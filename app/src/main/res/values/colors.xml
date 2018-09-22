@@ -17,4 +17,8 @@
     <color name="mid_blue">#3280b5</color>
     <color name="divider_color">#dadada</color>
 
+    <color name="dark_blue">#2c368d</color>
+    <color name="red">#ec2327</color>
+    <color name="gray">#dedddd</color>
+
 </resources>

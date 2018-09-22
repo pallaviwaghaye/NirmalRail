@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/headerView"
-    android:background="@drawable/rail_splash"
+    android:background="@drawable/nav_back"
     android:layout_width="match_parent"
     android:layout_height="130.33dp"
     android:orientation="vertical">
@@ -38,7 +38,7 @@
                     android:gravity="left"
                     android:singleLine="true"
                     android:text="abcefg"
-                    android:textColor="@color/black"
+                    android:textColor="@color/dark_blue"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="9876543210"
-                    android:textColor="@color/black"
+                    android:textColor="@color/dark_blue"
                     android:textSize="12sp" />
             </LinearLayout>
 

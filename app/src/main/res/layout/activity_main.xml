@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue">
+            android:background="@color/dark_blue">
 
 
             <RelativeLayout
@@ -88,11 +88,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/orange"
+                android:background="@color/dark_blue"
                 android:foreground="?selectableItemBackground"
                 android:text="Login"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
 
             <Button
@@ -102,11 +102,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/orange"
+                android:background="@color/dark_blue"
                 android:foreground="?selectableItemBackground"
                 android:text="Register"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
 
             </LinearLayout>

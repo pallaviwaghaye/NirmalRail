@@ -35,7 +35,9 @@ public class RailwayCategoryAdapter extends RecyclerView.Adapter<RailwayCategory
     @Override
     public void onBindViewHolder(final RailwayCategoryAdapter.ViewHolder viewHolder, final int position) {
 
-        viewHolder.textViewCategory.setText("Category " + position);
+        //viewHolder.textViewCategory.setText("Category " + position);
+        viewHolder.textViewCategoryName.setText("Category " + position);
+
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,15 +58,15 @@ public class RailwayCategoryAdapter extends RecyclerView.Adapter<RailwayCategory
         CardView cardView;
 
         TextView textViewCategory;
-        /*TextView textViewCategoryName;
-        ImageView imageViewCategory;*/
+        TextView textViewCategoryName;
+        ImageView imageViewCategory;
 
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.cardView);
-            textViewCategory = (TextView) itemView.findViewById(R.id.textViewCategory);
-            /*textViewCategoryName = (TextView) itemView.findViewById(R.id.textViewCategoryName);
-            imageViewCategory = (ImageView) itemView.findViewById(R.id.imageViewCategory);*/
+            //textViewCategory = (TextView) itemView.findViewById(R.id.textViewCategory);
+            textViewCategoryName = (TextView) itemView.findViewById(R.id.textViewCategoryName);
+            imageViewCategory = (ImageView) itemView.findViewById(R.id.imageViewCategory);
         }
     }
 

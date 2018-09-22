@@ -1,5 +1,8 @@
 package com.webakruti.nirmalrail.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -11,10 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.fragments.AboutFragment;
 import com.webakruti.nirmalrail.fragments.HomeFragment;
+import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
 
 
 public class HomePageActivity extends AppCompatActivity {
@@ -24,6 +29,8 @@ public class HomePageActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private FragmentManager fragManager;
+
+    private LinearLayout linearLayoutMyRequest;
 
 
     @Override
@@ -39,6 +46,14 @@ public class HomePageActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
 
+        linearLayoutMyRequest = (LinearLayout)findViewById(R.id.linearLayoutMyRequest);
+        linearLayoutMyRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePageActivity.this, MyRequestsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Menu menu = navigationView.getMenu();
 
@@ -57,6 +72,33 @@ public class HomePageActivity extends AppCompatActivity {
 
                     case R.id.navigationAbout:
                         fragManager.beginTransaction().replace(R.id.home_container, new AboutFragment()).commit();
+                        break;
+
+                    case R.id.navigationLogout:
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomePageActivity.this);
+                        // Setting Dialog Title
+                        alertDialog.setTitle("Logout");
+                        // Setting Dialog Message
+                        alertDialog.setMessage("Are you sure you want to logout?");
+                        // Setting Icon to Dialog
+                        // Setting Positive "Yes" Button
+                        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                SharedPreferenceManager.clearPreferences();
+                                Intent intent = new Intent(HomePageActivity.this, LandingPageActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                        // Setting Negative "NO" Button
+                        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        // Showing Alert Message
+                        alertDialog.show();
 
 
                         break;

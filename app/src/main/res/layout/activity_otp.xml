@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue">
+            android:background="@color/dark_blue">
 
 
             <RelativeLayout
@@ -95,7 +95,8 @@
                         android:layout_marginTop="10dp"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:textColor="@color/black"
+                        android:maxLength="6"
+                        android:textColor="@color/dark_blue"
                         android:textColorHint="@color/divider_color"
                         android:textSize="17sp" />
 
@@ -111,14 +112,12 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/orange"
+                android:background="@color/dark_blue"
                 android:foreground="?selectableItemBackground"
                 android:text="Verify"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
-
-
 
         </LinearLayout>
 

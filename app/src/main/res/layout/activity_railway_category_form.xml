@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue">
+            android:background="@color/dark_blue">
 
 
             <RelativeLayout
@@ -66,6 +66,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -78,14 +82,17 @@
 
             <Button
                 android:id="@+id/buttonCamera"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Camera" />
+                android:text="Camera"
+                android:textColor="@color/white"
+                android:background="@color/dark_blue"
+                android:textSize="15sp"/>
 
             <ImageView
                 android:id="@+id/imageViewPhoto"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="fill_parent"
+                android:layout_height="250dp"
                 android:layout_marginTop="20dp"
                 android:visibility="gone" />
         </LinearLayout>
@@ -93,17 +100,28 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:textSize="15sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="20dp"
-                android:text="Stations"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/black"
-                />
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/station"/>
+                <TextView
+                    android:textSize="15sp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Stations"
+                    android:textColor="@color/dark_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/dark_blue"
+                    />
+            </LinearLayout>
 
             <Spinner
                 android:id="@+id/spinnerStations"
@@ -121,17 +139,29 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:textSize="15sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="20dp"
-                android:text="Platforms"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/black"
-                />
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/platform"/>
+                <TextView
+                    android:textSize="15sp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Platforms"
+                    android:textColor="@color/dark_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/dark_blue"
+                    />
+            </LinearLayout>
 
             <Spinner
                 android:id="@+id/spinnerPlatform"
@@ -162,10 +192,10 @@
                 android:inputType="textMultiLine"
                 android:scrollHorizontally="false"
                 android:imeOptions="actionDone"
-                android:textColor="@color/black"
+                android:textColor="@color/dark_blue"
                 android:textColorHint="@color/divider_color"
                 android:textSize="15sp"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="@color/dark_blue"
                 />
 
         </LinearLayout>
@@ -177,13 +207,14 @@
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="10dp"
-            android:background="@color/orange"
+            android:background="@color/dark_blue"
             android:foreground="?selectableItemBackground"
             android:text="Submit"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
+    </LinearLayout>
     </LinearLayout>
     </ScrollView>
 </RelativeLayout>

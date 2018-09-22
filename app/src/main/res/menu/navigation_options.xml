@@ -6,32 +6,31 @@
         <item
             android:id="@+id/navigationHome"
             android:checked="true"
+            android:icon="@drawable/home"
             android:title="Home" />
 
         <item
             android:id="@+id/navigationAbout"
             android:checked="false"
+            android:icon="@drawable/about1"
             android:title="About" />
 
         <item
             android:id="@+id/navigationVision"
             android:checked="false"
+            android:icon="@drawable/vision1"
             android:title="Vision" />
 
         <item
             android:id="@+id/navigationObjective"
             android:checked="false"
+            android:icon="@drawable/objective"
             android:title="Objective" />
-
-        <item
-            android:id="@+id/navigationMyRequest"
-            android:checked="false"
-            android:title="My request" />
-
 
         <item
             android:id="@+id/navigationLogout"
             android:checked="false"
+            android:icon="@drawable/logout"
             android:title="Logout" />
 
 

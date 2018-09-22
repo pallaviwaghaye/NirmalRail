@@ -52,8 +52,8 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         RailwayFragment allFragment = new RailwayFragment();
         ColonyFragment liveFragment = new ColonyFragment();
 
-        adapter.addFragment(allFragment, "Railway");
-        adapter.addFragment(liveFragment, "Colony");
+        adapter.addFragment(allFragment, "STATION");
+        adapter.addFragment(liveFragment, "COLONY");
 
         viewPager.setAdapter(adapter);
     }

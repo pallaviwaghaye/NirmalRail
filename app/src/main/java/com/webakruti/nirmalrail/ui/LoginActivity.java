@@ -8,16 +8,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.webakruti.nirmalrail.R;
+
+import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView imageViewBack;
     private EditText editTextLoginMobileNo;
     private Button buttonLogin;
-    private LinearLayout linearLayoutGotoRegister;
+    private TextView textViewRegisterNow;
 
 
     @Override
@@ -34,8 +37,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
 
         editTextLoginMobileNo = (EditText)findViewById(R.id.editTextLoginMobileNo);
-        linearLayoutGotoRegister = (LinearLayout)findViewById(R.id.linearLayoutGotoRegister);
-        linearLayoutGotoRegister.setOnClickListener(this);
+        textViewRegisterNow = (TextView)findViewById(R.id.textViewRegisterNow);
+        textViewRegisterNow.setOnClickListener(this);
 
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(this);
@@ -63,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
 
-            case R.id.linearLayoutGotoRegister:
+            case R.id.textViewRegisterNow:
                 Intent intent2 = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(intent2);
                 finish();

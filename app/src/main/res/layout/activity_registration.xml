@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue">
+            android:background="@color/dark_blue">
 
 
             <RelativeLayout
@@ -102,7 +102,7 @@
                         android:hint="Enter Name"
                         android:imeOptions="actionNext"
                         android:inputType="textPersonName"
-                        android:textColor="@color/black"
+                        android:textColor="@color/dark_blue"
                         android:textColorHint="@color/divider_color"
                         android:textSize="17sp" />
 
@@ -117,7 +117,7 @@
                         android:inputType="number|phone"
                         android:maxLength="10"
                         android:layout_marginTop="15dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/dark_blue"
                         android:textColorHint="@color/divider_color"
                         android:textSize="17sp" />
 
@@ -134,7 +134,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/orange"
+                android:background="@color/dark_blue"
                 android:foreground="?selectableItemBackground"
                 android:text="Register"
                 android:textAllCaps="false"
@@ -155,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Go to login"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/dark_blue"
                     android:textSize="15sp" />
 
                 <TextView

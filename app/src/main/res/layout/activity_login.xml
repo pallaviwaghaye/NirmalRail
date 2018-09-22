@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue">
+            android:background="@color/dark_blue">
 
 
             <RelativeLayout
@@ -106,7 +106,7 @@
                         android:inputType="number|phone"
                         android:maxLength="10"
                         android:layout_marginTop="15dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/dark_blue"
                         android:textColorHint="@color/divider_color"
                         android:textSize="17sp" />
 
@@ -121,7 +121,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/orange"
+                android:background="@color/dark_blue"
                 android:foreground="?selectableItemBackground"
                 android:text="Login"
                 android:textAllCaps="false"
@@ -135,20 +135,28 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="fill_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Go to register"
-                    android:textColor="@color/blue"
-                    android:textSize="15sp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Not yet registered ? "
+                        android:textColor="@color/grey"
+                        android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="0.45dp"
-                    android:background="@color/black"
-                    android:gravity="center" />
+                    <TextView
+                        android:id="@+id/textViewRegisterNow"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Register now"
+                        android:textColor="@color/dark_blue"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
             </LinearLayout>
 
 
