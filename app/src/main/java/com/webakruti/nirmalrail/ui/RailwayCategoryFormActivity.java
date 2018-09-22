@@ -1,9 +1,15 @@
 package com.webakruti.nirmalrail.ui;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +28,7 @@ import android.widget.Spinner;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.webakruti.nirmalrail.R;
+import com.webakruti.nirmalrail.utils.Utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,6 +55,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     private EditText editTextComment;
     private ImageView imageViewBack;
     private Button buttonSubmit;
+    Uri outPutfileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +68,11 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
     private void initViews() {
 
-        spinnerStations =(Spinner)findViewById(R.id.spinnerStations);
-        spinnerPlatform = (Spinner)findViewById(R.id.spinnerPlatform);
-        editTextComment = (EditText)findViewById(R.id.editTextComment);
+        spinnerStations = (Spinner) findViewById(R.id.spinnerStations);
+        spinnerPlatform = (Spinner) findViewById(R.id.spinnerPlatform);
+        editTextComment = (EditText) findViewById(R.id.editTextComment);
 
-        imageViewBack = (ImageView)findViewById(R.id.imageViewBack);
+        imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,7 +83,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         buttonCamera = (Button) findViewById(R.id.buttonCamera);
         buttonCamera.setOnClickListener(this);
 
-        buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
+        buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
         buttonSubmit.setOnClickListener(this);
 
         imageViewPhoto = (ImageView) findViewById(R.id.imageViewPhoto);
@@ -99,19 +107,10 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
     }
 
-    PermissionListener permissionlistener = new PermissionListener() {
-        @Override
-        public void onPermissionGranted() {
-            startCamera();
-        }
 
-        @Override
-        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+    // -------------------------------------------------------CAMERA--------------------------------------------------------------------------------
 
-        }
-
-    };
-
+    // Camera Permission
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void startCameraActivity() {
 
@@ -150,31 +149,30 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                 result2 == PackageManager.PERMISSION_GRANTED;
     }
 
-
-    private void startCamera() {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        photoFile = null;
-        try {
-            photoFile = createImageFile();
-        } catch (IOException ex) {
-            // Error occurred while creating the File
-            Log.i("Error", "IOException");
+    PermissionListener permissionlistener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            startCamera();
         }
 
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-        startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
 
-    }
+        }
+
+    };
 
 
+    // Call back from StartActivityForResult,  REQUEST_IMAGE_CAPTURE should be same
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
                 imageViewPhoto.setVisibility(View.VISIBLE);
-                Bitmap mImageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(path));
-                if (mImageBitmap != null) {
-                    imageViewPhoto.setImageBitmap(mImageBitmap);
+                if (path != null) {
+                    Bitmap bitmap = decodeSampledBitmapFromFile(path, Utils.DpToPixel(RailwayCategoryFormActivity.this, 250), Utils.DpToPixel(RailwayCategoryFormActivity.this, 250));
+                    imageViewPhoto.setImageBitmap(bitmap);
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -183,25 +181,127 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     }
 
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "image" + timeStamp + "_";
-        File storageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "Railway App");
+    // Camera Functions
 
-        String fileName = "image_" + timeStamp + ".jpg";
-        Bitmap bitmap = null;
-
-        File file = new File(storageDir, fileName);
-        FileOutputStream out = new FileOutputStream(file);
-
-        //out = openFileInput(file);
-       /* bitmap = BitmapFactory.decodeStream(fileInputStream);
-        fileInputStream.close();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);*/
-        path = file.getPath();
-        return file;
+    private void startCamera() {
+        pickImageCamera();
     }
+
+    public void pickImageCamera() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+        String fileName = "image_" + timeStamp;
+        //create parameters for Intent with filename
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, fileName);
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Image capture by camera");
+        //imageUri is the current activity attribute, define and save it for later usage (also in onSaveInstanceState)
+        outPutfileUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        //create new Intent
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutfileUri);
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+        intent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE); // response will come in onActivityForResult
+        path = getRealPathFromURI(outPutfileUri);
+    }
+
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, // Which columns to return
+                null, // WHERE clause; which rows to return (all rows)
+                null, // WHERE clause selection arguments (none)
+                null); // Order-by clause (ascending by name)
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    public static Bitmap decodeSampledBitmapFromFile(String pathName, int reqWidth, int reqHeight) {
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(pathName, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        Bitmap bitmap = BitmapFactory.decodeFile(pathName, options);
+        try {
+            return checkRotation(pathName, bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return bitmap;
+
+        }
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    private static Bitmap checkRotation(String photoPath, Bitmap bitmap) throws IOException {
+        ExifInterface ei = new ExifInterface(photoPath);
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_UNDEFINED);
+
+        Log.e("orientation", "" + orientation);
+
+        Bitmap rotatedbitmap;
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                rotatedbitmap = rotateImage(bitmap, 90);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                rotatedbitmap = rotateImage(bitmap, 180);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                rotatedbitmap = rotateImage(bitmap, 270);
+                break;
+            case ExifInterface.ORIENTATION_NORMAL:
+                rotatedbitmap = bitmap;
+                break;
+            default:
+                rotatedbitmap = bitmap;
+                break;
+        }
+        return rotatedbitmap;
+    }
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        try {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(angle);
+            return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix,
+                    true);
+        } catch (OutOfMemoryError e) {
+
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------CAMERA--------------------------------------------------------------------------------
 
 }
