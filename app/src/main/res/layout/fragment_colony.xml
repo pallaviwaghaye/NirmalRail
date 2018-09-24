@@ -39,7 +39,7 @@
 
                 <ImageView
                     android:id="@+id/imageViewPhoto"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginTop="20dp"
                     android:visibility="gone" />
@@ -48,16 +48,30 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/station">
+
+                </ImageView>
                 <TextView
                     android:textSize="15sp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="40dp"
                     android:text="Colony"
                     android:textColor="@color/dark_blue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColorHint="@color/dark_blue"
+                    android:visibility="gone"
                     />
 
                 <Spinner
@@ -66,10 +80,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:popupBackground="@color/white"
                     >
                 </Spinner>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -90,7 +105,7 @@
                     android:inputType="textMultiLine"
                     android:scrollHorizontally="false"
                     android:imeOptions="actionNext"
-                    android:textColor="@color/dark_blue"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/divider_color"
                     android:textSize="17sp" />
 
@@ -113,7 +128,7 @@
                     android:inputType="textMultiLine"
                     android:scrollHorizontally="false"
                     android:imeOptions="actionDone"
-                    android:textColor="@color/dark_blue"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/divider_color"
                     android:textSize="15sp"
 
@@ -123,7 +138,7 @@
 
             <Button
                 android:id="@+id/buttonColonySubmit"
-                android:layout_width="200dp"
+                android:layout_width="250dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="40dp"

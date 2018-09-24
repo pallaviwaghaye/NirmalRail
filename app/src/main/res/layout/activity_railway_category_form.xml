@@ -100,6 +100,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -110,30 +111,21 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="20dp"
-                            android:src="@drawable/station"/>
-                        <TextView
-                            android:textSize="15sp"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginTop="25dp"
-                            android:text="Stations"
-                            android:textColor="@color/dark_blue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColorHint="@color/dark_blue"
-                            />
-                    </LinearLayout>
+                            android:src="@drawable/station">
 
-                    <Spinner
-                        android:id="@+id/spinnerStations"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:popupBackground="@color/white"
-                        >
-                    </Spinner>
-                </LinearLayout>
+                        </ImageView>
+                        <Spinner
+                            android:id="@+id/spinnerStations"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="20dp"
+                            android:popupBackground="@color/white"
+                            >
+                        </Spinner>
+                    </LinearLayout>
+                    </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -149,30 +141,23 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginTop="20dp"
-                            android:src="@drawable/platform"/>
-                        <TextView
-                            android:textSize="15sp"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginTop="25dp"
-                            android:text="Platforms"
-                            android:textColor="@color/dark_blue"
-                            android:layout_width="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:src="@drawable/platform">
+
+                        </ImageView>
+                        <Spinner
+                            android:id="@+id/spinnerPlatform"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColorHint="@color/dark_blue"
-                            />
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="30dp"
+                            android:popupBackground="@color/white"
+                            >
+                        </Spinner>
                     </LinearLayout>
 
-                    <Spinner
-                        android:id="@+id/spinnerPlatform"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:popupBackground="@color/white"
-                        >
-                    </Spinner>
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -192,7 +177,7 @@
                         android:inputType="textMultiLine"
                         android:scrollHorizontally="false"
                         android:imeOptions="actionDone"
-                        android:textColor="@color/dark_blue"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/divider_color"
                         android:textSize="15sp"
                         android:backgroundTint="@color/dark_blue"
@@ -202,7 +187,7 @@
 
                 <Button
                     android:id="@+id/buttonSubmit"
-                    android:layout_width="200dp"
+                    android:layout_width="250dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="40dp"

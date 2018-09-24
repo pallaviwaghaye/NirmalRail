@@ -23,10 +23,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -56,6 +58,8 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
     private Spinner spinnerStations;
     private Spinner spinnerPlatform;
+    String selectedStations = "Select station";
+    String selectedPlatform = "Select platform";
     private EditText editTextComment;
     private ImageView imageViewBack;
     private Button buttonSubmit;
@@ -91,6 +95,34 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         buttonSubmit.setOnClickListener(this);
 
         imageViewPhoto = (ImageView) findViewById(R.id.imageViewPhoto);
+
+        String[] stationList = getResources().getStringArray(R.array.stations);
+        ArrayAdapter<String> adapterStation = new ArrayAdapter<String>(RailwayCategoryFormActivity.this, android.R.layout.simple_spinner_dropdown_item, stationList);
+        spinnerStations.setAdapter(adapterStation);
+
+        spinnerStations.setSelection(0,true);
+        View v=spinnerStations.getSelectedView();
+        setTextCustom(v);
+
+        String[] platformList = getResources().getStringArray(R.array.platforms);
+        ArrayAdapter<String> adapterPlatform = new ArrayAdapter<String>(RailwayCategoryFormActivity.this, android.R.layout.simple_spinner_dropdown_item, platformList);
+        spinnerPlatform.setAdapter(adapterPlatform);
+
+        spinnerPlatform.setSelection(0,true);
+        View v1=spinnerPlatform.getSelectedView();
+        setTextCustom(v1);
+
+
+    }
+
+    public void setTextCustom(View view)
+    {
+        TextView customTextView = ((TextView)view);
+        if(customTextView!=null)
+        {
+            //customTextView.setTextColor(getResources().getColor(R.color.white));
+            customTextView.setTextColor(getResources().getColor(R.color.dark_blue));
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -104,8 +136,8 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
             case R.id.buttonSubmit:
 
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(RailwayCategoryFormActivity.this,R.style.alertDialog);
-                // Setting Dialog Title
-                alertDialog.setTitle("Success");
+                /*// Setting Dialog Title
+                alertDialog.setTitle("Thank You !!!");*/
                 // Setting Dialog Message
                 alertDialog.setMessage("Thank You !!!");
                 // Setting Icon to Dialog

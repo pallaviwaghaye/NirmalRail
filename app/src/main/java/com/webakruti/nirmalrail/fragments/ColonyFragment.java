@@ -23,10 +23,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -40,6 +43,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import static android.Manifest.permission.CAMERA;
@@ -59,6 +63,7 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
     Uri outPutfileUri;
 
     private Spinner spinnerColony;
+    String selectedColony = "Select colony";
     private EditText editTextColonyAddress;
     private EditText editTextColonyComment;
     private Button buttonColonySubmit;
@@ -90,6 +95,48 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
         buttonColonySubmit.setOnClickListener(this);
 
         imageViewPhoto = (ImageView) rootView.findViewById(R.id.imageViewPhoto);
+
+        // set spinner data
+        String[] colonyList = getResources().getStringArray(R.array.colony);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, colonyList);
+        spinnerColony.setAdapter(adapter);
+
+        //13th july
+        spinnerColony.setSelection(0,true);
+        View v=spinnerColony.getSelectedView();
+        setTextCustom(v);
+
+        //spinnerColony.setSelection(Arrays.asList(colonyList).size());
+
+        /*spinnerColony.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedColony = (String) adapterView.getItemAtPosition(i);
+
+                //13th july
+                setTextCustom(view);
+                //13th july
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+*/
+    }
+
+
+
+    public void setTextCustom(View view)
+    {
+        TextView customTextView = ((TextView)view);
+        if(customTextView!=null)
+        {
+            //customTextView.setTextColor(getResources().getColor(R.color.white));
+             customTextView.setTextColor(getResources().getColor(R.color.dark_blue));
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -102,10 +149,10 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.buttonColonySubmit:
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(),R.style.alertDialog);
-                // Setting Dialog Title
-                alertDialog.setTitle("Thank You !!!");
-                /*// Setting Dialog Message
-                alertDialog.setMessage("Thank You !!!");*/
+                /*// Setting Dialog Title
+                alertDialog.setTitle("Thank You !!!");*/
+                // Setting Dialog Message
+                alertDialog.setMessage("Thank You !!!");
                 // Setting Icon to Dialog
                 // Setting Positive "Yes" Button
                 alertDialog.setPositiveButton("Check Status", new DialogInterface.OnClickListener() {
