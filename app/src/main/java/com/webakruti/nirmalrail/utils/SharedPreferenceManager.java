@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.webakruti.nirmalrail.model.UserResponse;
 
 
 /**
@@ -20,7 +21,7 @@ public class SharedPreferenceManager {
 
     private static void setPreferences() {
         if (tuitionPlusPreferences == null) {
-            tuitionPlusPreferences = applicationContext.getSharedPreferences("tuitionplusRef",
+            tuitionPlusPreferences = applicationContext.getSharedPreferences("niramlrail",
                     Context.MODE_PRIVATE);
         }
     }
@@ -56,22 +57,22 @@ public class SharedPreferenceManager {
         return token;
     }
 
-   /* public static void storeUserObjectInSharedPreference(Student user) {
+    public static void storeUserResponseObjectInSharedPreference(UserResponse user) {
         SharedPreferences.Editor prefsEditor = tuitionPlusPreferences.edit();
         //  prefsEditor.clear();
         Gson gson = new Gson();
         String json = gson.toJson(user);
-        prefsEditor.putString("UserObject", json);
+        prefsEditor.putString("UserResponseObject", json);
         prefsEditor.commit();
     }
 
-    public static Student getUserObjectFromSharedPreference() {
+    public static UserResponse getUserObjectFromSharedPreference() {
         Gson gson1 = new Gson();
-        String json1 = tuitionPlusPreferences.getString("UserObject", "");
-        Student obj = gson1.fromJson(json1, Student.class);
+        String json1 = tuitionPlusPreferences.getString("UserResponseObject", "");
+        UserResponse obj = gson1.fromJson(json1, UserResponse.class);
 //		Log.e("RetrivedName:", obj.getFirstName());
         return obj;
-    }*/
+    }
 
 
 }

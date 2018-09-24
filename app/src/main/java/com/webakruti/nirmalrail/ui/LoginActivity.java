@@ -18,6 +18,7 @@ import com.webakruti.nirmalrail.model.UserResponse;
 import com.webakruti.nirmalrail.retrofit.ApiConstants;
 import com.webakruti.nirmalrail.retrofit.service.RestClient;
 import com.webakruti.nirmalrail.utils.NetworkUtil;
+import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,12 +38,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ProgressDialog progressDialogForAPI;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        SharedPreferenceManager.setApplicationContext(LoginActivity.this);
         imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,8 +53,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
 
 
-        editTextLoginMobileNo = (EditText)findViewById(R.id.editTextLoginMobileNo);
-        textViewRegisterNow = (TextView)findViewById(R.id.textViewRegisterNow);
+        editTextLoginMobileNo = (EditText) findViewById(R.id.editTextLoginMobileNo);
+        textViewRegisterNow = (TextView) findViewById(R.id.textViewRegisterNow);
         textViewRegisterNow.setOnClickListener(this);
 
         editTextLoginMobileNo = (EditText) findViewById(R.id.editTextLoginMobileNo);
@@ -122,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (result.getSuccess().getStatus()) {
 
                         // Save UserResponse to SharedPref
-
+                        SharedPreferenceManager.storeUserResponseObjectInSharedPreference(result);
                         Intent intent = new Intent(LoginActivity.this, OtpActivity.class);
                         startActivity(intent);
                         finish();

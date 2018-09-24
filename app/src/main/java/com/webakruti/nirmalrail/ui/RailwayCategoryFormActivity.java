@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -50,7 +51,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class RailwayCategoryFormActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private Button buttonCamera;
+    private LinearLayout linearLayoutCamera;
     private ImageView imageViewPhoto;
     private File baseImage;
     private File photoFile;
@@ -88,8 +89,8 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
             }
         });
 
-        buttonCamera = (Button) findViewById(R.id.buttonCamera);
-        buttonCamera.setOnClickListener(this);
+        linearLayoutCamera = (LinearLayout) findViewById(R.id.linearLayoutCamera);
+        linearLayoutCamera.setOnClickListener(this);
 
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
         buttonSubmit.setOnClickListener(this);
@@ -100,26 +101,24 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         ArrayAdapter<String> adapterStation = new ArrayAdapter<String>(RailwayCategoryFormActivity.this, android.R.layout.simple_spinner_dropdown_item, stationList);
         spinnerStations.setAdapter(adapterStation);
 
-        spinnerStations.setSelection(0,true);
-        View v=spinnerStations.getSelectedView();
+        spinnerStations.setSelection(0, true);
+        View v = spinnerStations.getSelectedView();
         setTextCustom(v);
 
         String[] platformList = getResources().getStringArray(R.array.platforms);
         ArrayAdapter<String> adapterPlatform = new ArrayAdapter<String>(RailwayCategoryFormActivity.this, android.R.layout.simple_spinner_dropdown_item, platformList);
         spinnerPlatform.setAdapter(adapterPlatform);
 
-        spinnerPlatform.setSelection(0,true);
-        View v1=spinnerPlatform.getSelectedView();
+        spinnerPlatform.setSelection(0, true);
+        View v1 = spinnerPlatform.getSelectedView();
         setTextCustom(v1);
 
 
     }
 
-    public void setTextCustom(View view)
-    {
-        TextView customTextView = ((TextView)view);
-        if(customTextView!=null)
-        {
+    public void setTextCustom(View view) {
+        TextView customTextView = ((TextView) view);
+        if (customTextView != null) {
             //customTextView.setTextColor(getResources().getColor(R.color.white));
             customTextView.setTextColor(getResources().getColor(R.color.dark_blue));
         }
@@ -130,12 +129,12 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     public void onClick(View view) {
         switch (view.getId()) {
 
-            case R.id.buttonCamera:
+            case R.id.linearLayoutCamera:
                 startCameraActivity();
                 break;
             case R.id.buttonSubmit:
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(RailwayCategoryFormActivity.this,R.style.alertDialog);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(RailwayCategoryFormActivity.this, R.style.alertDialog);
                 /*// Setting Dialog Title
                 alertDialog.setTitle("Thank You !!!");*/
                 // Setting Dialog Message
@@ -230,9 +229,12 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
-                imageViewPhoto.setVisibility(View.VISIBLE);
+
                 if (path != null) {
-                    Bitmap bitmap = decodeSampledBitmapFromFile(path, Utils.DpToPixel(RailwayCategoryFormActivity.this, 250), Utils.DpToPixel(RailwayCategoryFormActivity.this, 250));
+                    linearLayoutCamera.setVisibility(View.GONE);
+                    imageViewPhoto.setVisibility(View.VISIBLE);
+                    Bitmap bitmap = decodeSampledBitmapFromFile(path, Utils.DpToPixel(RailwayCategoryFormActivity.this, 270), Utils.DpToPixel(RailwayCategoryFormActivity.this, 150));
+
                     imageViewPhoto.setImageBitmap(bitmap);
 
                 }

@@ -17,6 +17,7 @@ import com.webakruti.nirmalrail.model.UserResponse;
 import com.webakruti.nirmalrail.retrofit.ApiConstants;
 import com.webakruti.nirmalrail.retrofit.service.RestClient;
 import com.webakruti.nirmalrail.utils.NetworkUtil;
+import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,6 +36,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        SharedPreferenceManager.setApplicationContext(RegistrationActivity.this);
 
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextMobileNumber = (EditText) findViewById(R.id.editTextMobileNumber);
@@ -113,7 +115,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     if (result.getSuccess().getStatus()) {
 
                         // Save UserResponse to SharedPref
-
+                        SharedPreferenceManager.storeUserResponseObjectInSharedPreference(result);
                         Intent intent = new Intent(RegistrationActivity.this, OtpActivity.class);
                         startActivity(intent);
                         finish();
