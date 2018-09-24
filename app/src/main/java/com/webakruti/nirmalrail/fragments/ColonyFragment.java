@@ -1,7 +1,9 @@
 package com.webakruti.nirmalrail.fragments;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -29,6 +31,7 @@ import android.widget.Spinner;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.webakruti.nirmalrail.R;
+import com.webakruti.nirmalrail.ui.MyRequestsActivity;
 import com.webakruti.nirmalrail.ui.RailwayCategoryFormActivity;
 import com.webakruti.nirmalrail.ui.SuccessActivity;
 import com.webakruti.nirmalrail.utils.Utils;
@@ -98,8 +101,29 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
                 startCameraActivity();
                 break;
             case R.id.buttonColonySubmit:
-                Intent intent = new Intent(getActivity(), SuccessActivity.class);
-                startActivity(intent);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(),R.style.alertDialog);
+                // Setting Dialog Title
+                alertDialog.setTitle("Thank You !!!");
+                /*// Setting Dialog Message
+                alertDialog.setMessage("Thank You !!!");*/
+                // Setting Icon to Dialog
+                // Setting Positive "Yes" Button
+                alertDialog.setPositiveButton("Check Status", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //SharedPreferenceManager.clearPreferences();
+                        Intent intent = new Intent(getActivity(), MyRequestsActivity.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                });
+               /* // Setting Negative "NO" Button
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });*/
+                // Showing Alert Message
+                alertDialog.show();
 
         }
 

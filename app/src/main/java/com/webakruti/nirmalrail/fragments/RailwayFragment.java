@@ -11,8 +11,12 @@ import android.view.ViewGroup;
 
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.adapter.RailwayCategoryAdapter;
+import com.webakruti.nirmalrail.model.Category;
 import com.webakruti.nirmalrail.utils.GridSpacingItemDecoration;
 import com.webakruti.nirmalrail.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class RailwayFragment extends Fragment {
@@ -47,7 +51,18 @@ public class RailwayFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
 
 
-        railwayCategoryAdapter = new RailwayCategoryAdapter(getActivity(), 10);
+        List<Category> listOfCategories = new ArrayList<Category>();
+        listOfCategories.add(new Category("Waiting Hall",getResources().getDrawable(R.drawable.icons_01)));
+        listOfCategories.add(new Category("Urinal",getResources().getDrawable(R.drawable.icons_02)));
+        listOfCategories.add(new Category("Lavatories",getResources().getDrawable(R.drawable.icons_03)));
+        listOfCategories.add(new Category("Divyanhjan Toilet",getResources().getDrawable(R.drawable.icons_10)));
+        listOfCategories.add(new Category("Foot Over Bridge",getResources().getDrawable(R.drawable.icons_09)));
+        listOfCategories.add(new Category("Water Cooler",getResources().getDrawable(R.drawable.icons_08)));
+        listOfCategories.add(new Category("Parking",getResources().getDrawable(R.drawable.icons_07)));
+        listOfCategories.add(new Category("Dustbin",getResources().getDrawable(R.drawable.icons_06)));
+        listOfCategories.add(new Category("Catering",getResources().getDrawable(R.drawable.icons_05)));
+        listOfCategories.add(new Category("Any Other Places",getResources().getDrawable(R.drawable.icons_04)));
+        railwayCategoryAdapter = new RailwayCategoryAdapter(getActivity(), listOfCategories);
         recyclerView.setAdapter(railwayCategoryAdapter);
 
     }

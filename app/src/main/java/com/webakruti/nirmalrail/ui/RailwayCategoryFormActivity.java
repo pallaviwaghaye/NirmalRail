@@ -1,7 +1,9 @@
 package com.webakruti.nirmalrail.ui;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -15,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +31,7 @@ import android.widget.Spinner;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.webakruti.nirmalrail.R;
+import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
 import com.webakruti.nirmalrail.utils.Utils;
 
 import java.io.File;
@@ -98,11 +102,38 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                 startCameraActivity();
                 break;
             case R.id.buttonSubmit:
-                Intent intent = new Intent(RailwayCategoryFormActivity.this, SuccessActivity.class);
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(RailwayCategoryFormActivity.this,R.style.alertDialog);
+                // Setting Dialog Title
+                alertDialog.setTitle("Success");
+                // Setting Dialog Message
+                alertDialog.setMessage("Thank You !!!");
+                // Setting Icon to Dialog
+                // Setting Positive "Yes" Button
+                alertDialog.setPositiveButton("Check Status", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //SharedPreferenceManager.clearPreferences();
+                        Intent intent = new Intent(RailwayCategoryFormActivity.this, MyRequestsActivity.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+               /* // Setting Negative "NO" Button
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });*/
+                // Showing Alert Message
+                alertDialog.show();
+
+
+               /* Intent intent = new Intent(RailwayCategoryFormActivity.this, SuccessActivity.class);
                 startActivity(intent);
                 finish();
 
-
+*/
         }
 
     }
@@ -203,6 +234,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         intent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE); // response will come in onActivityForResult
         path = getRealPathFromURI(outPutfileUri);
+
     }
 
 
@@ -237,8 +269,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         }
     }
 
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -289,6 +320,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         return rotatedbitmap;
     }
 
+    @Nullable
     public static Bitmap rotateImage(Bitmap source, float angle) {
         try {
             Matrix matrix = new Matrix();
@@ -300,6 +332,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         }
         return null;
     }
+
 
     // -------------------------------------------------------CAMERA--------------------------------------------------------------------------------
 

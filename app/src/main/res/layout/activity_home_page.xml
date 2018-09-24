@@ -49,7 +49,7 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/request1" />
+                            android:src="@drawable/request2" />
 
                     </LinearLayout>
 
@@ -90,6 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:color="@color/white"
         android:background="@color/white"
         app:headerLayout="@layout/drawer_header"
         app:itemIconTint="@color/nav_drawer_item_select"

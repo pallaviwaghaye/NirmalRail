@@ -6,7 +6,7 @@
         <item
             android:id="@+id/navigationHome"
             android:checked="true"
-            android:icon="@drawable/home"
+            android:icon="@drawable/home1"
             android:title="Home" />
 
         <item
@@ -24,13 +24,13 @@
         <item
             android:id="@+id/navigationObjective"
             android:checked="false"
-            android:icon="@drawable/objective"
+            android:icon="@drawable/objective1"
             android:title="Objective" />
 
         <item
             android:id="@+id/navigationLogout"
             android:checked="false"
-            android:icon="@drawable/logout"
+            android:icon="@drawable/logout1"
             android:title="Logout" />
 
 

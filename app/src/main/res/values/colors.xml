@@ -11,13 +11,14 @@
     <color name="dashboard_count_color">#e61a1a</color>
     <color name="grey">#6d8383</color>
     <color name="pink">#FF69B4</color>
+    <color name="faintPink">#f7a3af</color>
     <color name="sky_blue">#47C0EF</color>
     <color name="skyblue">#FF31B2E4</color>
     <color name="faint_blue">#ADD8E6</color>
     <color name="mid_blue">#3280b5</color>
     <color name="divider_color">#dadada</color>
-
-    <color name="dark_blue">#2c368d</color>
+    <color name="blue_for_link">#2B7CA0</color>
+    <color name="dark_blue">#134677</color>
     <color name="red">#ec2327</color>
     <color name="gray">#dedddd</color>
 
