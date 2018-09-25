@@ -83,7 +83,7 @@ public class OtpActivity extends AppCompatActivity {
                     }
                 } else {
                     // Response code is 401
-                    Toast.makeText(OtpActivity.this, "Error occurred", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtpActivity.this, "Error!! OTP Not Correct.", Toast.LENGTH_SHORT).show();
                 }
 
                 if (progressDialogForAPI != null) {

@@ -48,7 +48,7 @@ public class RailwayCategoryAdapter extends RecyclerView.Adapter<RailwayCategory
 
         Picasso.with(context)
                 .load(category.getIconPathTwo())
-                .placeholder(R.drawable.camera)
+                .placeholder(R.drawable.icons_01)
                 .into(viewHolder.imageViewCategory);
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {

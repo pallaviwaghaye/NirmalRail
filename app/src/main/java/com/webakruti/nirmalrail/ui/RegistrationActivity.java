@@ -157,7 +157,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-
     private void callOTPApi() {
 
         Call<OTPResponse> requestCallback = RestClient.getApiService(ApiConstants.BASE_URL).otpVerification(editTextMobileNumber.getText().toString());

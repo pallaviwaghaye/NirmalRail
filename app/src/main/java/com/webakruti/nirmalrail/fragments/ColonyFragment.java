@@ -97,6 +97,7 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
         buttonColonySubmit.setOnClickListener(this);
 
         imageViewPhoto = (ImageView) rootView.findViewById(R.id.imageViewPhoto);
+        imageViewPhoto.setOnClickListener(this);
 
         // set spinner data
         String[] colonyList = getResources().getStringArray(R.array.colony);
@@ -147,6 +148,9 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
 
             case R.id.linearLayoutCamera:
+                startCameraActivity();
+                break;
+            case R.id.imageViewPhoto:
                 startCameraActivity();
                 break;
             case R.id.buttonColonySubmit:
