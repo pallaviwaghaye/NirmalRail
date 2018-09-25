@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -55,7 +56,8 @@ import static android.app.Activity.RESULT_OK;
 public class ColonyFragment extends Fragment implements View.OnClickListener {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private Button buttonCamera;
+    private LinearLayout linearLayoutCamera;
+    //private Button buttonCamera;
     private ImageView imageViewPhoto;
     private File baseImage;
     private File photoFile;
@@ -88,8 +90,8 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
         editTextColonyComment = (EditText) rootView.findViewById(R.id.editTextColonyComment);
 
 
-        buttonCamera = (Button) rootView.findViewById(R.id.buttonCamera);
-        buttonCamera.setOnClickListener(this);
+        linearLayoutCamera = (LinearLayout)rootView.findViewById(R.id.linearLayoutCamera);
+        linearLayoutCamera.setOnClickListener(this);
 
         buttonColonySubmit = (Button) rootView.findViewById(R.id.buttonColonySubmit);
         buttonColonySubmit.setOnClickListener(this);
@@ -144,7 +146,7 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
 
-            case R.id.buttonCamera:
+            case R.id.linearLayoutCamera:
                 startCameraActivity();
                 break;
             case R.id.buttonColonySubmit:
@@ -230,15 +232,17 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
 
     };
 
-
     // Call back from StartActivityForResult,  REQUEST_IMAGE_CAPTURE should be same
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
-                imageViewPhoto.setVisibility(View.VISIBLE);
+
                 if (path != null) {
-                    Bitmap bitmap = decodeSampledBitmapFromFile(path, Utils.DpToPixel(getActivity(), 250), Utils.DpToPixel(getActivity(), 250));
+                    linearLayoutCamera.setVisibility(View.GONE);
+                    imageViewPhoto.setVisibility(View.VISIBLE);
+                    Bitmap bitmap = decodeSampledBitmapFromFile(path, Utils.DpToPixel(getActivity(), 270), Utils.DpToPixel(getActivity(), 150));
+
                     imageViewPhoto.setImageBitmap(bitmap);
 
                 }

@@ -205,10 +205,10 @@
                         android:backgroundTint="@color/dark_blue"
                         android:gravity="top|left"
                         android:hint="Comment"
-                        android:imeOptions="actionDone"
                         android:inputType="textMultiLine"
                         android:lines="5"
                         android:scrollHorizontally="false"
+                        android:imeOptions="actionDone"
                         android:textColor="@color/black"
                         android:textColorHint="@color/divider_color"
                         android:textSize="15sp" />

@@ -96,6 +96,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         buttonSubmit.setOnClickListener(this);
 
         imageViewPhoto = (ImageView) findViewById(R.id.imageViewPhoto);
+        imageViewPhoto.setOnClickListener(this);
 
         String[] stationList = getResources().getStringArray(R.array.stations);
         ArrayAdapter<String> adapterStation = new ArrayAdapter<String>(RailwayCategoryFormActivity.this, android.R.layout.simple_spinner_dropdown_item, stationList);
@@ -130,6 +131,9 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         switch (view.getId()) {
 
             case R.id.linearLayoutCamera:
+                startCameraActivity();
+                break;
+            case R.id.imageViewPhoto:
                 startCameraActivity();
                 break;
             case R.id.buttonSubmit:

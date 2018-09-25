@@ -61,6 +61,7 @@ public class RailwayFragment extends Fragment {
         listOfCategories.add(new Category("Parking",getResources().getDrawable(R.drawable.icons_07)));
         listOfCategories.add(new Category("Dustbin",getResources().getDrawable(R.drawable.icons_06)));
         listOfCategories.add(new Category("Catering",getResources().getDrawable(R.drawable.icons_05)));
+        listOfCategories.add(new Category("Waiting Room",getResources().getDrawable(R.drawable.icons_01)));
         listOfCategories.add(new Category("Any Other Places",getResources().getDrawable(R.drawable.icons_04)));
         railwayCategoryAdapter = new RailwayCategoryAdapter(getActivity(), listOfCategories);
         recyclerView.setAdapter(railwayCategoryAdapter);
