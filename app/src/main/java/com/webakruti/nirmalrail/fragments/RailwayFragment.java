@@ -63,8 +63,9 @@ public class RailwayFragment extends Fragment {
         SharedPreferenceManager.setApplicationContext(getActivity());
         String token = SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
 
+        String API = "http://nirmalrail.webakruti.in/api/";
         String headers = "Bearer " + token;
-        Call<RailwayCategoryResponse> requestCallback = RestClient.getApiService(ApiConstants.GET_RAILWAY_CATEGORY).getServices(headers);
+        Call<RailwayCategoryResponse> requestCallback = RestClient.getApiService(API).getServices(headers);
         requestCallback.enqueue(new Callback<RailwayCategoryResponse>() {
             @Override
             public void onResponse(Call<RailwayCategoryResponse> call, Response<RailwayCategoryResponse> response) {
