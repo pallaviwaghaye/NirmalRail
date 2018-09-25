@@ -9,7 +9,7 @@ public class ApiConstants {
 
     public static final String LOGIN_API = "login";
     public static final String OTP_VERIFICATION = "verifymobile";
-    public static final String GET_RAILWAY_CATEGORY = "get-services";
+    public static final String GET_RAILWAY_CATEGORY = "getservices";
 
 
 }
