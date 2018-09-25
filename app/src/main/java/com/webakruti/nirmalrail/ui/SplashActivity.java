@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.webakruti.nirmalrail.R;
+import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-       // SharedPreferenceManager.setApplicationContext(SplashActivity.this);
+        // SharedPreferenceManager.setApplicationContext(SplashActivity.this);
 
         new Handler().postDelayed(new Runnable() {
             /*
@@ -39,15 +40,15 @@ public class SplashActivity extends AppCompatActivity {
                 // Start your app main activity
                 try {
 
-                    /*if (SharedPreferenceManager.getUserObjectFromSharedPreference() != null) {
-                        Intent i = new Intent(SplashActivity.this, RegistrationActivity.class);
+                    if (SharedPreferenceManager.getUserObjectFromSharedPreference() != null) {
+                        Intent i = new Intent(SplashActivity.this, HomePageActivity.class);
                         startActivity(i);
                         finish();
-                    } else {*/
+                    } else {
                         Intent i = new Intent(SplashActivity.this, LandingPageActivity.class);
                         startActivity(i);
                         finish();
-                    //}
+                    }
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
