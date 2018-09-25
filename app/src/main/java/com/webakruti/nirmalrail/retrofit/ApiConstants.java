@@ -1,8 +1,6 @@
 package com.webakruti.nirmalrail.retrofit;
 
-/**
- * Created by nikhilkumar.waghaye on 19-02-2018.
- */
+
 
 public class ApiConstants {
 

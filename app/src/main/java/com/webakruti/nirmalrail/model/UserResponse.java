@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserResponse {
 
-
     @SerializedName("success")
     @Expose
     private Success success;
