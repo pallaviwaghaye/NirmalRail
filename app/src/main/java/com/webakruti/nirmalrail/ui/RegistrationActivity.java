@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.webakruti.nirmalrail.R;
+import com.webakruti.nirmalrail.model.OTPResponse;
+import com.webakruti.nirmalrail.model.RegistrationResponse;
 import com.webakruti.nirmalrail.model.UserResponse;
 import com.webakruti.nirmalrail.retrofit.ApiConstants;
 import com.webakruti.nirmalrail.retrofit.service.RestClient;
@@ -63,14 +65,14 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 if (editTextName.getText().toString().length() > 0) {
                     if (editTextMobileNumber.getText().toString().length() > 0) {
                         if (editTextMobileNumber.getText().toString().length() == 10) {
-                            Intent intent = new Intent(RegistrationActivity.this, OtpActivity.class);
+                          /*  Intent intent = new Intent(RegistrationActivity.this, OtpActivity.class);
                             startActivity(intent);
-                            finish();
-                            /*if (NetworkUtil.hasConnectivity(RegistrationActivity.this)) {
+                            finish();*/
+                            if (NetworkUtil.hasConnectivity(RegistrationActivity.this)) {
                                 callRegistartionAPI();
                             } else {
                                 Toast.makeText(RegistrationActivity.this, R.string.no_internet_message, Toast.LENGTH_SHORT).show();
-                            }*/
+                            }
                         } else {
                             Toast.makeText(RegistrationActivity.this, "Mobile number must be valid", Toast.LENGTH_SHORT).show();
                         }
@@ -105,21 +107,26 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         progressDialogForAPI.show();
 
 
-        Call<UserResponse> requestCallback = RestClient.getApiService(ApiConstants.BASE_URL).login(editTextName.getText().toString(), editTextMobileNumber.getText().toString(), editTextMobileNumber.getText().toString());
-        requestCallback.enqueue(new Callback<UserResponse>() {
+        Call<RegistrationResponse> requestCallback = RestClient.getApiService(ApiConstants.BASE_URL).registration(editTextName.getText().toString(), editTextMobileNumber.getText().toString(), editTextMobileNumber.getText().toString());
+        requestCallback.enqueue(new Callback<RegistrationResponse>() {
             @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+            public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.code() == 200) {
 
-                    UserResponse result = response.body();
-                    if (result.getSuccess().getStatus()) {
+                    RegistrationResponse result = response.body();
+                    if (result.getError() == null && result.getSuccess() != null) {
+                        if (result.getSuccess().getStatus()) {
 
-                        // Save UserResponse to SharedPref
-                        SharedPreferenceManager.storeUserResponseObjectInSharedPreference(result);
-                        Intent intent = new Intent(RegistrationActivity.this, OtpActivity.class);
-                        startActivity(intent);
-                        finish();
+                            if (NetworkUtil.hasConnectivity(RegistrationActivity.this)) {
+                                callOTPApi();
+                            } else {
+                                Toast.makeText(RegistrationActivity.this, R.string.no_internet_message, Toast.LENGTH_SHORT).show();
+                            }
 
+
+                        }
+                    } else {
+                        Toast.makeText(RegistrationActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     // Response code is 401
@@ -131,8 +138,58 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 }
             }
 
+
             @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
+            public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+
+                if (t != null) {
+
+                    if (progressDialogForAPI != null) {
+                        progressDialogForAPI.cancel();
+                    }
+                    if (t.getMessage() != null)
+                        Log.e("error", t.getMessage());
+                }
+
+            }
+        });
+
+
+    }
+
+
+    private void callOTPApi() {
+
+        Call<OTPResponse> requestCallback = RestClient.getApiService(ApiConstants.BASE_URL).otpVerification(editTextMobileNumber.getText().toString());
+        requestCallback.enqueue(new Callback<OTPResponse>() {
+            @Override
+            public void onResponse(Call<OTPResponse> call, Response<OTPResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.code() == 200) {
+
+                    OTPResponse result = response.body();
+                    if (result.getSuccess().getStatus()) {
+
+                        Intent intent = new Intent(RegistrationActivity.this, OtpActivity.class);
+                        intent.putExtra("MOBILE_NO", editTextMobileNumber.getText().toString());
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        Toast.makeText(RegistrationActivity.this, "OTP Error", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // Response code is 401
+                    Toast.makeText(RegistrationActivity.this, "OTP Error", Toast.LENGTH_SHORT).show();
+                }
+
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<OTPResponse> call, Throwable t) {
 
                 if (t != null) {
 

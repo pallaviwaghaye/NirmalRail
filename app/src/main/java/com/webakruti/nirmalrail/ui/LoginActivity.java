@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.webakruti.nirmalrail.R;
+import com.webakruti.nirmalrail.model.OTPResponse;
 import com.webakruti.nirmalrail.model.UserResponse;
 import com.webakruti.nirmalrail.retrofit.ApiConstants;
 import com.webakruti.nirmalrail.retrofit.service.RestClient;
@@ -75,15 +76,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.buttonLogin:
                 if (editTextLoginMobileNo.getText().toString().length() > 0) {
                     if (editTextLoginMobileNo.getText().toString().length() == 10) {
-                        Intent intent = new Intent(LoginActivity.this, OtpActivity.class);
+                    /*    Intent intent = new Intent(LoginActivity.this, OtpActivity.class);
                         startActivity(intent);
-                        finish();
+                        finish();*/
 
-                     /*   if (NetworkUtil.hasConnectivity(LoginActivity.this)) {
-                            callLoginAPI();
+                        if (NetworkUtil.hasConnectivity(LoginActivity.this)) {
+                            callOTPApi();
                         } else {
                             Toast.makeText(LoginActivity.this, R.string.no_internet_message, Toast.LENGTH_SHORT).show();
-                        }*/
+                        }
                     } else {
                         Toast.makeText(LoginActivity.this, "Mobile number must be valid", Toast.LENGTH_SHORT).show();
                     }
@@ -104,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void callLoginAPI() {
+    private void callOTPApi() {
 
         progressDialogForAPI = new ProgressDialog(this);
         progressDialogForAPI.setCancelable(false);
@@ -113,25 +114,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialogForAPI.show();
 
 
-        Call<UserResponse> requestCallback = RestClient.getApiService(ApiConstants.BASE_URL).login(editTextLoginMobileNo.getText().toString(), editTextLoginMobileNo.getText().toString(), "123456");
-        requestCallback.enqueue(new Callback<UserResponse>() {
+        Call<OTPResponse> requestCallback = RestClient.getApiService(ApiConstants.BASE_URL).otpVerification(editTextLoginMobileNo.getText().toString());
+        requestCallback.enqueue(new Callback<OTPResponse>() {
             @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+            public void onResponse(Call<OTPResponse> call, Response<OTPResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.code() == 200) {
 
-                    UserResponse result = response.body();
+                    OTPResponse result = response.body();
                     if (result.getSuccess().getStatus()) {
 
-                        // Save UserResponse to SharedPref
-                        SharedPreferenceManager.storeUserResponseObjectInSharedPreference(result);
                         Intent intent = new Intent(LoginActivity.this, OtpActivity.class);
+                        intent.putExtra("MOBILE_NO", editTextLoginMobileNo.getText().toString());
                         startActivity(intent);
                         finish();
 
+                    } else {
+                        Toast.makeText(LoginActivity.this, "OTP Error", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     // Response code is 401
-                    Toast.makeText(LoginActivity.this, "Unauthorized User", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "OTP Error", Toast.LENGTH_SHORT).show();
                 }
 
                 if (progressDialogForAPI != null) {
@@ -139,8 +141,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
 
+
             @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
+            public void onFailure(Call<OTPResponse> call, Throwable t) {
 
                 if (t != null) {
 
@@ -156,6 +159,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     }
+
 
 }
 
