@@ -46,7 +46,7 @@ public class HomePageActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
 
-        linearLayoutMyRequest = (LinearLayout)findViewById(R.id.linearLayoutMyRequest);
+        linearLayoutMyRequest = (LinearLayout) findViewById(R.id.linearLayoutMyRequest);
         linearLayoutMyRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

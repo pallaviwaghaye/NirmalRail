@@ -34,11 +34,13 @@ public class LandingPageActivity extends AppCompatActivity implements View.OnCli
             case R.id.buttonLogin:
                 Intent intent = new Intent(LandingPageActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
                 break;
 
             case R.id.buttonRegister:
                 Intent intent1 = new Intent(LandingPageActivity.this, RegistrationActivity.class);
                 startActivity(intent1);
+                finish();
                 break;
 
         }

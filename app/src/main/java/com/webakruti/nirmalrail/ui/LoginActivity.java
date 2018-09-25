@@ -121,15 +121,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (response.isSuccessful() && response.body() != null && response.code() == 200) {
 
                     OTPResponse result = response.body();
-                    if (result.getSuccess().getStatus()) {
+                    if(result.getSuccess() != null) {
+                        if (result.getSuccess().getStatus()) {
 
-                        Intent intent = new Intent(LoginActivity.this, OtpActivity.class);
-                        intent.putExtra("MOBILE_NO", editTextLoginMobileNo.getText().toString());
-                        startActivity(intent);
-                        finish();
+                            Intent intent = new Intent(LoginActivity.this, OtpActivity.class);
+                            intent.putExtra("MOBILE_NO", editTextLoginMobileNo.getText().toString());
+                            startActivity(intent);
+                            finish();
 
+                        } else {
+                            Toast.makeText(LoginActivity.this, "OTP Error", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(LoginActivity.this, "OTP Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Mobile number is not registered. Please register first.", Toast.LENGTH_SHORT).show();
+
                     }
                 } else {
                     // Response code is 401
