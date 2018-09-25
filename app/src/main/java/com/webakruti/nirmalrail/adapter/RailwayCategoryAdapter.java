@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.model.Category;
+import com.webakruti.nirmalrail.model.RailwayCategoryResponse;
 import com.webakruti.nirmalrail.ui.RailwayCategoryFormActivity;
 
 import java.util.List;
@@ -20,10 +22,10 @@ import java.util.List;
 public class RailwayCategoryAdapter extends RecyclerView.Adapter<RailwayCategoryAdapter.ViewHolder> {
 
     Activity context;
-    List<Category> list;
+    List<RailwayCategoryResponse.Category> list;
     int size;
 
-    public RailwayCategoryAdapter(Activity context, List<Category> list) {
+    public RailwayCategoryAdapter(Activity context, List<RailwayCategoryResponse.Category> list) {
         this.context = context;
         this.size = size;
         this.list = list;
@@ -40,10 +42,14 @@ public class RailwayCategoryAdapter extends RecyclerView.Adapter<RailwayCategory
     @Override
     public void onBindViewHolder(final RailwayCategoryAdapter.ViewHolder viewHolder, final int position) {
 
-        Category category = list.get(position);
+        RailwayCategoryResponse.Category category = list.get(position);
         //viewHolder.textViewCategory.setText("Category " + position);
-        viewHolder.textViewCategoryName.setText(category.getCategoryName());
-        viewHolder.imageViewCategory.setImageDrawable(category.getCategoryImage());
+        viewHolder.textViewCategoryName.setText(category.getName());
+
+        Picasso.with(context)
+                .load(category.getIconPathTwo())
+                .placeholder(R.drawable.camera)
+                .into(viewHolder.imageViewCategory);
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

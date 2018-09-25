@@ -31,31 +31,6 @@ public class SharedPreferenceManager {
     }
 
 
-    public static void saveWorkspace(String workspace) {
-        SharedPreferences.Editor prefsEditor = tuitionPlusPreferences.edit();
-        prefsEditor.putString("Workspace", workspace);
-        Log.e("SavedWorkspace:", workspace);
-        prefsEditor.commit();
-    }
-
-    public static String getWorkspace() {
-        String workspace = tuitionPlusPreferences.getString("Workspace", null);
-        Log.e("RetrievedWorkspace:", workspace);
-        return workspace;
-    }
-
-    public static void saveToken(String token) {
-        SharedPreferences.Editor prefsEditor = tuitionPlusPreferences.edit();
-        prefsEditor.putString("Token", token);
-        Log.e("SavedWorkspace:", token);
-        prefsEditor.commit();
-    }
-
-    public static String getToken() {
-        String token = tuitionPlusPreferences.getString("Token", null);
-       // Log.e("RetrievedToken:", success);
-        return token;
-    }
 
     public static void storeUserResponseObjectInSharedPreference(UserResponse user) {
         SharedPreferences.Editor prefsEditor = tuitionPlusPreferences.edit();
