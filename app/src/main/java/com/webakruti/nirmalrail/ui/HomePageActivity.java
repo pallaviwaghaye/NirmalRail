@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.fragments.AboutFragment;
@@ -33,6 +34,8 @@ public class HomePageActivity extends AppCompatActivity {
     private ImageView imageViewSwachhataKendra;
     private ImageView imageViewRequestImage;
 
+    private TextView toolbarUserDetailsHomeTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class HomePageActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbarUserDetailsHomeTitle = (TextView) findViewById(R.id.toolbarUserDetailsHomeTitle);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -75,18 +80,21 @@ public class HomePageActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
 
                     case R.id.navigationHome:
+                        toolbarUserDetailsHomeTitle.setText("Home");
                         // toolbarStudentDetailsHomeTitle.setText("My details");
                         // SwachhataKendraFragment fragment = new SwachhataKendraFragment();
                         fragManager.beginTransaction().replace(R.id.home_container, new HomeFragment()).commit();
                         break;
 
                     case R.id.navigationSwachhataKendra:
+                        toolbarUserDetailsHomeTitle.setText("Swachhata kendra");
                         // toolbarStudentDetailsHomeTitle.setText("My details");
                         // SwachhataKendraFragment fragment = new SwachhataKendraFragment();
                         fragManager.beginTransaction().replace(R.id.home_container, new SwachhataKendraFragment()).commit();
                         break;
 
                     case R.id.navigationAbout:
+                        toolbarUserDetailsHomeTitle.setText("About");
                         fragManager.beginTransaction().replace(R.id.home_container, new AboutFragment()).commit();
                         break;
 
