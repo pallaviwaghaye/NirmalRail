@@ -83,7 +83,7 @@ public class HomePageActivity extends AppCompatActivity {
                     case R.id.navigationSwachhataKendra:
                         // toolbarStudentDetailsHomeTitle.setText("My details");
                         // SwachhataKendraFragment fragment = new SwachhataKendraFragment();
-                        fragManager.beginTransaction().replace(R.id.swachhata_container, new SwachhataKendraFragment()).commit();
+                        fragManager.beginTransaction().replace(R.id.home_container, new SwachhataKendraFragment()).commit();
                         break;
 
                     case R.id.navigationAbout:
@@ -140,7 +140,7 @@ public class HomePageActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
 
         fragManager = getSupportFragmentManager();
-        fragManager.beginTransaction().replace(R.id.home_container, new SwachhataKendraFragment()).commit();
+        fragManager.beginTransaction().replace(R.id.home_container, new HomeFragment()).commit();
 
     }
 
