@@ -408,7 +408,14 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
 
         File baseImage = new File(path);
-
+        int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
+        } catch (Throwable t) {
+            Log.e("ERROR", "Error compressing file." + t.toString());
+            t.printStackTrace();
+        }
 
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextComment.getText().toString());
         RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), "1");
@@ -416,7 +423,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
 
         RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
-        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("baseimage", "image" + System.currentTimeMillis(), requestBaseFile);
+        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
 
 
         String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
@@ -433,7 +440,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
                         if (saveComplaintResponse.getSuccess() != null) {
                             if (saveComplaintResponse.getSuccess().getStatus()) {
-                                Toast.makeText(getApplicationContext(), "Upload successful ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), saveComplaintResponse.getSuccess().getMsg(), Toast.LENGTH_SHORT).show();
                                 Log.e("Upload", "Upload Successful");
                             }
                         } else {

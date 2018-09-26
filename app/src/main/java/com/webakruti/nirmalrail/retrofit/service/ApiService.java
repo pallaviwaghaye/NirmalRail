@@ -46,7 +46,7 @@ public interface ApiService {
 
     // Send Request Complaint
     @Multipart
-    @POST(ApiConstants.GET_RAILWAY_CATEGORY)
+    @POST(ApiConstants.SAVE_COMPLAINT)
     Call<SaveComplaintResponse> uploadImage(@Header("Authorization") String header,
                                             @Part MultipartBody.Part baseImage,
                                             @Part("description") RequestBody description,
