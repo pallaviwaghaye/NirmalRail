@@ -66,9 +66,9 @@ public class MyRequestsActivity extends AppCompatActivity {
         });
 // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(R.color.blue,
+                R.color.red,
                 R.color.blue,
-                R.color.blue,
-                R.color.blue);
+                R.color.red);
 
     }
 

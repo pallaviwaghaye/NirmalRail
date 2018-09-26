@@ -33,9 +33,10 @@
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.OtpActivity" />
         <activity android:name=".ui.HomePageActivity" />
+        <activity android:name=".ui.SwachhataKendraPageActivity" />
         <activity android:name=".ui.RailwayCategoryFormActivity" />
         <activity android:name=".ui.MyRequestsActivity" />
-        <activity android:name=".ui.SuccessActivity"></activity>
+        <activity android:name=".ui.SuccessActivity" />
     </application>
 
 </manifest>

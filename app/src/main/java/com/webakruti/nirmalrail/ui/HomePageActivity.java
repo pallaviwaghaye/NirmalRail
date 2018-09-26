@@ -3,34 +3,35 @@ package com.webakruti.nirmalrail.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.fragments.AboutFragment;
 import com.webakruti.nirmalrail.fragments.HomeFragment;
+import com.webakruti.nirmalrail.fragments.SwachhataKendraFragment;
 import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
 
-
 public class HomePageActivity extends AppCompatActivity {
-
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private FragmentManager fragManager;
 
-    private LinearLayout linearLayoutMyRequest;
+    private ImageView imageViewSwachhataKendra;
+    private ImageView imageViewRequestImage;
 
 
     @Override
@@ -46,8 +47,16 @@ public class HomePageActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
 
-        linearLayoutMyRequest = (LinearLayout) findViewById(R.id.linearLayoutMyRequest);
-        linearLayoutMyRequest.setOnClickListener(new View.OnClickListener() {
+        imageViewSwachhataKendra = (ImageView) findViewById(R.id.imageViewSwachhataKendra);
+        imageViewSwachhataKendra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePageActivity.this, SwachhataKendraPageActivity.class);
+                startActivity(intent);
+            }
+        });
+        imageViewRequestImage = (ImageView) findViewById(R.id.imageViewRequestImage);
+        imageViewRequestImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomePageActivity.this, MyRequestsActivity.class);
@@ -64,10 +73,17 @@ public class HomePageActivity extends AppCompatActivity {
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
                 switch (menuItem.getItemId()) {
+
                     case R.id.navigationHome:
                         // toolbarStudentDetailsHomeTitle.setText("My details");
-                        // HomeFragment fragment = new HomeFragment();
+                        // SwachhataKendraFragment fragment = new SwachhataKendraFragment();
                         fragManager.beginTransaction().replace(R.id.home_container, new HomeFragment()).commit();
+                        break;
+
+                    case R.id.navigationSwachhataKendra:
+                        // toolbarStudentDetailsHomeTitle.setText("My details");
+                        // SwachhataKendraFragment fragment = new SwachhataKendraFragment();
+                        fragManager.beginTransaction().replace(R.id.swachhata_container, new SwachhataKendraFragment()).commit();
                         break;
 
                     case R.id.navigationAbout:
@@ -124,7 +140,7 @@ public class HomePageActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
 
         fragManager = getSupportFragmentManager();
-        fragManager.beginTransaction().replace(R.id.home_container, new HomeFragment()).commit();
+        fragManager.beginTransaction().replace(R.id.home_container, new SwachhataKendraFragment()).commit();
 
     }
 
@@ -148,6 +164,5 @@ public class HomePageActivity extends AppCompatActivity {
 
         }
     }
-
 
 }
