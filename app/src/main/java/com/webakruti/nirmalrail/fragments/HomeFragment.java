@@ -39,6 +39,8 @@ public class HomeFragment extends Fragment {
 
 
 
+
+
         // send this list to carousel adapter.
 
         initCarouselData(list);

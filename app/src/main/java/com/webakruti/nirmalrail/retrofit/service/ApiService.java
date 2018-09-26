@@ -3,12 +3,17 @@ package com.webakruti.nirmalrail.retrofit.service;
 import com.webakruti.nirmalrail.model.OTPResponse;
 import com.webakruti.nirmalrail.model.RailwayCategoryResponse;
 import com.webakruti.nirmalrail.model.RegistrationResponse;
+import com.webakruti.nirmalrail.model.SaveComplaintResponse;
 import com.webakruti.nirmalrail.model.UserResponse;
 import com.webakruti.nirmalrail.retrofit.ApiConstants;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -35,9 +40,20 @@ public interface ApiService {
 
 
     // GET RAILWAY CATEGORY API
-    //http://nirmalrail.webakruti.in/api/login?mobile=9561665846&password=9561665846&otp=123456
     @POST(ApiConstants.GET_RAILWAY_CATEGORY)
     Call<RailwayCategoryResponse> getServices(@Header("Authorization") String header);
+
+
+    // Send Request Complaint
+    @Multipart
+    @POST(ApiConstants.GET_RAILWAY_CATEGORY)
+    Call<SaveComplaintResponse> uploadImage(@Header("Authorization") String header,
+                                            @Part MultipartBody.Part baseImage,
+                                            @Part("description") RequestBody description,
+                                            @Part("service_id") RequestBody serviceId,
+                                            @Part("station_id") RequestBody stationId
+    );
+
 
 
 }

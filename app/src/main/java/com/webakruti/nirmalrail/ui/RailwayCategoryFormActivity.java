@@ -2,9 +2,11 @@ package com.webakruti.nirmalrail.ui;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
@@ -30,19 +33,35 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.webakruti.nirmalrail.R;
+import com.webakruti.nirmalrail.model.RailwayCategoryResponse;
+import com.webakruti.nirmalrail.model.SaveComplaintResponse;
+import com.webakruti.nirmalrail.retrofit.ApiConstants;
+import com.webakruti.nirmalrail.retrofit.service.RestClient;
+import com.webakruti.nirmalrail.utils.NetworkUtil;
 import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
 import com.webakruti.nirmalrail.utils.Utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -65,11 +84,13 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     private ImageView imageViewBack;
     private Button buttonSubmit;
     Uri outPutfileUri;
+    private ProgressDialog progressDialogForAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_railway_category_form);
+        SharedPreferenceManager.setApplicationContext(RailwayCategoryFormActivity.this);
 
         initViews();
 
@@ -138,13 +159,18 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                 break;
             case R.id.buttonSubmit:
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(RailwayCategoryFormActivity.this, R.style.alertDialog);
-                /*// Setting Dialog Title
-                alertDialog.setTitle("Thank You !!!");*/
-                // Setting Dialog Message
+
+                if (NetworkUtil.hasConnectivity(RailwayCategoryFormActivity.this)) {
+
+                    callSendRequestAPI();
+                } else {
+                    Toast.makeText(RailwayCategoryFormActivity.this, R.string.no_internet_message, Toast.LENGTH_SHORT).show();
+                }
+
+
+              /*  AlertDialog.Builder alertDialog = new AlertDialog.Builder(RailwayCategoryFormActivity.this, R.style.alertDialog);
+                alertDialog.setTitle("Thank You !!!");
                 alertDialog.setMessage("Thank You !!!");
-                // Setting Icon to Dialog
-                // Setting Positive "Yes" Button
                 alertDialog.setPositiveButton("Check Status", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //SharedPreferenceManager.clearPreferences();
@@ -154,21 +180,16 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                         finish();
                     }
                 });
-               /* // Setting Negative "NO" Button
+               *//* // Setting Negative "NO" Button
                 alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
-                });*/
+                });*//*
                 // Showing Alert Message
-                alertDialog.show();
+                alertDialog.show();*/
 
 
-               /* Intent intent = new Intent(RailwayCategoryFormActivity.this, SuccessActivity.class);
-                startActivity(intent);
-                finish();
-
-*/
         }
 
     }
@@ -373,5 +394,85 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
 
     // -------------------------------------------------------CAMERA--------------------------------------------------------------------------------
+
+
+    public void callSendRequestAPI() {
+        //creating request body for file
+
+
+        progressDialogForAPI = new ProgressDialog(RailwayCategoryFormActivity.this);
+        progressDialogForAPI.setCancelable(false);
+        progressDialogForAPI.setIndeterminate(true);
+        progressDialogForAPI.setMessage("Please wait...");
+        progressDialogForAPI.show();
+
+
+        File baseImage = new File(path);
+
+
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextComment.getText().toString());
+        RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), "1");
+        RequestBody stationId = RequestBody.create(MediaType.parse("multipart/form-data"), "6");
+
+
+        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("baseimage", "image" + System.currentTimeMillis(), requestBaseFile);
+
+
+        String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
+
+        Call<SaveComplaintResponse> colorsCall = RestClient.getApiService(ApiConstants.BASE_URL).uploadImage(header, bodyImage, description, serviceId, stationId);
+
+        colorsCall.enqueue(new Callback<SaveComplaintResponse>() {
+            @Override
+            public void onResponse(Call<SaveComplaintResponse> call, Response<SaveComplaintResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.code() == 200) {
+                    //
+                    try {
+                        SaveComplaintResponse saveComplaintResponse = response.body();
+
+                        if (saveComplaintResponse.getSuccess() != null) {
+                            if (saveComplaintResponse.getSuccess().getStatus()) {
+                                Toast.makeText(getApplicationContext(), "Upload successful ", Toast.LENGTH_SHORT).show();
+                                Log.e("Upload", "Upload Successful");
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                }
+
+
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<SaveComplaintResponse> call, Throwable t) {
+
+                Toast.makeText(getApplicationContext(), "Time out error. ", Toast.LENGTH_SHORT).show();
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+                if (t != null) {
+
+                    if (t.getMessage() != null)
+                        Log.e("error", t.getMessage());
+
+                }
+            }
+        });
+
+
+    }
+
 
 }

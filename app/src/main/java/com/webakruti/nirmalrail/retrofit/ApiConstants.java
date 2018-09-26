@@ -11,5 +11,8 @@ public class ApiConstants {
     public static final String OTP_VERIFICATION = "verifymobile";
     public static final String GET_RAILWAY_CATEGORY = "getservices";
 
+    public static final String SAVE_COMPLAINT = "savecomplaint";
+
+
 
 }
