@@ -12,7 +12,7 @@
         <item
             android:id="@+id/navigationSwachhataKendra"
             android:checked="true"
-            android:icon="@drawable/home1"
+            android:icon="@drawable/swachata_kendra"
             android:title="Swachhata kendra" />
 
         <item

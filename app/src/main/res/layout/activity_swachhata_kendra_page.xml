@@ -23,12 +23,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/imageViewBack"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="5dp"
+                    android:src="@drawable/action_back" />
+
+
                 <TextView
                     android:id="@+id/textViewSwachhataKendra"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="40dp"
                     android:text="Swachhata Kendra "
                     android:textColor="@color/white"
                     android:textSize="18sp"
