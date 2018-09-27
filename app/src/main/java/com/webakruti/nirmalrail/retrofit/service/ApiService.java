@@ -4,6 +4,7 @@ import com.webakruti.nirmalrail.model.OTPResponse;
 import com.webakruti.nirmalrail.model.RailwayCategoryResponse;
 import com.webakruti.nirmalrail.model.RegistrationResponse;
 import com.webakruti.nirmalrail.model.SaveComplaintResponse;
+import com.webakruti.nirmalrail.model.SendRequestFormResponse;
 import com.webakruti.nirmalrail.model.UserResponse;
 import com.webakruti.nirmalrail.retrofit.ApiConstants;
 
@@ -54,6 +55,9 @@ public interface ApiService {
                                             @Part("station_id") RequestBody stationId
     );
 
+    @POST(ApiConstants.GET_STATION_PLATFORM)
+    Call<SendRequestFormResponse> getStationPlatform(@Header("Authorization") String header,
+                                                     @Part("service_id") RequestBody serviceId);
 
 
 }

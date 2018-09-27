@@ -3,13 +3,22 @@ package com.webakruti.nirmalrail.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RailwayCategoryResponse {
+public class RailwayCategoryResponse implements Serializable{
+
+    public RailwayCategoryResponse() {
+    }
+
+    public RailwayCategoryResponse(Success success) {
+        this.success = success;
+    }
 
     @SerializedName("success")
     @Expose
     private Success success;
+
 
     public Success getSuccess() {
         return success;

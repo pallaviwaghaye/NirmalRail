@@ -13,6 +13,8 @@ public class ApiConstants {
 
     public static final String SAVE_COMPLAINT = "savecomplaint";
 
+    public static final String GET_STATION_PLATFORM = "getplatformnstation";
+
 
 
 }

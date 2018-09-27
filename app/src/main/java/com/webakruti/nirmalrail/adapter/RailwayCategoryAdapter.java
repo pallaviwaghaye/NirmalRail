@@ -16,6 +16,7 @@ import com.webakruti.nirmalrail.model.Category;
 import com.webakruti.nirmalrail.model.RailwayCategoryResponse;
 import com.webakruti.nirmalrail.ui.RailwayCategoryFormActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -42,7 +43,7 @@ public class RailwayCategoryAdapter extends RecyclerView.Adapter<RailwayCategory
     @Override
     public void onBindViewHolder(final RailwayCategoryAdapter.ViewHolder viewHolder, final int position) {
 
-        RailwayCategoryResponse.Category category = list.get(position);
+        final RailwayCategoryResponse.Category category = list.get(position);
         //viewHolder.textViewCategory.setText("Category " + position);
         viewHolder.textViewCategoryName.setText(category.getName());
 
@@ -55,6 +56,7 @@ public class RailwayCategoryAdapter extends RecyclerView.Adapter<RailwayCategory
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, RailwayCategoryFormActivity.class);
+                intent.putExtra("ServiceCategory", (Serializable) category);
                 context.startActivity(intent);
             }
         });
