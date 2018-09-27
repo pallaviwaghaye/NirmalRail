@@ -185,7 +185,7 @@ public class SendRequestFormResponse {
 
         @Override
         public String toString() {
-            return "Platform " + platform;
+            return platform;
         }
     }
 }
