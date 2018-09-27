@@ -15,11 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.webakruti.nirmalrail.R;
-import com.webakruti.nirmalrail.fragments.AboutFragment;
+import com.webakruti.nirmalrail.fragments.ContactUsFragment;
+import com.webakruti.nirmalrail.fragments.EventFragment;
+import com.webakruti.nirmalrail.fragments.UseOfTechnologyFragment;
+import com.webakruti.nirmalrail.fragments.VisionAndObjectiveFragment;
 import com.webakruti.nirmalrail.fragments.HomeFragment;
 import com.webakruti.nirmalrail.fragments.SwachhataKendraFragment;
 import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
@@ -86,6 +88,12 @@ public class HomePageActivity extends AppCompatActivity {
                         fragManager.beginTransaction().replace(R.id.home_container, new HomeFragment()).commit();
                         break;
 
+
+                    case R.id.navigationVisionAndObjective:
+                        toolbarUserDetailsHomeTitle.setText("Vision and objective");
+                        fragManager.beginTransaction().replace(R.id.home_container, new VisionAndObjectiveFragment()).commit();
+                        break;
+
                     case R.id.navigationSwachhataKendra:
                         toolbarUserDetailsHomeTitle.setText("Swachhata kendra");
                         // toolbarStudentDetailsHomeTitle.setText("My details");
@@ -93,10 +101,21 @@ public class HomePageActivity extends AppCompatActivity {
                         fragManager.beginTransaction().replace(R.id.home_container, new SwachhataKendraFragment()).commit();
                         break;
 
-                    case R.id.navigationVision:
-                        toolbarUserDetailsHomeTitle.setText("About");
-                        fragManager.beginTransaction().replace(R.id.home_container, new AboutFragment()).commit();
+                    case R.id.navigationUseofTechnology:
+                        toolbarUserDetailsHomeTitle.setText("Use of technology");
+                        fragManager.beginTransaction().replace(R.id.home_container, new UseOfTechnologyFragment()).commit();
                         break;
+
+                    case R.id.navigationEvent:
+                        toolbarUserDetailsHomeTitle.setText("Event");
+                        fragManager.beginTransaction().replace(R.id.home_container, new EventFragment()).commit();
+                        break;
+
+                    case R.id.navigationContactUs:
+                        toolbarUserDetailsHomeTitle.setText("Contact us");
+                        fragManager.beginTransaction().replace(R.id.home_container, new ContactUsFragment()).commit();
+                        break;
+
 
                     case R.id.navigationLogout:
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomePageActivity.this);

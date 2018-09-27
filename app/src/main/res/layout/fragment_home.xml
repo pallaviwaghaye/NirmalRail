@@ -40,7 +40,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/home_back"
             android:orientation="vertical">
 
                 <TextView
@@ -50,7 +49,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="120dp"
                     android:layout_marginTop="10dp"
-                    android:text="About Us"
+                    android:text="Nirmal Rail App"
                     android:gravity="center"
                     android:textColor="@color/blue"
                     android:textSize="18sp" />
@@ -60,52 +59,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_gravity="center_vertical"
-                android:textAlignment="center"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-            <TextView
-                android:id="@+id/textViewHeading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="120dp"
-                android:layout_marginTop="10dp"
-                android:text="Heading"
-                android:gravity="center"
-                android:textColor="@color/blue"
-                android:textSize="18sp" />
-            <TextView
-                android:id="@+id/textViewHeadingText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_vertical"
-                android:textAlignment="center"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/textViewHeading1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="120dp"
-                android:layout_marginTop="10dp"
-                android:text="Heading"
-                android:gravity="center"
-                android:textColor="@color/blue"
-                android:textSize="18sp" />
-            <TextView
-                android:id="@+id/textViewHeading1Text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_vertical"
-                android:textAlignment="center"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                android:layout_gravity="center"
+                android:text="                The objective of this APP is to provide an IT enabled platform for cleanliness related issues of stations and colonies of Nagpur Division SECR. This will enhance Public and Staff participation by giving dynamic feedback to fulfill our endeavour to provide Swachh and Nirmal Railway in Nagpur Division SECR."
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 

@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.webakruti.nirmalrail.R;
-import com.webakruti.nirmalrail.fragments.AboutFragment;
 import com.webakruti.nirmalrail.fragments.ColonyFragment;
 import com.webakruti.nirmalrail.fragments.RailwayFragment;
 import com.webakruti.nirmalrail.fragments.SwachhataKendraFragment;
