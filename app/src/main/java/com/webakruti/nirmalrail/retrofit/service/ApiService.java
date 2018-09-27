@@ -57,7 +57,7 @@ public interface ApiService {
 
     @POST(ApiConstants.GET_STATION_PLATFORM)
     Call<SendRequestFormResponse> getStationPlatform(@Header("Authorization") String header,
-                                                     @Part("service_id") RequestBody serviceId);
+                                                     @Query("service_id") String serviceId);
 
 
 }

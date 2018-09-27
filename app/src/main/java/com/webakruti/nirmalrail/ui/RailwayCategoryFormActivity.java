@@ -26,6 +26,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,8 +40,10 @@ import com.google.gson.Gson;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.webakruti.nirmalrail.R;
+import com.webakruti.nirmalrail.adapter.RailwayCategoryAdapter;
 import com.webakruti.nirmalrail.model.RailwayCategoryResponse;
 import com.webakruti.nirmalrail.model.SaveComplaintResponse;
+import com.webakruti.nirmalrail.model.SendRequestFormResponse;
 import com.webakruti.nirmalrail.retrofit.ApiConstants;
 import com.webakruti.nirmalrail.retrofit.service.RestClient;
 import com.webakruti.nirmalrail.utils.NetworkUtil;
@@ -54,7 +57,9 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -85,6 +90,8 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     private Button buttonSubmit;
     Uri outPutfileUri;
     private ProgressDialog progressDialogForAPI;
+    private RailwayCategoryResponse.Category serviceCategory;
+    private ArrayList<List<SendRequestFormResponse.PlatformList>> listOfPlatFormsFinal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,12 +99,13 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         setContentView(R.layout.activity_railway_category_form);
         SharedPreferenceManager.setApplicationContext(RailwayCategoryFormActivity.this);
 
-        RailwayCategoryResponse.Category serviceCategory = (RailwayCategoryResponse.Category)getIntent().getSerializableExtra("ServiceCategory");
-
-
+        serviceCategory = (RailwayCategoryResponse.Category) getIntent().getSerializableExtra("ServiceCategory");
         initViews();
 
+
+        callGetPlatFormStationAPI();
     }
+
 
     private void initViews() {
 
@@ -122,22 +130,125 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         imageViewPhoto = (ImageView) findViewById(R.id.imageViewPhoto);
         imageViewPhoto.setOnClickListener(this);
 
-        String[] stationList = getResources().getStringArray(R.array.stations);
-        ArrayAdapter<String> adapterStation = new ArrayAdapter<String>(RailwayCategoryFormActivity.this, android.R.layout.simple_spinner_dropdown_item, stationList);
+
+       /* String[] platformList = getResources().getStringArray(R.array.platforms);
+        ArrayAdapter<String> adapterPlatform = new ArrayAdapter<String>(RailwayCategoryFormActivity.this, android.R.layout.simple_spinner_dropdown_item, platformList);
+        spinnerPlatform.setAdapter(adapterPlatform);
+
+        spinnerPlatform.setSelection(0, true);
+        View v1 = spinnerPlatform.getSelectedView();
+        setTextCustom(v1);*/
+
+
+    }
+
+
+    private void callGetPlatFormStationAPI() {
+
+
+        final ProgressDialog progressDialog = new ProgressDialog(RailwayCategoryFormActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
+
+        SharedPreferenceManager.setApplicationContext(RailwayCategoryFormActivity.this);
+        String token = SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
+
+        String headers = "Bearer " + token;
+        Call<SendRequestFormResponse> requestCallback = RestClient.getApiService(ApiConstants.BASE_URL).getStationPlatform(headers, serviceCategory.getId() + "");
+        requestCallback.enqueue(new Callback<SendRequestFormResponse>() {
+            @Override
+            public void onResponse(Call<SendRequestFormResponse> call, Response<SendRequestFormResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.code() == 200) {
+                    SendRequestFormResponse sendRequestFormResponse = response.body();
+
+                    if (sendRequestFormResponse != null) {
+                        handleStationPlatformData(sendRequestFormResponse);
+
+                    }
+
+                } else {
+                    // Response code is 401
+                }
+
+                if (progressDialog != null) {
+                    progressDialog.cancel();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SendRequestFormResponse> call, Throwable t) {
+
+                if (t != null) {
+
+                    if (progressDialog != null) {
+                        progressDialog.cancel();
+                    }
+                    if (t.getMessage() != null)
+                        Log.e("error", t.getMessage());
+                }
+
+            }
+        });
+
+    }
+
+    private void handleStationPlatformData(SendRequestFormResponse sendRequestFormResponse) {
+        List<SendRequestFormResponse.Station> stationList = sendRequestFormResponse.getSuccess().getStation();
+        List<SendRequestFormResponse.Place> placeList = sendRequestFormResponse.getSuccess().getPlaces();
+        Map<String, List<SendRequestFormResponse.PlatformList>> mapList = sendRequestFormResponse.getSuccess().getPlatformMap();
+
+        //
+        listOfPlatFormsFinal = new ArrayList<>();
+
+        if (mapList != null && mapList.size() > 0) {
+            for (Map.Entry<String, List<SendRequestFormResponse.PlatformList>> entry : mapList.entrySet()) {
+                List<SendRequestFormResponse.PlatformList> lisOfPlatForms = entry.getValue();
+                listOfPlatFormsFinal.add(lisOfPlatForms);
+            }
+
+        }
+
+
+        // set Station Spinner Value
+        if (stationList != null && stationList.size() > 0 && listOfPlatFormsFinal != null && listOfPlatFormsFinal.size() > 0) {
+            setStationSpinner(stationList);
+            setPlatFormSpinnerData(0);
+        }
+
+
+    }
+
+    private void setStationSpinner(List<SendRequestFormResponse.Station> stationList) {
+        ArrayAdapter<SendRequestFormResponse.Station> adapterStation = new ArrayAdapter<SendRequestFormResponse.Station>(RailwayCategoryFormActivity.this, android.R.layout.simple_spinner_dropdown_item, stationList);
         spinnerStations.setAdapter(adapterStation);
 
         spinnerStations.setSelection(0, true);
         View v = spinnerStations.getSelectedView();
         setTextCustom(v);
 
-        String[] platformList = getResources().getStringArray(R.array.platforms);
-        ArrayAdapter<String> adapterPlatform = new ArrayAdapter<String>(RailwayCategoryFormActivity.this, android.R.layout.simple_spinner_dropdown_item, platformList);
-        spinnerPlatform.setAdapter(adapterPlatform);
 
-        spinnerPlatform.setSelection(0, true);
-        View v1 = spinnerPlatform.getSelectedView();
-        setTextCustom(v1);
+        spinnerStations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                SendRequestFormResponse.Station station = (SendRequestFormResponse.Station) adapterView.getItemAtPosition(position);
+                setPlatFormSpinnerData(position);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void setPlatFormSpinnerData(int position) {
+        List<SendRequestFormResponse.PlatformList> list = listOfPlatFormsFinal.get(position);
+        ArrayAdapter<SendRequestFormResponse.PlatformList> adapterStation = new ArrayAdapter<SendRequestFormResponse.PlatformList>(RailwayCategoryFormActivity.this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinnerPlatform.setAdapter(adapterStation);
+        View v = spinnerPlatform.getSelectedView();
+        setTextCustom(v);
 
     }
 

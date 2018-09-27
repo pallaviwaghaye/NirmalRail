@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class RailwayCategoryResponse implements Serializable{
+public class RailwayCategoryResponse implements Serializable {
 
     public RailwayCategoryResponse() {
     }
@@ -56,7 +56,7 @@ public class RailwayCategoryResponse implements Serializable{
 
     }
 
-    public static class Category {
+    public static class Category implements Serializable {
 
         @SerializedName("id")
         @Expose
