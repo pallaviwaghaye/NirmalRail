@@ -56,7 +56,7 @@ public class RailwayCategoryAdapter extends RecyclerView.Adapter<RailwayCategory
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, RailwayCategoryFormActivity.class);
-               // intent.putExtra("ServiceCategory", (Serializable) category);
+                intent.putExtra("ServiceCategory", (Serializable) category);
                 context.startActivity(intent);
             }
         });
