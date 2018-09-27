@@ -107,7 +107,6 @@ public class RailwayFragment extends Fragment {
 
     }
 
-
     private void initViews() {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);

@@ -10,18 +10,6 @@
             android:title="Home" />
 
         <item
-            android:id="@+id/navigationSwachhataKendra"
-            android:checked="true"
-            android:icon="@drawable/swachata_kendra"
-            android:title="Swachhata kendra" />
-
-        <item
-            android:id="@+id/navigationAbout"
-            android:checked="false"
-            android:icon="@drawable/about1"
-            android:title="About" />
-
-        <item
             android:id="@+id/navigationVision"
             android:checked="false"
             android:icon="@drawable/vision1"
@@ -32,6 +20,31 @@
             android:checked="false"
             android:icon="@drawable/objective1"
             android:title="Objective" />
+
+        <item
+            android:id="@+id/navigationSwachhataKendra"
+            android:checked="true"
+            android:icon="@drawable/swachata_kendra"
+            android:title="Swachhata kendra" />
+
+        <item
+            android:id="@+id/navigationAbout"
+            android:checked="false"
+            android:icon="@drawable/about1"
+            android:title="Use of technology" />
+
+        <item
+            android:id="@+id/navigationEvent"
+            android:checked="false"
+            android:icon="@drawable/objective1"
+            android:title="Event" />
+
+        <item
+            android:id="@+id/navigationContactUs"
+            android:checked="false"
+            android:icon="@drawable/objective1"
+            android:title="Contact us" />
+
 
         <item
             android:id="@+id/navigationLogout"

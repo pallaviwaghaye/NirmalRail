@@ -82,7 +82,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:color="@color/white"
-        android:background="@color/white"
+        android:background="@drawable/nav_background1"
         app:headerLayout="@layout/drawer_header"
         app:itemIconTint="@color/nav_drawer_item_select"
         app:itemTextColor="@color/nav_drawer_item_select"

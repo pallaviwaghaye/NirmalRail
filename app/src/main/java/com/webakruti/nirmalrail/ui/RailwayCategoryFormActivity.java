@@ -100,6 +100,8 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         SharedPreferenceManager.setApplicationContext(RailwayCategoryFormActivity.this);
 
         serviceCategory = (RailwayCategoryResponse.Category) getIntent().getSerializableExtra("ServiceCategory");
+        //RailwayCategoryResponse.Category serviceCategory = (RailwayCategoryResponse.Category)getIntent().getSerializableExtra("ServiceCategory");
+
         initViews();
 
 
