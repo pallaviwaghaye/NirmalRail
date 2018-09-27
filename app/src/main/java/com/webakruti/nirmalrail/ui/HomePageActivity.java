@@ -93,7 +93,7 @@ public class HomePageActivity extends AppCompatActivity {
                         fragManager.beginTransaction().replace(R.id.home_container, new SwachhataKendraFragment()).commit();
                         break;
 
-                    case R.id.navigationAbout:
+                    case R.id.navigationVision:
                         toolbarUserDetailsHomeTitle.setText("About");
                         fragManager.beginTransaction().replace(R.id.home_container, new AboutFragment()).commit();
                         break;

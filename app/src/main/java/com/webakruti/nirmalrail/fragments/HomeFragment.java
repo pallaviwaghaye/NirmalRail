@@ -32,10 +32,12 @@ public class HomeFragment extends Fragment {
 
 
         List<Drawable> list = new ArrayList<>();
-        list.add(getResources().getDrawable(R.drawable.image1));
-        list.add(getResources().getDrawable(R.drawable.image2));
-        list.add(getResources().getDrawable(R.drawable.image3));
-        list.add(getResources().getDrawable(R.drawable.image4));
+        list.add(getResources().getDrawable(R.drawable.image_1));
+        list.add(getResources().getDrawable(R.drawable.image_2));
+        list.add(getResources().getDrawable(R.drawable.image_3));
+        list.add(getResources().getDrawable(R.drawable.image_4));
+        list.add(getResources().getDrawable(R.drawable.image_5));
+        list.add(getResources().getDrawable(R.drawable.image_6));
 
 
 
