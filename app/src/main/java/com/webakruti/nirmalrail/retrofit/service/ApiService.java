@@ -47,14 +47,14 @@ public interface ApiService {
 
 
     // Send Request Complaint
-    @Multipart
+   /* @Multipart
     @POST(ApiConstants.SAVE_COMPLAINT)
     Call<SaveComplaintResponse> uploadImage(@Header("Authorization") String header,
                                             @Part MultipartBody.Part baseImage,
                                             @Part("description") RequestBody description,
                                             @Part("service_id") RequestBody serviceId,
                                             @Part("station_id") RequestBody stationId
-    );
+    );*/
 
     @POST(ApiConstants.GET_STATION_PLATFORM)
     Call<SendRequestFormResponse> getStationPlatform(@Header("Authorization") String header,
@@ -63,6 +63,53 @@ public interface ApiService {
 
     @POST(ApiConstants.GET_MY_REQUEST_STATUS)
     Call<MyRequestStatusResponse> getMyRequestStatus(@Header("Authorization") String header);
+
+
+    // Station, Places, PF
+    @Multipart
+    @POST(ApiConstants.SAVE_COMPLAINT)
+    Call<SaveComplaintResponse> uploadImage_Station_Places_PF(
+            @Header("Authorization") String header,
+            @Part MultipartBody.Part baseImage,
+            @Part("description") RequestBody description,
+            @Part("service_id") RequestBody serviceId,
+            @Part("station_id") RequestBody stationId,
+            @Part("at_platform") RequestBody platform
+    );
+
+
+    // Station and Places
+    @Multipart
+    @POST(ApiConstants.SAVE_COMPLAINT)
+    Call<SaveComplaintResponse> uploadImage_Station_Places(
+            @Header("Authorization") String header,
+            @Part MultipartBody.Part baseImage,
+            @Part("description") RequestBody description,
+            @Part("service_id") RequestBody serviceId,
+            @Part("station_id") RequestBody stationId);
+
+    // Station and PF
+    @Multipart
+    @POST(ApiConstants.SAVE_COMPLAINT)
+    Call<SaveComplaintResponse> uploadImage_Station_PF(
+            @Header("Authorization") String header,
+            @Part MultipartBody.Part baseImage,
+            @Part("description") RequestBody description,
+            @Part("service_id") RequestBody serviceId,
+            @Part("station_id") RequestBody stationId,
+            @Part("at_platform") RequestBody platform
+    );
+
+
+    // Station and Category Service
+    @Multipart
+    @POST(ApiConstants.SAVE_COMPLAINT)
+    Call<SaveComplaintResponse> uploadImage_Station_Category(
+            @Header("Authorization") String header,
+            @Part MultipartBody.Part baseImage,
+            @Part("description") RequestBody description,
+            @Part("service_id") RequestBody serviceId,
+            @Part("station_id") RequestBody stationId);
 
 
 }

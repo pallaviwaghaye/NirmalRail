@@ -481,12 +481,12 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
                 if (NetworkUtil.hasConnectivity(RailwayCategoryFormActivity.this)) {
 
-                  /*  if (linearLayoutPlaces.getVisibility() == View.VISIBLE) {
+                    if (linearLayoutPlaces.getVisibility() == View.VISIBLE) {
                         if (selectedPlace.getName().equalsIgnoreCase("Select place")) {
                             if (selectedStation.getName().equalsIgnoreCase("Select station")) {
                                 if (linearLayoutPlatform.getVisibility() == View.VISIBLE) {
                                     if (selectedPlatformSpinner.getPlatform().equalsIgnoreCase("Select platform")) {
-
+                                        callUploadForStationAndPlacesAndPlatForm();
                                     } else {
                                         Toast.makeText(RailwayCategoryFormActivity.this, "Please select platform", Toast.LENGTH_SHORT).show();
                                     }
@@ -537,38 +537,389 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
 
                     }
-*/
-                    callSendRequestAPI();
+                    // callSendRequestAPI();
                 } else {
                     Toast.makeText(RailwayCategoryFormActivity.this, R.string.no_internet_message, Toast.LENGTH_SHORT).show();
                 }
 
-
-              /*  AlertDialog.Builder alertDialog = new AlertDialog.Builder(RailwayCategoryFormActivity.this, R.style.alertDialog);
-                alertDialog.setTitle("Thank You !!!");
-                alertDialog.setMessage("Thank You !!!");
-                alertDialog.setPositiveButton("Check Status", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        //SharedPreferenceManager.clearPreferences();
-                        Intent intent = new Intent(RailwayCategoryFormActivity.this, MyRequestsActivity.class);
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-               *//* // Setting Negative "NO" Button
-                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });*//*
-                // Showing Alert Message
-                alertDialog.show();*/
-
-
         }
 
     }
+
+
+    public void showDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(RailwayCategoryFormActivity.this, R.style.alertDialog);
+        alertDialog.setTitle("Thank You !!!");
+        alertDialog.setMessage("Thank You !!!");
+        alertDialog.setPositiveButton("Check Status", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //SharedPreferenceManager.clearPreferences();
+                Intent intent = new Intent(RailwayCategoryFormActivity.this, MyRequestsActivity.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        // Setting Negative "NO" Button
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
+
+    private void callUploadForStation() {
+        // Station and Category Service
+        progressDialogForAPI = new ProgressDialog(RailwayCategoryFormActivity.this);
+        progressDialogForAPI.setCancelable(false);
+        progressDialogForAPI.setIndeterminate(true);
+        progressDialogForAPI.setMessage("Please wait...");
+        progressDialogForAPI.show();
+
+
+        File baseImage = new File(path);
+        int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
+        } catch (Throwable t) {
+            Log.e("ERROR", "Error compressing file." + t.toString());
+            t.printStackTrace();
+        }
+
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextComment.getText().toString());
+        RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), serviceCategory.getId() + "");
+        RequestBody stationId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedStation.getId() + "");
+
+
+        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+
+
+        String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
+
+        Call<SaveComplaintResponse> colorsCall = RestClient.getApiService(ApiConstants.BASE_URL).uploadImage_Station_Category(header, bodyImage, description, serviceId, stationId);
+
+        colorsCall.enqueue(new Callback<SaveComplaintResponse>() {
+            @Override
+            public void onResponse(Call<SaveComplaintResponse> call, Response<SaveComplaintResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.code() == 200) {
+                    //
+                    try {
+                        SaveComplaintResponse saveComplaintResponse = response.body();
+
+                        if (saveComplaintResponse.getSuccess() != null) {
+                            if (saveComplaintResponse.getSuccess().getStatus()) {
+                                //Toast.makeText(getApplicationContext(), saveComplaintResponse.getSuccess().getMsg(), Toast.LENGTH_SHORT).show();
+                                Log.e("Upload", "Upload Successful");
+                                showDialog();
+
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                }
+
+
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<SaveComplaintResponse> call, Throwable t) {
+
+                Toast.makeText(getApplicationContext(), "Time out error. ", Toast.LENGTH_SHORT).show();
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+                if (t != null) {
+
+                    if (t.getMessage() != null)
+                        Log.e("error", t.getMessage());
+
+                }
+            }
+        });
+
+    }
+
+    private void callUploadForStationAndPlatform() {
+        // Station and PF
+        progressDialogForAPI = new ProgressDialog(RailwayCategoryFormActivity.this);
+        progressDialogForAPI.setCancelable(false);
+        progressDialogForAPI.setIndeterminate(true);
+        progressDialogForAPI.setMessage("Please wait...");
+        progressDialogForAPI.show();
+
+
+        File baseImage = new File(path);
+        int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
+        } catch (Throwable t) {
+            Log.e("ERROR", "Error compressing file." + t.toString());
+            t.printStackTrace();
+        }
+
+        /*
+         @Header("Authorization") String header,
+            @Part MultipartBody.Part baseImage,
+            @Part("description") RequestBody description,
+            @Part("service_id") RequestBody serviceId,
+            @Part("station_id") RequestBody stationId,
+            @Part("at_platform") RequestBody platform
+         */
+
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextComment.getText().toString());
+        RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), serviceCategory.getId() + "");
+        RequestBody stationId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedStation.getId() + "");
+        RequestBody atPlatform = RequestBody.create(MediaType.parse("multipart/form-data"), selectedPlatformSpinner.getPlatform() + "");
+
+
+        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+
+
+        String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
+
+        Call<SaveComplaintResponse> colorsCall = RestClient.getApiService(ApiConstants.BASE_URL).uploadImage_Station_PF(header, bodyImage, description, serviceId, stationId, atPlatform);
+
+        colorsCall.enqueue(new Callback<SaveComplaintResponse>() {
+            @Override
+            public void onResponse(Call<SaveComplaintResponse> call, Response<SaveComplaintResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.code() == 200) {
+                    //
+                    try {
+                        SaveComplaintResponse saveComplaintResponse = response.body();
+
+                        if (saveComplaintResponse.getSuccess() != null) {
+                            if (saveComplaintResponse.getSuccess().getStatus()) {
+                                //Toast.makeText(getApplicationContext(), saveComplaintResponse.getSuccess().getMsg(), Toast.LENGTH_SHORT).show();
+                                Log.e("Upload", "Upload Successful");
+                                showDialog();
+
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                }
+
+
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<SaveComplaintResponse> call, Throwable t) {
+
+                Toast.makeText(getApplicationContext(), "Time out error. ", Toast.LENGTH_SHORT).show();
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+                if (t != null) {
+
+                    if (t.getMessage() != null)
+                        Log.e("error", t.getMessage());
+
+                }
+            }
+        });
+
+
+    }
+
+    private void callUploadForStationAndPlaces() {
+        // Station and Places
+
+        progressDialogForAPI = new ProgressDialog(RailwayCategoryFormActivity.this);
+        progressDialogForAPI.setCancelable(false);
+        progressDialogForAPI.setIndeterminate(true);
+        progressDialogForAPI.setMessage("Please wait...");
+        progressDialogForAPI.show();
+
+
+        File baseImage = new File(path);
+        int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
+        } catch (Throwable t) {
+            Log.e("ERROR", "Error compressing file." + t.toString());
+            t.printStackTrace();
+        }
+
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextComment.getText().toString());
+        RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedPlace.getId() + "");
+        RequestBody stationId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedStation.getId() + "");
+
+
+        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+
+
+        String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
+
+        Call<SaveComplaintResponse> colorsCall = RestClient.getApiService(ApiConstants.BASE_URL).uploadImage_Station_Places(header, bodyImage, description, serviceId, stationId);
+
+        colorsCall.enqueue(new Callback<SaveComplaintResponse>() {
+            @Override
+            public void onResponse(Call<SaveComplaintResponse> call, Response<SaveComplaintResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.code() == 200) {
+                    //
+                    try {
+                        SaveComplaintResponse saveComplaintResponse = response.body();
+
+                        if (saveComplaintResponse.getSuccess() != null) {
+                            if (saveComplaintResponse.getSuccess().getStatus()) {
+                                //Toast.makeText(getApplicationContext(), saveComplaintResponse.getSuccess().getMsg(), Toast.LENGTH_SHORT).show();
+                                Log.e("Upload", "Upload Successful");
+                                showDialog();
+
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                }
+
+
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<SaveComplaintResponse> call, Throwable t) {
+
+                Toast.makeText(getApplicationContext(), "Time out error. ", Toast.LENGTH_SHORT).show();
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+                if (t != null) {
+
+                    if (t.getMessage() != null)
+                        Log.e("error", t.getMessage());
+
+                }
+            }
+        });
+
+
+    }
+
+    private void callUploadForStationAndPlacesAndPlatForm() {
+        // Station and Places and PF
+
+        progressDialogForAPI = new ProgressDialog(RailwayCategoryFormActivity.this);
+        progressDialogForAPI.setCancelable(false);
+        progressDialogForAPI.setIndeterminate(true);
+        progressDialogForAPI.setMessage("Please wait...");
+        progressDialogForAPI.show();
+
+
+        File baseImage = new File(path);
+        int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
+        } catch (Throwable t) {
+            Log.e("ERROR", "Error compressing file." + t.toString());
+            t.printStackTrace();
+        }
+
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextComment.getText().toString());
+        RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedPlace.getId() + "");
+        RequestBody stationId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedStation.getId() + "");
+        RequestBody atPlatform = RequestBody.create(MediaType.parse("multipart/form-data"), selectedPlatformSpinner.getPlatform() + "");
+
+
+        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+
+
+        String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
+
+        Call<SaveComplaintResponse> colorsCall = RestClient.getApiService(ApiConstants.BASE_URL).uploadImage_Station_Places_PF(header, bodyImage, description, serviceId, stationId, atPlatform);
+
+        colorsCall.enqueue(new Callback<SaveComplaintResponse>() {
+            @Override
+            public void onResponse(Call<SaveComplaintResponse> call, Response<SaveComplaintResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.code() == 200) {
+                    //
+                    try {
+                        SaveComplaintResponse saveComplaintResponse = response.body();
+
+                        if (saveComplaintResponse.getSuccess() != null) {
+                            if (saveComplaintResponse.getSuccess().getStatus()) {
+                                //Toast.makeText(getApplicationContext(), saveComplaintResponse.getSuccess().getMsg(), Toast.LENGTH_SHORT).show();
+                                Log.e("Upload", "Upload Successful");
+                                showDialog();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                }
+
+
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<SaveComplaintResponse> call, Throwable t) {
+
+                Toast.makeText(getApplicationContext(), "Time out error. ", Toast.LENGTH_SHORT).show();
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+                if (t != null) {
+
+                    if (t.getMessage() != null)
+                        Log.e("error", t.getMessage());
+
+                }
+            }
+        });
+    }
+
 
     // -------------------------------------------------------CAMERA--------------------------------------------------------------------------------
 
@@ -774,6 +1125,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     // -------------------------------------------------------CAMERA--------------------------------------------------------------------------------
 
 
+/*
     public void callSendRequestAPI() {
         //creating request body for file
 
@@ -858,6 +1210,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
 
     }
+*/
 
 
 }

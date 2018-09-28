@@ -38,6 +38,7 @@ public class MyRequestsActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeContainer;
     private ProgressDialog progressDialogForAPI;
     private MyRequestStatusAdapter myRequestStatusAdapter;
+    private TextView textViewNoData;
 
 //    List<MyRequestStatusResponse> list = new ArrayList<MyRequestStatusResponse>();
 
@@ -47,6 +48,7 @@ public class MyRequestsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_requests);
 
         imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
+        textViewNoData = (TextView) findViewById(R.id.textViewNoData);
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,11 +127,15 @@ public class MyRequestsActivity extends AppCompatActivity {
 
                     MyRequestStatusResponse details = response.body();
                     //  Toast.makeText(getActivity(),"Data : " + details ,Toast.LENGTH_LONG).show();
-                    if (details.getSuccess().getStatus()) {
-
+                    if (details.getSuccess().getStatus() && details.getSuccess().getData() != null && details.getSuccess().getData().size() > 0) {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        textViewNoData.setVisibility(View.GONE);
                         List<MyRequestStatusResponse.Datum> list = details.getSuccess().getData();
                         myRequestStatusAdapter = new MyRequestStatusAdapter(MyRequestsActivity.this, list);
                         recyclerView.setAdapter(myRequestStatusAdapter);
+                    } else {
+                        recyclerView.setVisibility(View.GONE);
+                        textViewNoData.setVisibility(View.VISIBLE);
                     }
 
                    /* // just given timer to go off refreshing icon after 5 seconds., later we need to remove this and on api response success, we need to do set refreshing to false.

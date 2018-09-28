@@ -29,7 +29,7 @@ public class MyRequestStatusResponse {
         private String beforeImgUrl;
         @SerializedName("after_img_url")
         @Expose
-        private Object afterImgUrl;
+        private String afterImgUrl;
         @SerializedName("description")
         @Expose
         private String description;
@@ -75,11 +75,11 @@ public class MyRequestStatusResponse {
             this.beforeImgUrl = beforeImgUrl;
         }
 
-        public Object getAfterImgUrl() {
+        public String getAfterImgUrl() {
             return afterImgUrl;
         }
 
-        public void setAfterImgUrl(Object afterImgUrl) {
+        public void setAfterImgUrl(String afterImgUrl) {
             this.afterImgUrl = afterImgUrl;
         }
 
