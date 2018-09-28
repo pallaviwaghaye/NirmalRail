@@ -38,8 +38,7 @@ public class MyRequestsActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeContainer;
     private ProgressDialog progressDialogForAPI;
     private MyRequestStatusAdapter myRequestStatusAdapter;
-    private TextView textViewNoData;
-
+    boolean isCallFromPullDown = false;
 //    List<MyRequestStatusResponse> list = new ArrayList<MyRequestStatusResponse>();
 
     @Override
@@ -48,7 +47,6 @@ public class MyRequestsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_requests);
 
         imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
-        textViewNoData = (TextView) findViewById(R.id.textViewNoData);
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,13 +60,20 @@ public class MyRequestsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager2);
         //recyclerView.setAdapter(new MyRequestStatusAdapter(MyRequestsActivity.this, list));
 
-        //initSwipeLayout();
+        initSwipeLayout();
+
+
+        progressDialogForAPI = new ProgressDialog(MyRequestsActivity.this);
+        progressDialogForAPI.setCancelable(false);
+        progressDialogForAPI.setIndeterminate(true);
+        progressDialogForAPI.setMessage("Please wait...");
+        progressDialogForAPI.show();
         callGetRequestAPI();
 
     }
 
 
-   /* private void initSwipeLayout() {
+    private void initSwipeLayout() {
 
 // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -77,7 +82,7 @@ public class MyRequestsActivity extends AppCompatActivity {
                 Log.e("", "swipe to refresh");
                 if (NetworkUtil.hasConnectivity(MyRequestsActivity.this)) {
                     // call API
-
+                    isCallFromPullDown = true;
                     callGetRequestAPI();
 
                 } else {
@@ -91,7 +96,7 @@ public class MyRequestsActivity extends AppCompatActivity {
                 R.color.blue,
                 R.color.red);
 
-    }*/
+    }
 
    /* private void callGetRequestAPI() {
 
@@ -108,11 +113,6 @@ public class MyRequestsActivity extends AppCompatActivity {
 
     private void callGetRequestAPI() {
 
-        progressDialogForAPI = new ProgressDialog(MyRequestsActivity.this);
-        progressDialogForAPI.setCancelable(false);
-        progressDialogForAPI.setIndeterminate(true);
-        progressDialogForAPI.setMessage("Please wait...");
-        progressDialogForAPI.show();
 
         SharedPreferenceManager.setApplicationContext(MyRequestsActivity.this);
         String token = SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
@@ -127,32 +127,25 @@ public class MyRequestsActivity extends AppCompatActivity {
 
                     MyRequestStatusResponse details = response.body();
                     //  Toast.makeText(getActivity(),"Data : " + details ,Toast.LENGTH_LONG).show();
-                    if (details.getSuccess().getStatus() && details.getSuccess().getData() != null && details.getSuccess().getData().size() > 0) {
-                        recyclerView.setVisibility(View.VISIBLE);
-                        textViewNoData.setVisibility(View.GONE);
+                    if (details.getSuccess().getStatus()) {
                         List<MyRequestStatusResponse.Datum> list = details.getSuccess().getData();
                         myRequestStatusAdapter = new MyRequestStatusAdapter(MyRequestsActivity.this, list);
                         recyclerView.setAdapter(myRequestStatusAdapter);
-                    } else {
-                        recyclerView.setVisibility(View.GONE);
-                        textViewNoData.setVisibility(View.VISIBLE);
                     }
 
-                   /* // just given timer to go off refreshing icon after 5 seconds., later we need to remove this and on api response success, we need to do set refreshing to false.
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            swipeContainer.setRefreshing(false);
-
-                        }
-                    }, 5000);*/
 
                 } else {
                     // Response code is 401
                 }
 
-                if (progressDialogForAPI != null) {
-                    progressDialogForAPI.cancel();
+
+                if (isCallFromPullDown) {
+                    swipeContainer.setRefreshing(false);
+                    isCallFromPullDown = false;
+                } else {
+                    if (progressDialogForAPI != null) {
+                        progressDialogForAPI.cancel();
+                    }
                 }
             }
 
@@ -161,8 +154,13 @@ public class MyRequestsActivity extends AppCompatActivity {
 
                 if (t != null) {
 
-                    if (progressDialogForAPI != null) {
-                        progressDialogForAPI.cancel();
+                    if (isCallFromPullDown) {
+                        swipeContainer.setRefreshing(false);
+                        isCallFromPullDown = false;
+                    } else {
+                        if (progressDialogForAPI != null) {
+                            progressDialogForAPI.cancel();
+                        }
                     }
                     if (t.getMessage() != null)
                         Log.e("error", t.getMessage());
@@ -174,5 +172,4 @@ public class MyRequestsActivity extends AppCompatActivity {
     }
 
 }
-
 

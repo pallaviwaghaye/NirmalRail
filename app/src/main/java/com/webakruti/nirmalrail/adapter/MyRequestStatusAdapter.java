@@ -58,16 +58,19 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
 
        // viewHolder.imageViewRequestImage.setImageDrawable(R.drawable.request_image);
 
+/*
         Picasso.with(context).load(myRequestStatus.getAfterImgUrl()).placeholder(R.drawable.request_image)
+*/
+        Picasso.with(context).load(myRequestStatus.getBeforeImgUrl().toString()).placeholder(R.drawable.image_back)
                 .into(viewHolder.imageViewRequestImage, new Callback.EmptyCallback() {
                     @Override
                     public void onSuccess() {
-                        Log.i("Error", "Picasso Success - user profile pic");
+                        Log.i("Success", "Picasso Success - user profile pic");
                     }
 
                     public void onError() {
                         Log.i("", "Picasso Error - user profile pic");
-                        viewHolder.imageViewRequestImage.setImageResource(R.drawable.request_image);
+                        viewHolder.imageViewRequestImage.setImageResource(R.drawable.image_back);
                     }
                 });
 

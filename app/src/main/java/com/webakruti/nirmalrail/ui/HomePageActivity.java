@@ -24,6 +24,7 @@ import com.webakruti.nirmalrail.fragments.UseOfTechnologyFragment;
 import com.webakruti.nirmalrail.fragments.VisionAndObjectiveFragment;
 import com.webakruti.nirmalrail.fragments.HomeFragment;
 import com.webakruti.nirmalrail.fragments.SwachhataKendraFragment;
+import com.webakruti.nirmalrail.model.UserResponse;
 import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
 
 public class HomePageActivity extends AppCompatActivity {
@@ -37,6 +38,9 @@ public class HomePageActivity extends AppCompatActivity {
     private ImageView imageViewRequestImage;
 
     private TextView toolbarUserDetailsHomeTitle;
+
+    private TextView textViewName;
+    private TextView textViewMobileNo;
 
 
     @Override
@@ -53,6 +57,14 @@ public class HomePageActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
+
+        SharedPreferenceManager.setApplicationContext(HomePageActivity.this);
+        UserResponse user = SharedPreferenceManager.getUserObjectFromSharedPreference();
+
+        View headerLayout = navigationView.getHeaderView(0);
+
+        textViewName = (TextView) headerLayout.findViewById(R.id.textViewName);
+        textViewMobileNo = (TextView) headerLayout.findViewById(R.id.textViewMobileNo);
 
         imageViewSwachhataKendra = (ImageView) findViewById(R.id.imageViewSwachhataKendra);
         imageViewSwachhataKendra.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +84,22 @@ public class HomePageActivity extends AppCompatActivity {
         });
 
         Menu menu = navigationView.getMenu();
+
+        MenuItem navigationLogout = menu.findItem(R.id.navigationLogout);
+
+        if (user != null) {
+            textViewMobileNo.setVisibility(View.VISIBLE);
+            textViewName.setText(user.getSuccess().getUser().getName());
+            textViewMobileNo.setText(user.getSuccess().getUser().getMobile());
+
+            navigationLogout.setVisible(true);
+        } else {
+            textViewMobileNo.setVisibility(View.INVISIBLE);
+
+            textViewName.setText("Welcome, Guest");
+            navigationLogout.setVisible(false);
+
+        }
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

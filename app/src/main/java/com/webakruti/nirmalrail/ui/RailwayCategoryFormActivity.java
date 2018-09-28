@@ -87,8 +87,8 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     private Spinner spinnerPlatform;
 
 
-    String selectedStations = "Select station";
-    String selectedPlatform = "Select platform";
+    String selectedStations = "Select Station";
+    String selectedPlatform = "Select Platform";
     private EditText editTextComment;
     private ImageView imageViewBack;
     private Button buttonSubmit;
@@ -204,7 +204,6 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                 spinnerStations.setVisibility(View.VISIBLE);
 
                 break;
-
 
         }
     }
@@ -1148,8 +1147,9 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         }
 
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextComment.getText().toString());
-        RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), "1");
-        RequestBody stationId = RequestBody.create(MediaType.parse("multipart/form-data"), "6");
+        RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), "3");
+        RequestBody stationId = RequestBody.create(MediaType.parse("multipart/form-data"), "8");
+        RequestBody atPlatform = RequestBody.create(MediaType.parse("multipart/form-data"), "2&3");
 
 
         RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
@@ -1158,7 +1158,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
         String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
 
-        Call<SaveComplaintResponse> colorsCall = RestClient.getApiService(ApiConstants.BASE_URL).uploadImage(header, bodyImage, description, serviceId, stationId);
+        Call<SaveComplaintResponse> colorsCall = RestClient.getApiService(ApiConstants.BASE_URL).uploadImage(header, bodyImage, description, serviceId, stationId, atPlatform);
 
         colorsCall.enqueue(new Callback<SaveComplaintResponse>() {
             @Override
