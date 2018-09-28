@@ -39,6 +39,7 @@ public class MyRequestsActivity extends AppCompatActivity {
     private ProgressDialog progressDialogForAPI;
     private MyRequestStatusAdapter myRequestStatusAdapter;
     boolean isCallFromPullDown = false;
+    private TextView textViewNoData;
 //    List<MyRequestStatusResponse> list = new ArrayList<MyRequestStatusResponse>();
 
     @Override
@@ -56,6 +57,7 @@ public class MyRequestsActivity extends AppCompatActivity {
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        textViewNoData = (TextView) findViewById(R.id.textViewNoData);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(MyRequestsActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager2);
         //recyclerView.setAdapter(new MyRequestStatusAdapter(MyRequestsActivity.this, list));
@@ -127,10 +129,15 @@ public class MyRequestsActivity extends AppCompatActivity {
 
                     MyRequestStatusResponse details = response.body();
                     //  Toast.makeText(getActivity(),"Data : " + details ,Toast.LENGTH_LONG).show();
-                    if (details.getSuccess().getStatus()) {
+                    if (details.getSuccess().getStatus() && details.getSuccess().getData() != null && details.getSuccess().getData().size() > 0) {
+                        textViewNoData.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         List<MyRequestStatusResponse.Datum> list = details.getSuccess().getData();
                         myRequestStatusAdapter = new MyRequestStatusAdapter(MyRequestsActivity.this, list);
                         recyclerView.setAdapter(myRequestStatusAdapter);
+                    } else {
+                        textViewNoData.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
                     }
 
 

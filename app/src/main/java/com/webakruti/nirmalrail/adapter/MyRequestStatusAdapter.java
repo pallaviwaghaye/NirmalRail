@@ -39,7 +39,7 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
 
     @NonNull
     @Override
-    public MyRequestStatusAdapter.ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i) {
+    public MyRequestStatusAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_my_request_status, viewGroup, false);
         MyRequestStatusAdapter.ViewHolder viewHolder = new MyRequestStatusAdapter.ViewHolder(v);
         return viewHolder;
@@ -52,11 +52,15 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
 
 
         viewHolder.textViewRequestStations.setText(myRequestStatus.getStationname());
-        viewHolder.textViewRequestPlatform.setText(myRequestStatus.getAtPlatform());
+        if (myRequestStatus.getAtPlatform() != null) {
+            viewHolder.textViewRequestPlatform.setText(myRequestStatus.getAtPlatform());
+        } else {
+            viewHolder.textViewRequestPlatform.setText("N/A");
+        }
         viewHolder.textViewRequestDate.setText(myRequestStatus.getComplaintDate());
         viewHolder.textViewRequestStatus.setText(myRequestStatus.getStatus());
 
-       // viewHolder.imageViewRequestImage.setImageDrawable(R.drawable.request_image);
+        // viewHolder.imageViewRequestImage.setImageDrawable(R.drawable.request_image);
 
 /*
         Picasso.with(context).load(myRequestStatus.getAfterImgUrl()).placeholder(R.drawable.request_image)

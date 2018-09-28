@@ -11,8 +11,8 @@
         android:id="@+id/cardView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/white"
         android:layout_margin="5dp"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="4dp"
         app:cardElevation="3dp">
 
@@ -20,96 +20,130 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-
                 android:orientation="horizontal"
-                android:padding="5dp">
-                <ImageView
-                    android:id="@+id/imageViewRequestImage"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/gray_back1" />
+                android:padding="5dp"
+                android:weightSum="100">
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_weight="75"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageViewRequestImage"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/gray_back1"
+                        android:scaleType="fitXY" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal">
-                        <TextView
+                        android:orientation="vertical">
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="Station:"
-                            android:textColor="@color/blue"
-                            android:textSize="17sp" />
-                        <TextView
-                            android:id="@+id/textViewRequestStations"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="Station:"
+                                android:textColor="@color/blue"
+                                android:textSize="17sp" />
+
+                            <TextView
+                                android:id="@+id/textViewRequestStations"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="abcdef"
+                                android:textColor="@color/black"
+                                android:textSize="17sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="abcdef"
-                            android:textColor="@color/black"
-                            android:textSize="17sp" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="Platform:"
-                            android:textColor="@color/blue"
-                            android:textSize="17sp" />
-                        <TextView
-                            android:id="@+id/textViewRequestPlatform"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="123"
-                            android:textColor="@color/black"
-                            android:textSize="17sp" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="Platform:"
+                                android:textColor="@color/blue"
+                                android:textSize="17sp" />
+
+                            <TextView
+                                android:id="@+id/textViewRequestPlatform"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="123"
+                                android:textColor="@color/black"
+                                android:textSize="17sp" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/textViewRequestStatus"
-                        android:layout_width="100dp"
-                        android:layout_height="60dp"
-                        android:layout_marginLeft="10dp"
-                        android:text="STATUS"
-                        android:layout_marginBottom="5dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:background="@color/skyblue"
-                        android:textSize="15sp" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="25"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/textViewRequestDate"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_gravity="center"
-                        android:text="11/04/2018"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+
+                            android:id="@+id/textViewRequestStatus"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/skyblue"
+                            android:gravity="center"
+                            android:paddingBottom="4dp"
+                            android:paddingTop="4dp"
+                            android:text="Status"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/textViewRequestDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text="11/04/2018"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
 
 
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
