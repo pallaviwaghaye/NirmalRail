@@ -118,6 +118,12 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
         initViews();
 
+        selectedPlace = new SendRequestFormResponse.Place();
+        selectedPlace.setName("Select place");
+        selectedPlatformSpinner = new SendRequestFormResponse.PlatformList();
+        selectedPlatformSpinner.setPlatform(selectedPlatform);
+        selectedStation = new SendRequestFormResponse.Station();
+        selectedStation.setName(selectedStations);
         if (NetworkUtil.hasConnectivity(RailwayCategoryFormActivity.this)) {
             callGetPlatFormStationAPI();
         } else {
@@ -481,10 +487,10 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                 if (NetworkUtil.hasConnectivity(RailwayCategoryFormActivity.this)) {
 
                     if (linearLayoutPlaces.getVisibility() == View.VISIBLE) {
-                        if (selectedPlace.getName().equalsIgnoreCase("Select place")) {
-                            if (selectedStation.getName().equalsIgnoreCase("Select station")) {
+                        if (!selectedPlace.getName().equalsIgnoreCase("Select place")) {
+                            if (!selectedStation.getName().equalsIgnoreCase("Select station")) {
                                 if (linearLayoutPlatform.getVisibility() == View.VISIBLE) {
-                                    if (selectedPlatformSpinner.getPlatform().equalsIgnoreCase("Select platform")) {
+                                    if (!selectedPlatformSpinner.getPlatform().equalsIgnoreCase("Select platform")) {
                                         callUploadForStationAndPlacesAndPlatForm();
                                     } else {
                                         Toast.makeText(RailwayCategoryFormActivity.this, "Please select platform", Toast.LENGTH_SHORT).show();
@@ -503,13 +509,15 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                                 Toast.makeText(RailwayCategoryFormActivity.this, "Please select station", Toast.LENGTH_SHORT).show();
                             }
 
+                        } else {
+                            Toast.makeText(RailwayCategoryFormActivity.this, "Please select place", Toast.LENGTH_SHORT).show();
                         }
 
                     } else {
                         // only station, platform, image, commen
-                        if (selectedStation.getName().equalsIgnoreCase("Select station")) {
+                        if (!selectedStation.getName().equalsIgnoreCase("Select station")) {
                             if (linearLayoutPlatform.getVisibility() == View.VISIBLE) {
-                                if (selectedPlatformSpinner.getPlatform().equalsIgnoreCase("Select platform")) {
+                                if (!selectedPlatformSpinner.getPlatform().equalsIgnoreCase("Select platform")) {
 
                                     if (editTextComment.getText().toString().length() > 0) {
                                         callUploadForStationAndPlatform();
@@ -572,22 +580,32 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
     private void callUploadForStation() {
         // Station and Category Service
+
+
+        File baseImage = null;
+        if (path != null) {
+            baseImage = new File(path);
+
+            int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
+            } catch (Throwable t) {
+                Log.e("ERROR", "Error compressing file." + t.toString());
+                t.printStackTrace();
+            }
+        } else {
+            Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
         progressDialogForAPI = new ProgressDialog(RailwayCategoryFormActivity.this);
         progressDialogForAPI.setCancelable(false);
         progressDialogForAPI.setIndeterminate(true);
         progressDialogForAPI.setMessage("Please wait...");
         progressDialogForAPI.show();
 
-
-        File baseImage = new File(path);
-        int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
-        try {
-            Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
-        } catch (Throwable t) {
-            Log.e("ERROR", "Error compressing file." + t.toString());
-            t.printStackTrace();
-        }
 
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextComment.getText().toString());
         RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), serviceCategory.getId() + "");
@@ -656,23 +674,22 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
     private void callUploadForStationAndPlatform() {
         // Station and PF
-        progressDialogForAPI = new ProgressDialog(RailwayCategoryFormActivity.this);
-        progressDialogForAPI.setCancelable(false);
-        progressDialogForAPI.setIndeterminate(true);
-        progressDialogForAPI.setMessage("Please wait...");
-        progressDialogForAPI.show();
 
-
-        File baseImage = new File(path);
-        int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
-        try {
-            Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
-        } catch (Throwable t) {
-            Log.e("ERROR", "Error compressing file." + t.toString());
-            t.printStackTrace();
+        File baseImage = null;
+        if (path != null) {
+            baseImage = new File(path);
+            int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
+            } catch (Throwable t) {
+                Log.e("ERROR", "Error compressing file." + t.toString());
+                t.printStackTrace();
+            }
+        } else {
+            Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+            return;
         }
-
         /*
          @Header("Authorization") String header,
             @Part MultipartBody.Part baseImage,
@@ -681,7 +698,11 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
             @Part("station_id") RequestBody stationId,
             @Part("at_platform") RequestBody platform
          */
-
+        progressDialogForAPI = new ProgressDialog(RailwayCategoryFormActivity.this);
+        progressDialogForAPI.setCancelable(false);
+        progressDialogForAPI.setIndeterminate(true);
+        progressDialogForAPI.setMessage("Please wait...");
+        progressDialogForAPI.show();
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextComment.getText().toString());
         RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), serviceCategory.getId() + "");
         RequestBody stationId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedStation.getId() + "");
@@ -752,22 +773,31 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     private void callUploadForStationAndPlaces() {
         // Station and Places
 
+
+
+
+        File baseImage = null;
+        if (path != null) {
+            baseImage = new File(path);
+
+            int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
+            } catch (Throwable t) {
+                Log.e("ERROR", "Error compressing file." + t.toString());
+                t.printStackTrace();
+            }
+        } else {
+            Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         progressDialogForAPI = new ProgressDialog(RailwayCategoryFormActivity.this);
         progressDialogForAPI.setCancelable(false);
         progressDialogForAPI.setIndeterminate(true);
         progressDialogForAPI.setMessage("Please wait...");
         progressDialogForAPI.show();
-
-
-        File baseImage = new File(path);
-        int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
-        try {
-            Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
-        } catch (Throwable t) {
-            Log.e("ERROR", "Error compressing file." + t.toString());
-            t.printStackTrace();
-        }
 
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextComment.getText().toString());
         RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedPlace.getId() + "");
@@ -838,23 +868,30 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     private void callUploadForStationAndPlacesAndPlatForm() {
         // Station and Places and PF
 
+
+        File baseImage = null;
+        if (path != null) {
+            baseImage = new File(path);
+
+            int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
+            } catch (Throwable t) {
+                Log.e("ERROR", "Error compressing file." + t.toString());
+                t.printStackTrace();
+            }
+        } else {
+            Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
         progressDialogForAPI = new ProgressDialog(RailwayCategoryFormActivity.this);
         progressDialogForAPI.setCancelable(false);
         progressDialogForAPI.setIndeterminate(true);
         progressDialogForAPI.setMessage("Please wait...");
         progressDialogForAPI.show();
-
-
-        File baseImage = new File(path);
-        int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
-        try {
-            Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
-        } catch (Throwable t) {
-            Log.e("ERROR", "Error compressing file." + t.toString());
-            t.printStackTrace();
-        }
-
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextComment.getText().toString());
         RequestBody serviceId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedPlace.getId() + "");
         RequestBody stationId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedStation.getId() + "");
