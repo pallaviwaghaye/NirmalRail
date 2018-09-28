@@ -17,6 +17,4 @@ public class ApiConstants {
 
     public static final String GET_MY_REQUEST_STATUS = "getcomplaint";
 
-
-
 }

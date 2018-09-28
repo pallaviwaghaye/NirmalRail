@@ -205,7 +205,6 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
                 break;
 
-
         }
     }
 
