@@ -5,64 +5,19 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        app:elevation="0dp">
+        >
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/dark_blue">
-
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:orientation="horizontal">
-
-                    <ImageView
-
-                        android:id="@+id/imageViewBack"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center_vertical"
-                        android:padding="5dp"
-                        android:src="@drawable/action_back" />
-
-
-                    <TextView
-                        android:id="@+id/textViewTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="left"
-                        android:text="Vision and Objective"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-
-            </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_below="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:orientation="vertical">
 
         <TextView
@@ -76,19 +31,37 @@
             android:text="Vision and Objective of Nirmal Rail App"
             android:gravity="center"
             android:textColor="@color/blue"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textViewAboutUsText"
+            android:id="@+id/textViewText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_gravity="center"
-            android:text="                Our vision is influenced by thoughts of Mahatma Gandhi, Father of Nation whose vision was that of emancipation of India is possible only through sanitation.
-                 We at Nagpur Division SECR believe that cleanliness is not just responsibility of Government but all citizens including those works for Government. Thus oue vision is to provide clean and hygienic environment at our  stations and colonies by the use of committed staff, modern technology, better infrastructure and public participation so as to make Nagpur Division a role model in cleanliness."
+            android:text="Our vision is influenced by thoughts of Mahatma Gandhi, Father of Nation whose vision was that of emancipation of India is possible only through sanitation."
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="17sp" />
+        <TextView
+            android:id="@+id/textViewText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:text="We at Nagpur Division SECR believe that cleanliness is not just responsibility of Government but all citizens including those works for Government. Thus oue vision is to provide clean and hygienic environment at our  stations and colonies by the use of committed staff, modern technology, better infrastructure and public participation so as to make Nagpur Division a role model in cleanliness."
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/imageViewRequestImage"
+            android:layout_width="340dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/vision_image" />
+
 
     </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

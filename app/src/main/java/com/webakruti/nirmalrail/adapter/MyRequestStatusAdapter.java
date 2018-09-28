@@ -28,13 +28,14 @@ import java.util.List;
 public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatusAdapter.ViewHolder> {
 
     Activity context;
-    List<MyRequestStatusResponse> list;
+    List<MyRequestStatusResponse.Datum> list;
 
-    public MyRequestStatusAdapter(Activity context, List<MyRequestStatusResponse> list) {
+
+    public MyRequestStatusAdapter(Activity context, List<MyRequestStatusResponse.Datum> list) {
         this.context = context;
         this.list = list;
-    }
 
+    }
 
     @NonNull
     @Override
@@ -45,26 +46,39 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
     }
 
     @Override
-    public void onBindViewHolder( MyRequestStatusAdapter.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final MyRequestStatusAdapter.ViewHolder viewHolder, final int position) {
 
-        final MyRequestStatusResponse myRequestStatus = list.get(position);
+        final MyRequestStatusResponse.Datum myRequestStatus = list.get(position);
 
 
-        viewHolder.textViewRequestStations.setText(myRequestStatus.getSuccess().getData().get(0).getStationname());
-        viewHolder.textViewRequestPlatform.setText(myRequestStatus.getSuccess().getData().get(0).getAtPlatform());
-        viewHolder.textViewRequestDate.setText(myRequestStatus.getSuccess().getData().get(0).getComplaintDate());
-        viewHolder.textViewRequestStatus.setText(myRequestStatus.getSuccess().getData().get(0).getStatus());
+        viewHolder.textViewRequestStations.setText(myRequestStatus.getStationname());
+        viewHolder.textViewRequestPlatform.setText(myRequestStatus.getAtPlatform());
+        viewHolder.textViewRequestDate.setText(myRequestStatus.getComplaintDate());
+        viewHolder.textViewRequestStatus.setText(myRequestStatus.getStatus());
 
        // viewHolder.imageViewRequestImage.setImageDrawable(R.drawable.request_image);
 
-        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+        Picasso.with(context).load(myRequestStatus.getAfterImgUrl().toString()).placeholder(R.drawable.request_image)
+                .into(viewHolder.imageViewRequestImage, new Callback.EmptyCallback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.i("Error", "Picasso Success - user profile pic");
+                    }
+
+                    public void onError() {
+                        Log.i("", "Picasso Error - user profile pic");
+                        viewHolder.imageViewRequestImage.setImageResource(R.drawable.request_image);
+                    }
+                });
+
+        /*viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, RailwayCategoryFormActivity.class);
                 context.startActivity(intent);
             }
         });
-
+*/
 
     }
 

@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.webakruti.nirmalrail.fragments.HomeFragment">
 
     <ScrollView
         android:scrollbars="none"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,19 +42,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_gravity="center">
 
                 <TextView
                     android:id="@+id/textViewAboutUs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="120dp"
+                    android:layout_marginLeft="100dp"
                     android:layout_marginTop="10dp"
                     android:text="Nirmal Rail App"
                     android:gravity="center"
                     android:textColor="@color/blue"
-                    android:textSize="18sp" />
+                    android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/textViewAboutUsText"
@@ -60,9 +64,16 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
-                android:text="                The objective of this APP is to provide an IT enabled platform for cleanliness related issues of stations and colonies of Nagpur Division SECR. This will enhance Public and Staff participation by giving dynamic feedback to fulfill our endeavour to provide Swachh and Nirmal Railway in Nagpur Division SECR."
+                android:text="The objective of this APP is to provide an IT enabled platform for cleanliness related issues of stations and colonies of Nagpur Division SECR. This will enhance Public and Staff participation by giving dynamic feedback to fulfill our endeavour to provide Swachh and Nirmal Railway in Nagpur Division SECR."
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/imageViewRequestImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/home3" />
 
         </LinearLayout>
     </LinearLayout>
