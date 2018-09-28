@@ -85,6 +85,8 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
     private Spinner spinnerStations;
     private Spinner spinnerPlatform;
+
+
     String selectedStations = "Select station";
     String selectedPlatform = "Select platform";
     private EditText editTextComment;
@@ -99,6 +101,12 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     private RadioButton radioDustbin;
     private String place = "Foot";
     private ImageView imageViewPF;
+    private LinearLayout linearLayoutPlaces;
+    private Spinner spinnerPlaces;
+    private LinearLayout linearLayoutPlatform;
+    SendRequestFormResponse.Place selectedPlace;
+    SendRequestFormResponse.Station selectedStation;
+    SendRequestFormResponse.PlatformList selectedPlatformSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,89 +133,75 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         switch (serviceCategory.getId()) {
             case 1:
 
-                spinnerPlatform.setVisibility(View.VISIBLE);
-                imageViewPF.setVisibility(View.VISIBLE);
+                linearLayoutPlatform.setVisibility(View.VISIBLE);
                 spinnerStations.setVisibility(View.VISIBLE);
-                radioGroup.setVisibility(View.GONE);
+                linearLayoutPlaces.setVisibility(View.GONE);
                 break;
             case 2:
-                spinnerPlatform.setVisibility(View.VISIBLE);
+                linearLayoutPlatform.setVisibility(View.VISIBLE);
                 spinnerStations.setVisibility(View.VISIBLE);
-                imageViewPF.setVisibility(View.VISIBLE);
 
-                radioGroup.setVisibility(View.GONE);
+                linearLayoutPlaces.setVisibility(View.GONE);
 
                 break;
             case 3:
-                spinnerPlatform.setVisibility(View.VISIBLE);
+                linearLayoutPlatform.setVisibility(View.VISIBLE);
                 spinnerStations.setVisibility(View.VISIBLE);
-                radioGroup.setVisibility(View.GONE);
-                imageViewPF.setVisibility(View.VISIBLE);
+                linearLayoutPlaces.setVisibility(View.GONE);
 
 
                 break;
             case 4:
-                spinnerPlatform.setVisibility(View.VISIBLE);
+                linearLayoutPlatform.setVisibility(View.VISIBLE);
                 spinnerStations.setVisibility(View.VISIBLE);
-                imageViewPF.setVisibility(View.VISIBLE);
 
-                radioGroup.setVisibility(View.GONE);
+                linearLayoutPlaces.setVisibility(View.GONE);
 
                 break;
             case 5:
-                spinnerPlatform.setVisibility(View.VISIBLE);
+                linearLayoutPlatform.setVisibility(View.VISIBLE);
                 spinnerStations.setVisibility(View.VISIBLE);
-                imageViewPF.setVisibility(View.VISIBLE);
 
-                radioGroup.setVisibility(View.GONE);
+                linearLayoutPlaces.setVisibility(View.GONE);
 
                 break;
             case 6:
-                spinnerPlatform.setVisibility(View.VISIBLE);
+                linearLayoutPlatform.setVisibility(View.VISIBLE);
                 spinnerStations.setVisibility(View.VISIBLE);
-                imageViewPF.setVisibility(View.VISIBLE);
 
-                radioGroup.setVisibility(View.GONE);
+                linearLayoutPlaces.setVisibility(View.GONE);
 
                 break;
             case 7:
-                spinnerPlatform.setVisibility(View.GONE);
+                linearLayoutPlatform.setVisibility(View.GONE);
                 spinnerStations.setVisibility(View.VISIBLE);
-                imageViewPF.setVisibility(View.GONE);
 
-                radioGroup.setVisibility(View.GONE);
+                linearLayoutPlaces.setVisibility(View.GONE);
 
                 break;
             case 8:
-                spinnerPlatform.setVisibility(View.VISIBLE);
+                linearLayoutPlatform.setVisibility(View.VISIBLE);
                 spinnerStations.setVisibility(View.VISIBLE);
-                imageViewPF.setVisibility(View.VISIBLE);
 
-                radioGroup.setVisibility(View.GONE);
+                linearLayoutPlaces.setVisibility(View.GONE);
 
                 break;
             case 9:
-                spinnerPlatform.setVisibility(View.VISIBLE);
+                linearLayoutPlatform.setVisibility(View.VISIBLE);
                 spinnerStations.setVisibility(View.VISIBLE);
-                imageViewPF.setVisibility(View.VISIBLE);
 
-                radioGroup.setVisibility(View.GONE);
+                linearLayoutPlaces.setVisibility(View.GONE);
 
                 break;
             case 10:
-                spinnerPlatform.setVisibility(View.VISIBLE);
+                linearLayoutPlatform.setVisibility(View.VISIBLE);
                 spinnerStations.setVisibility(View.VISIBLE);
-                radioGroup.setVisibility(View.GONE);
-                imageViewPF.setVisibility(View.VISIBLE);
+                linearLayoutPlaces.setVisibility(View.GONE);
 
 
                 break;
             case 11:
-
                 spinnerStations.setVisibility(View.VISIBLE);
-                imageViewPF.setVisibility(View.GONE);
-
-                spinnerPlatform.setVisibility(View.VISIBLE);
 
                 break;
 
@@ -220,6 +214,10 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
         spinnerStations = (Spinner) findViewById(R.id.spinnerStations);
         spinnerPlatform = (Spinner) findViewById(R.id.spinnerPlatform);
+
+        linearLayoutPlaces = (LinearLayout) findViewById(R.id.linearLayoutPlaces);
+        linearLayoutPlatform = (LinearLayout) findViewById(R.id.linearLayoutPlatform);
+        spinnerPlaces = (Spinner) findViewById(R.id.spinnerPlaces);
         editTextComment = (EditText) findViewById(R.id.editTextComment);
         imageViewPF = (ImageView) findViewById(R.id.imageViewPF);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
@@ -311,27 +309,15 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         Map<String, List<SendRequestFormResponse.PlatformList>> mapList = sendRequestFormResponse.getSuccess().getPlatformMap();
 
         if (placeList != null && placeList.size() > 0) {
-            radioGroup.setVisibility(View.VISIBLE);
-            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(RadioGroup group, int selectedType) {
-                    // find which radio button is selected
-                    if (selectedType == R.id.radioFootOverBridge) {
-                        spinnerPlatform.setVisibility(View.VISIBLE);
-
-                        radioFootOverBridge.setButtonDrawable(R.drawable.form_checkbox_enabled);
-                        radioDustbin.setButtonDrawable(R.drawable.form_checkbox_radio_disabled);
-                    } else if (selectedType == R.id.radioDustbin) {
-                        radioDustbin.setButtonDrawable(R.drawable.form_checkbox_enabled);
-                        radioFootOverBridge.setButtonDrawable(R.drawable.form_checkbox_radio_disabled);
-                        place = "Dust";
-                        spinnerPlatform.setVisibility(View.GONE);
-                    }
-                }
-            });
+            linearLayoutPlaces.setVisibility(View.VISIBLE);
+            if (placeList.get(0).getAtPlateform().equalsIgnoreCase("0")) {
+                linearLayoutPlatform.setVisibility(View.GONE);
+            } else {
+                linearLayoutPlatform.setVisibility(View.VISIBLE);
+            }
+            setPlacesSpinner(placeList, stationList);
         } else {
-            radioGroup.setVisibility(View.GONE);
+            linearLayoutPlaces.setVisibility(View.GONE);
         }
 
 
@@ -354,6 +340,53 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         }
     }
 
+
+    private void setPlacesSpinner(List<SendRequestFormResponse.Place> placeList, final List<SendRequestFormResponse.Station> stationList) {
+
+        List<SendRequestFormResponse.Place> placesFinalList = new ArrayList<>();
+
+        SendRequestFormResponse.Place place = new SendRequestFormResponse.Place();
+        place.setId(-1);
+        place.setName("Select place");
+
+        placesFinalList.add(place);
+        placesFinalList.addAll(placeList);
+        ArrayAdapter<SendRequestFormResponse.Place> adapterStation = new ArrayAdapter<SendRequestFormResponse.Place>(RailwayCategoryFormActivity.this, android.R.layout.simple_spinner_dropdown_item, placesFinalList);
+        spinnerPlaces.setAdapter(adapterStation);
+
+        spinnerPlaces.setSelection(0, true);
+        View v = spinnerPlaces.getSelectedView();
+        setTextCustom(v);
+
+
+        spinnerPlaces.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                selectedPlace = (SendRequestFormResponse.Place) adapterView.getItemAtPosition(position);
+                if (selectedPlace.getId() > -1) {
+                    if (selectedPlace.getAtPlateform().equalsIgnoreCase("0")) {
+                        linearLayoutPlatform.setVisibility(View.GONE);
+                        setStationSpinner(stationList);
+                        setPlatFormSpinnerData(0);
+                    } else {
+                        linearLayoutPlatform.setVisibility(View.VISIBLE);
+                        setStationSpinner(stationList);
+                        setPlatFormSpinnerData(0);
+                    }
+                } else if (selectedPlace.getId() == -1) {
+                    setStationSpinner(stationList);
+                    setPlatFormSpinnerData(0);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+
     private void setStationSpinner(List<SendRequestFormResponse.Station> stationList) {
 
         List<SendRequestFormResponse.Station> finalList = new ArrayList<>();
@@ -375,7 +408,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         spinnerStations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                SendRequestFormResponse.Station station = (SendRequestFormResponse.Station) adapterView.getItemAtPosition(position);
+                selectedStation = (SendRequestFormResponse.Station) adapterView.getItemAtPosition(position);
                 setPlatFormSpinnerData(position);
             }
 
@@ -409,6 +442,20 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         View v = spinnerPlatform.getSelectedView();
         setTextCustom(v);
 
+
+        spinnerPlatform.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                selectedPlatformSpinner = (SendRequestFormResponse.PlatformList) adapterView.getItemAtPosition(position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     public void setTextCustom(View view) {
@@ -432,9 +479,65 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                 break;
             case R.id.buttonSubmit:
 
-
                 if (NetworkUtil.hasConnectivity(RailwayCategoryFormActivity.this)) {
 
+                  /*  if (linearLayoutPlaces.getVisibility() == View.VISIBLE) {
+                        if (selectedPlace.getName().equalsIgnoreCase("Select place")) {
+                            if (selectedStation.getName().equalsIgnoreCase("Select station")) {
+                                if (linearLayoutPlatform.getVisibility() == View.VISIBLE) {
+                                    if (selectedPlatformSpinner.getPlatform().equalsIgnoreCase("Select platform")) {
+
+                                    } else {
+                                        Toast.makeText(RailwayCategoryFormActivity.this, "Please select platform", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                } else {
+                                    // only station, place,  image, comment
+                                    if (editTextComment.getText().toString().length() > 0) {
+                                        callUploadForStationAndPlaces();
+                                    } else {
+                                        Toast.makeText(RailwayCategoryFormActivity.this, "Please write comments", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            } else {
+                                Toast.makeText(RailwayCategoryFormActivity.this, "Please select station", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                    } else {
+                        // only station, platform, image, commen
+                        if (selectedStation.getName().equalsIgnoreCase("Select station")) {
+                            if (linearLayoutPlatform.getVisibility() == View.VISIBLE) {
+                                if (selectedPlatformSpinner.getPlatform().equalsIgnoreCase("Select platform")) {
+
+                                    if (editTextComment.getText().toString().length() > 0) {
+                                        callUploadForStationAndPlatform();
+                                    } else {
+                                        Toast.makeText(RailwayCategoryFormActivity.this, "Please write comments", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                } else {
+                                    Toast.makeText(RailwayCategoryFormActivity.this, "Please select platform", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } else {
+                                // only station, image, comment
+                                if (editTextComment.getText().toString().length() > 0) {
+                                    callUploadForStation();
+                                } else {
+                                    Toast.makeText(RailwayCategoryFormActivity.this, "Please write comments", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        } else {
+                            Toast.makeText(RailwayCategoryFormActivity.this, "Please select station", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+*/
                     callSendRequestAPI();
                 } else {
                     Toast.makeText(RailwayCategoryFormActivity.this, R.string.no_internet_message, Toast.LENGTH_SHORT).show();
@@ -581,7 +684,8 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         return cursor.getString(column_index);
     }
 
-    public static Bitmap decodeSampledBitmapFromFile(String pathName, int reqWidth, int reqHeight) {
+    public static Bitmap decodeSampledBitmapFromFile(String pathName, int reqWidth,
+                                                     int reqHeight) {
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -601,7 +705,8 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         }
     }
 
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth,
+                                            int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
