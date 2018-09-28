@@ -53,7 +53,8 @@ public interface ApiService {
                                             @Part MultipartBody.Part baseImage,
                                             @Part("description") RequestBody description,
                                             @Part("service_id") RequestBody serviceId,
-                                            @Part("station_id") RequestBody stationId
+                                            @Part("station_id") RequestBody stationId,
+                                            @Part("at_platform") RequestBody atPlatform
     );
 
     @POST(ApiConstants.GET_STATION_PLATFORM)

@@ -60,13 +60,13 @@ public class MyRequestsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager2);
         //recyclerView.setAdapter(new MyRequestStatusAdapter(MyRequestsActivity.this, list));
 
-        //initSwipeLayout();
+        initSwipeLayout();
         callGetRequestAPI();
 
     }
 
 
-   /* private void initSwipeLayout() {
+    private void initSwipeLayout() {
 
 // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -89,7 +89,7 @@ public class MyRequestsActivity extends AppCompatActivity {
                 R.color.blue,
                 R.color.red);
 
-    }*/
+    }
 
    /* private void callGetRequestAPI() {
 
@@ -127,19 +127,21 @@ public class MyRequestsActivity extends AppCompatActivity {
                     //  Toast.makeText(getActivity(),"Data : " + details ,Toast.LENGTH_LONG).show();
                     if (details.getSuccess().getStatus()) {
 
+                        // just given timer to go off refreshing icon after 5 seconds., later we need to remove this and on api response success, we need to do set refreshing to false.
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                swipeContainer.setRefreshing(false);
+
+                            }
+                        }, 5000);
+
+
                         List<MyRequestStatusResponse.Datum> list = details.getSuccess().getData();
                         myRequestStatusAdapter = new MyRequestStatusAdapter(MyRequestsActivity.this, list);
                         recyclerView.setAdapter(myRequestStatusAdapter);
                     }
 
-                   /* // just given timer to go off refreshing icon after 5 seconds., later we need to remove this and on api response success, we need to do set refreshing to false.
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            swipeContainer.setRefreshing(false);
-
-                        }
-                    }, 5000);*/
 
                 } else {
                     // Response code is 401

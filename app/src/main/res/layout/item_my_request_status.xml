@@ -11,8 +11,8 @@
         android:id="@+id/cardView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         app:cardBackgroundColor="@color/white"
+        android:layout_margin="5dp"
         app:cardCornerRadius="4dp"
         app:cardElevation="3dp">
 
@@ -33,7 +33,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/request_image" />
+                    android:background="@drawable/gray_back1" />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -86,15 +86,16 @@
                     android:orientation="vertical">
                     <TextView
                         android:id="@+id/textViewRequestStatus"
-                        android:layout_width="fill_parent"
+                        android:layout_width="100dp"
                         android:layout_height="60dp"
                         android:layout_marginLeft="10dp"
-                        android:text="Status"
+                        android:text="STATUS"
                         android:layout_marginBottom="5dp"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:background="@color/dark_blue"
+                        android:background="@color/skyblue"
                         android:textSize="15sp" />
 
                     <TextView
