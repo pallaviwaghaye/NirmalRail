@@ -24,7 +24,6 @@ public class MyRequestsActivity extends AppCompatActivity {
     private ImageView imageViewBack;
     private SwipeRefreshLayout swipeContainer;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +72,6 @@ public class MyRequestsActivity extends AppCompatActivity {
     }
 
     private void callGetRequestAPI() {
-
 
         // just given timer to go off refreshing icon after 5 seconds., later we need to remove this and on api response success, we need to do set refreshing to false.
         new Handler().postDelayed(new Runnable() {

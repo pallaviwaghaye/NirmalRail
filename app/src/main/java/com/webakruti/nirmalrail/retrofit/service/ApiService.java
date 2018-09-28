@@ -1,5 +1,6 @@
 package com.webakruti.nirmalrail.retrofit.service;
 
+import com.webakruti.nirmalrail.model.MyRequestStatusResponse;
 import com.webakruti.nirmalrail.model.OTPResponse;
 import com.webakruti.nirmalrail.model.RailwayCategoryResponse;
 import com.webakruti.nirmalrail.model.RegistrationResponse;
@@ -58,6 +59,10 @@ public interface ApiService {
     @POST(ApiConstants.GET_STATION_PLATFORM)
     Call<SendRequestFormResponse> getStationPlatform(@Header("Authorization") String header,
                                                      @Query("service_id") String serviceId);
+
+
+    @POST(ApiConstants.GET_MY_REQUEST_STATUS)
+    Call<MyRequestStatusResponse> getMyRequestStatus(@Header("Authorization") String header);
 
 
 }
