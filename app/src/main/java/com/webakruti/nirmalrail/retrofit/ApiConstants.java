@@ -15,6 +15,8 @@ public class ApiConstants {
 
     public static final String GET_STATION_PLATFORM = "getplatformnstation";
 
+    public static final String GET_MY_REQUEST_STATUS = "getcomplaint";
+
 
 
 }

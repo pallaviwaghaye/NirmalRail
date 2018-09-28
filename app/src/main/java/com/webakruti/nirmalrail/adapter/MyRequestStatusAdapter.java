@@ -15,8 +15,11 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.webakruti.nirmalrail.R;
+import com.webakruti.nirmalrail.model.MyRequestStatusResponse;
 import com.webakruti.nirmalrail.ui.MyRequestsActivity;
 import com.webakruti.nirmalrail.ui.RailwayCategoryFormActivity;
+
+import java.util.List;
 
 /**
  * Created by DELL on 9/22/2018.
@@ -25,11 +28,11 @@ import com.webakruti.nirmalrail.ui.RailwayCategoryFormActivity;
 public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatusAdapter.ViewHolder> {
 
     Activity context;
-    int size;
+    List<MyRequestStatusResponse> list;
 
-    public MyRequestStatusAdapter(Activity context, int size) {
+    public MyRequestStatusAdapter(Activity context, List<MyRequestStatusResponse> list) {
         this.context = context;
-        this.size = size;
+        this.list = list;
     }
 
 
@@ -44,10 +47,14 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
     @Override
     public void onBindViewHolder( MyRequestStatusAdapter.ViewHolder viewHolder, final int position) {
 
-        viewHolder.textViewRequestStations.setText("abcde " + position);
-       /* viewHolder.textViewRequestPlatform.setText(" 4 " + position);
-        viewHolder.textViewRequestDate.setText("20-09-2018 " + position);
-        viewHolder.textViewRequestStatus.setText("Complete " + position);*/
+        final MyRequestStatusResponse myRequestStatus = list.get(position);
+
+
+        viewHolder.textViewRequestStations.setText(myRequestStatus.getSuccess().getData().get(0).getStationname());
+        viewHolder.textViewRequestPlatform.setText(myRequestStatus.getSuccess().getData().get(0).getAtPlatform());
+        viewHolder.textViewRequestDate.setText(myRequestStatus.getSuccess().getData().get(0).getComplaintDate());
+        viewHolder.textViewRequestStatus.setText(myRequestStatus.getSuccess().getData().get(0).getStatus());
+
        // viewHolder.imageViewRequestImage.setImageDrawable(R.drawable.request_image);
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +70,7 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
 
     @Override
     public int getItemCount() {
-        return size;
+        return list.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

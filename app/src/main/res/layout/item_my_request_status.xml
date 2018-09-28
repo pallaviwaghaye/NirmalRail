@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="300dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         app:cardBackgroundColor="@color/white"
@@ -17,7 +17,7 @@
         app:cardElevation="3dp">
 
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="10dp"
+
                 android:orientation="horizontal"
                 android:padding="5dp">
                 <ImageView
@@ -41,6 +41,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="wrap_content"
@@ -48,7 +49,7 @@
                             android:layout_marginLeft="10dp"
                             android:text="Station:"
                             android:textColor="@color/blue"
-                            android:textSize="15sp" />
+                            android:textSize="17sp" />
                         <TextView
                             android:id="@+id/textViewRequestStations"
                             android:layout_width="wrap_content"
@@ -56,7 +57,7 @@
                             android:layout_marginLeft="10dp"
                             android:text="abcdef"
                             android:textColor="@color/black"
-                            android:textSize="15sp" />
+                            android:textSize="17sp" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -68,7 +69,7 @@
                             android:layout_marginLeft="10dp"
                             android:text="Platform:"
                             android:textColor="@color/blue"
-                            android:textSize="15sp" />
+                            android:textSize="17sp" />
                         <TextView
                             android:id="@+id/textViewRequestPlatform"
                             android:layout_width="wrap_content"
@@ -76,13 +77,25 @@
                             android:layout_marginLeft="10dp"
                             android:text="123"
                             android:textColor="@color/black"
-                            android:textSize="15sp" />
+                            android:textSize="17sp" />
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/textViewRequestStatus"
+                        android:layout_width="fill_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="Status"
+                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:background="@color/dark_blue"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/textViewRequestDate"
@@ -94,17 +107,7 @@
                         android:text="11/04/2018"
                         android:textColor="@color/black"
                         android:textSize="15sp" />
-                    <TextView
-                        android:id="@+id/textViewRequestStatus"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="10dp"
-                        android:text="Status"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:background="@color/dark_blue"
-                        android:textSize="15sp" />
+
 
                 </LinearLayout>
             </LinearLayout>
