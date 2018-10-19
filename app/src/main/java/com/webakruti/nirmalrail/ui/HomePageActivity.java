@@ -156,7 +156,7 @@ public class HomePageActivity extends AppCompatActivity {
                         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 SharedPreferenceManager.clearPreferences();
-                                Intent intent = new Intent(HomePageActivity.this, LandingPageActivity.class);
+                                Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();

@@ -1,11 +1,14 @@
 package com.webakruti.nirmalrail.retrofit.service;
 
+import com.webakruti.nirmalrail.model.ColonyResponse;
+import com.webakruti.nirmalrail.model.EventImageResponse;
 import com.webakruti.nirmalrail.model.MyRequestStatusResponse;
 import com.webakruti.nirmalrail.model.OTPResponse;
 import com.webakruti.nirmalrail.model.RailwayCategoryResponse;
 import com.webakruti.nirmalrail.model.RegistrationResponse;
 import com.webakruti.nirmalrail.model.SaveComplaintResponse;
 import com.webakruti.nirmalrail.model.SendRequestFormResponse;
+import com.webakruti.nirmalrail.model.TechnologyImageResponse;
 import com.webakruti.nirmalrail.model.UserResponse;
 import com.webakruti.nirmalrail.retrofit.ApiConstants;
 
@@ -44,6 +47,17 @@ public interface ApiService {
     // GET RAILWAY CATEGORY API
     @POST(ApiConstants.GET_RAILWAY_CATEGORY)
     Call<RailwayCategoryResponse> getServices(@Header("Authorization") String header);
+
+
+    @POST(ApiConstants.GET_COLONIES)
+    Call<ColonyResponse> getColony(@Header("Authorization") String header);
+
+
+    @POST(ApiConstants.GET_TECHNOLOGIES)
+    Call<TechnologyImageResponse> getTechnlogiy(@Header("Authorization") String header);
+
+    @POST(ApiConstants.GET_EVENTS)
+    Call<EventImageResponse> getEvents(@Header("Authorization") String header);
 
 
     // Send Request Complaint
@@ -111,6 +125,17 @@ public interface ApiService {
             @Part("description") RequestBody description,
             @Part("service_id") RequestBody serviceId,
             @Part("station_id") RequestBody stationId);
+
+
+    @Multipart
+    @POST(ApiConstants.SAVE_COMPLAINT_COLONY)
+    Call<SaveComplaintResponse> uploadColonyRequest(
+            @Header("Authorization") String header,
+            @Part MultipartBody.Part baseImage,
+            @Part("colony_id") RequestBody colonyId,
+            @Part("description") RequestBody description,
+            @Part("address") RequestBody address
+    );
 
 
 }

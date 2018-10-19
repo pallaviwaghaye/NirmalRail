@@ -2,6 +2,7 @@ package com.webakruti.nirmalrail.fragments;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,21 +32,39 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.webakruti.nirmalrail.R;
+import com.webakruti.nirmalrail.adapter.RailwayCategoryAdapter;
+import com.webakruti.nirmalrail.model.ColonyResponse;
+import com.webakruti.nirmalrail.model.RailwayCategoryResponse;
+import com.webakruti.nirmalrail.model.SaveComplaintResponse;
+import com.webakruti.nirmalrail.retrofit.ApiConstants;
+import com.webakruti.nirmalrail.retrofit.service.RestClient;
 import com.webakruti.nirmalrail.ui.MyRequestsActivity;
 import com.webakruti.nirmalrail.ui.RailwayCategoryFormActivity;
 import com.webakruti.nirmalrail.ui.SuccessActivity;
+import com.webakruti.nirmalrail.utils.NetworkUtil;
+import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
 import com.webakruti.nirmalrail.utils.Utils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -65,12 +84,13 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
     Uri outPutfileUri;
 
     private Spinner spinnerColony;
-    String selectedColony = "Select colony";
+    ColonyResponse.Colony selectedColony;
     private EditText editTextColonyAddress;
     private EditText editTextColonyComment;
     private Button buttonColonySubmit;
 
     private View rootView;
+    private ProgressDialog progressDialogForAPI;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,9 +98,108 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
 
         rootView = inflater.inflate(R.layout.fragment_colony, container, false);
-
+        selectedColony = new ColonyResponse.Colony();
+        selectedColony.setId(-1);
+        selectedColony.setName("Select colony");
         initViews();
+
+        if (NetworkUtil.hasConnectivity(getActivity())) {
+            getColonys();
+
+        } else {
+            Toast.makeText(getActivity(), R.string.no_internet_message, Toast.LENGTH_SHORT).show();
+        }
         return rootView;
+    }
+
+    private void getColonys() {
+
+        progressDialogForAPI = new ProgressDialog(getActivity());
+        progressDialogForAPI.setCancelable(false);
+        progressDialogForAPI.setIndeterminate(true);
+        progressDialogForAPI.setMessage("Please wait...");
+        progressDialogForAPI.show();
+
+        SharedPreferenceManager.setApplicationContext(getActivity());
+        String token = SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
+
+        String headers = "Bearer " + token;
+        Call<ColonyResponse> requestCallback = RestClient.getApiService(ApiConstants.BASE_URL).getColony(headers);
+        requestCallback.enqueue(new Callback<ColonyResponse>() {
+            @Override
+            public void onResponse(Call<ColonyResponse> call, Response<ColonyResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.code() == 200) {
+
+                    ColonyResponse details = response.body();
+                    //  Toast.makeText(getActivity(),"Data : " + details ,Toast.LENGTH_LONG).show();
+                    if (details.getSuccess().getStatus()) {
+
+                        List<ColonyResponse.Colony> list = details.getSuccess().getColonies();
+                        setColonySpinnerData(list);
+                    }
+
+                } else {
+                    // Response code is 401
+                }
+
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ColonyResponse> call, Throwable t) {
+
+                if (t != null) {
+
+                    if (progressDialogForAPI != null) {
+                        progressDialogForAPI.cancel();
+                    }
+                    if (t.getMessage() != null)
+                        Log.e("error", t.getMessage());
+                }
+
+            }
+        });
+
+
+    }
+
+    private void setColonySpinnerData(List<ColonyResponse.Colony> colonyList) {
+
+        List<ColonyResponse.Colony> finalList = new ArrayList<>();
+        ColonyResponse.Colony colony = new ColonyResponse.Colony();
+        colony.setId(-1);
+        colony.setName("Select colony");
+        finalList.add(colony);
+
+        finalList.addAll(colonyList);
+
+
+        // set spinner data
+        ArrayAdapter<ColonyResponse.Colony> adapter = new ArrayAdapter<ColonyResponse.Colony>(getActivity(), android.R.layout.simple_spinner_dropdown_item, finalList);
+        spinnerColony.setAdapter(adapter);
+
+        //13th july
+        spinnerColony.setSelection(0, true);
+        View v = spinnerColony.getSelectedView();
+        setTextCustom(v);
+
+
+        spinnerColony.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedColony = (ColonyResponse.Colony) adapterView.getItemAtPosition(i);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
     }
 
     private void initViews() {
@@ -90,7 +209,7 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
         editTextColonyComment = (EditText) rootView.findViewById(R.id.editTextColonyComment);
 
 
-        linearLayoutCamera = (LinearLayout)rootView.findViewById(R.id.linearLayoutCamera);
+        linearLayoutCamera = (LinearLayout) rootView.findViewById(R.id.linearLayoutCamera);
         linearLayoutCamera.setOnClickListener(this);
 
         buttonColonySubmit = (Button) rootView.findViewById(R.id.buttonColonySubmit);
@@ -98,47 +217,14 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
 
         imageViewPhoto = (ImageView) rootView.findViewById(R.id.imageViewPhoto);
         imageViewPhoto.setOnClickListener(this);
-
-        // set spinner data
-        String[] colonyList = getResources().getStringArray(R.array.colony);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, colonyList);
-        spinnerColony.setAdapter(adapter);
-
-        //13th july
-        spinnerColony.setSelection(0,true);
-        View v=spinnerColony.getSelectedView();
-        setTextCustom(v);
-
-        //spinnerColony.setSelection(Arrays.asList(colonyList).size());
-
-        /*spinnerColony.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedColony = (String) adapterView.getItemAtPosition(i);
-
-                //13th july
-                setTextCustom(view);
-                //13th july
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-*/
     }
 
 
-
-    public void setTextCustom(View view)
-    {
-        TextView customTextView = ((TextView)view);
-        if(customTextView!=null)
-        {
+    public void setTextCustom(View view) {
+        TextView customTextView = ((TextView) view);
+        if (customTextView != null) {
             //customTextView.setTextColor(getResources().getColor(R.color.white));
-             customTextView.setTextColor(getResources().getColor(R.color.dark_blue));
+            customTextView.setTextColor(getResources().getColor(R.color.dark_blue));
         }
     }
 
@@ -154,33 +240,155 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
                 startCameraActivity();
                 break;
             case R.id.buttonColonySubmit:
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(),R.style.alertDialog);
-                /*// Setting Dialog Title
-                alertDialog.setTitle("Thank You !!!");*/
-                // Setting Dialog Message
-                alertDialog.setMessage("Thank You !!!");
-                // Setting Icon to Dialog
-                // Setting Positive "Yes" Button
-                alertDialog.setPositiveButton("Check Status", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        //SharedPreferenceManager.clearPreferences();
-                        Intent intent = new Intent(getActivity(), MyRequestsActivity.class);
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+
+                if (selectedColony.getId() != -1) {
+                    if (editTextColonyAddress.getText().toString().length() > 0) {
+                        if (editTextColonyComment.getText().toString().length() > 0) {
+
+                            if (NetworkUtil.hasConnectivity(getActivity())) {
+                                callUploadForColony();
+                            } else {
+                                Toast.makeText(getActivity(), R.string.no_internet_message, Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            Toast.makeText(getActivity(), "Please enter address", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Please enter address", Toast.LENGTH_SHORT).show();
                     }
-                });
-               /* // Setting Negative "NO" Button
-                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });*/
-                // Showing Alert Message
-                alertDialog.show();
+
+
+                } else {
+                    Toast.makeText(getActivity(), "Please select colony", Toast.LENGTH_SHORT).show();
+                }
 
         }
 
     }
+
+    private void callUploadForColony() {
+        // Station and Category Service
+
+
+        File baseImage = null;
+        if (path != null) {
+            baseImage = new File(path);
+
+            int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
+            } catch (Throwable t) {
+                Log.e("ERROR", "Error compressing file." + t.toString());
+                t.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getActivity(), "Please select image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        progressDialogForAPI = new ProgressDialog(getActivity());
+        progressDialogForAPI.setCancelable(false);
+        progressDialogForAPI.setIndeterminate(true);
+        progressDialogForAPI.setMessage("Please wait...");
+        progressDialogForAPI.show();
+/*
+   @Part("colony_id") RequestBody colonyId,
+            @Part("description") RequestBody description,
+            @Part("address") RequestBody address
+ */
+
+        RequestBody colonyId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedColony.getId() + "");
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), editTextColonyComment.getText().toString());
+        RequestBody address = RequestBody.create(MediaType.parse("multipart/form-data"), editTextColonyAddress.getText().toString());
+
+
+        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+
+
+        String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
+
+        Call<SaveComplaintResponse> colorsCall = RestClient.getApiService(ApiConstants.BASE_URL).uploadColonyRequest(header, bodyImage, colonyId, description, address);
+
+        colorsCall.enqueue(new Callback<SaveComplaintResponse>() {
+            @Override
+            public void onResponse(Call<SaveComplaintResponse> call, Response<SaveComplaintResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.code() == 200) {
+                    //
+                    try {
+                        SaveComplaintResponse saveComplaintResponse = response.body();
+
+                        if (saveComplaintResponse.getSuccess() != null) {
+                            if (saveComplaintResponse.getSuccess().getStatus()) {
+                                //Toast.makeText(getApplicationContext(), saveComplaintResponse.getSuccess().getMsg(), Toast.LENGTH_SHORT).show();
+                                Log.e("Upload", "Upload Successful");
+                                showDialog();
+
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(getActivity(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                }
+
+
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<SaveComplaintResponse> call, Throwable t) {
+
+                Toast.makeText(getActivity(), "Time out error. ", Toast.LENGTH_SHORT).show();
+                if (progressDialogForAPI != null) {
+                    progressDialogForAPI.cancel();
+                }
+                if (t != null) {
+
+                    if (t.getMessage() != null)
+                        Log.e("error", t.getMessage());
+
+                }
+            }
+        });
+
+    }
+
+
+    public void showDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.alertDialog);
+        alertDialog.setTitle("Thank You !!!");
+        alertDialog.setMessage("Thank You !!!");
+        alertDialog.setPositiveButton("Check Status", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //SharedPreferenceManager.clearPreferences();
+                Intent intent = new Intent(getActivity(), MyRequestsActivity.class);
+                intent.putExtra("TYPE_COMPLAINTS", 1); // 1 - Colony
+                startActivity(intent);
+
+            }
+        });
+        // Setting Negative "NO" Button
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
 
     // -------------------------------------------------------CAMERA--------------------------------------------------------------------------------
 

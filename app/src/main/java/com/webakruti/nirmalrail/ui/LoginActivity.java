@@ -29,14 +29,17 @@ import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView imageViewBack;
+    //private ImageView imageViewBack;
     private EditText editTextLoginMobileNo;
     private Button buttonLogin;
+
 
     private TextView textViewRegisterNow;
 
     private LinearLayout linearLayoutGotoRegister;
     private ProgressDialog progressDialogForAPI;
+
+    private LinearLayout linearLayoutAdminLogin;
 
 
     @Override
@@ -45,13 +48,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         SharedPreferenceManager.setApplicationContext(LoginActivity.this);
-        imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
+        /*imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });
+        });*/
 
 
         editTextLoginMobileNo = (EditText) findViewById(R.id.editTextLoginMobileNo);
@@ -65,6 +68,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(this);
+
+        linearLayoutAdminLogin = (LinearLayout) findViewById(R.id.linearLayoutAdminLogin);
+        linearLayoutAdminLogin.setOnClickListener(this);
 
 
     }
@@ -97,6 +103,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.textViewRegisterNow:
                 Intent intent2 = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(intent2);
+                finish();
+
+                break;
+            case R.id.linearLayoutAdminLogin:
+                Intent intent3 = new Intent(LoginActivity.this, AdminLoginActivity.class);
+                startActivity(intent3);
                 finish();
 
                 break;

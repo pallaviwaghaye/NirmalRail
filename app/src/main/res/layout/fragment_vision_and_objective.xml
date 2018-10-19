@@ -38,7 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="left|center_vertical"
             android:text="Our vision is influenced by thoughts of Mahatma Gandhi, Father of Nation whose vision was that of emancipation of India is possible only through sanitation."
             android:textColor="@color/black"
             android:textSize="17sp" />
@@ -47,7 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="left|center_vertical"
             android:text="We at Nagpur Division SECR believe that cleanliness is not just responsibility of Government but all citizens including those works for Government. Thus oue vision is to provide clean and hygienic environment at our  stations and colonies by the use of committed staff, modern technology, better infrastructure and public participation so as to make Nagpur Division a role model in cleanliness."
             android:textColor="@color/black"
             android:textSize="17sp" />
@@ -55,7 +57,7 @@
         <ImageView
             android:id="@+id/imageViewRequestImage"
             android:layout_width="340dp"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:background="@drawable/vision_image" />

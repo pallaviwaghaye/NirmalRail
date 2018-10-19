@@ -29,7 +29,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private EditText editTextName;
     private EditText editTextMobileNumber;
     private Button buttonRegister;
-    private ImageView imageViewBack;
+   // private ImageView imageViewBack;
     private LinearLayout linearLayoutGotoLogin;
     private ProgressDialog progressDialogForAPI;
 
@@ -46,13 +46,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         linearLayoutGotoLogin = (LinearLayout) findViewById(R.id.linearLayoutGotoLogin);
         linearLayoutGotoLogin.setOnClickListener(this);
 
-        imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
+        /*imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });
+        });*/
 
         buttonRegister.setOnClickListener(this);
     }

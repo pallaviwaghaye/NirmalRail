@@ -12,8 +12,57 @@ import java.util.List;
 
 public class MyRequestStatusResponse {
 
+    @SerializedName("success")
+    @Expose
+    private Success success;
 
-    public class Datum {
+    public Success getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Success success) {
+        this.success = success;
+    }
+
+
+    public class Success {
+
+        @SerializedName("status")
+        @Expose
+        private Boolean status;
+        @SerializedName("station")
+        @Expose
+        private List<Station> station = null;
+        @SerializedName("colony")
+        @Expose
+        private List<Colony> colony = null;
+
+        public Boolean getStatus() {
+            return status;
+        }
+
+        public void setStatus(Boolean status) {
+            this.status = status;
+        }
+
+        public List<Station> getStation() {
+            return station;
+        }
+
+        public void setStation(List<Station> station) {
+            this.station = station;
+        }
+
+        public List<Colony> getColony() {
+            return colony;
+        }
+
+        public void setColony(List<Colony> colony) {
+            this.colony = colony;
+        }
+    }
+
+    public class Station {
 
         @SerializedName("complaint_date")
         @Expose
@@ -117,43 +166,98 @@ public class MyRequestStatusResponse {
 
     }
 
-    @SerializedName("success")
-    @Expose
-    private Success success;
+    public class Colony {
 
-    public Success getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(Success success) {
-        this.success = success;
-    }
-
-
-    public class Success {
-
+        @SerializedName("complaint_date")
+        @Expose
+        private String complaintDate;
+        @SerializedName("id")
+        @Expose
+        private Integer id;
+        @SerializedName("before_img_url")
+        @Expose
+        private String beforeImgUrl;
+        @SerializedName("after_img_url")
+        @Expose
+        private String afterImgUrl;
+        @SerializedName("description")
+        @Expose
+        private String description;
+        @SerializedName("address")
+        @Expose
+        private String address;
         @SerializedName("status")
         @Expose
-        private Boolean status;
-        @SerializedName("data")
+        private String status;
+        @SerializedName("colonyname")
         @Expose
-        private List<Datum> data = null;
+        private String colonyname;
 
-        public Boolean getStatus() {
+        public String getComplaintDate() {
+            return complaintDate;
+        }
+
+        public void setComplaintDate(String complaintDate) {
+            this.complaintDate = complaintDate;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getBeforeImgUrl() {
+            return beforeImgUrl;
+        }
+
+        public void setBeforeImgUrl(String beforeImgUrl) {
+            this.beforeImgUrl = beforeImgUrl;
+        }
+
+        public Object getAfterImgUrl() {
+            return afterImgUrl;
+        }
+
+        public void setAfterImgUrl(String afterImgUrl) {
+            this.afterImgUrl = afterImgUrl;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getStatus() {
             return status;
         }
 
-        public void setStatus(Boolean status) {
+        public void setStatus(String status) {
             this.status = status;
         }
 
-        public List<Datum> getData() {
-            return data;
+        public String getColonyname() {
+            return colonyname;
         }
 
-        public void setData(List<Datum> data) {
-            this.data = data;
+        public void setColonyname(String colonyname) {
+            this.colonyname = colonyname;
         }
+
 
     }
+
 }

@@ -38,7 +38,8 @@
                         android:layout_height="32dp"
                         android:layout_gravity="center_vertical"
                         android:padding="5dp"
-                        android:src="@drawable/action_back" />
+                        android:src="@drawable/action_back"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/textViewTitle"

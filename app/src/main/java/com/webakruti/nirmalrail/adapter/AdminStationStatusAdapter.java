@@ -1,8 +1,8 @@
 package com.webakruti.nirmalrail.adapter;
 
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,29 +11,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.model.MyRequestStatusResponse;
-import com.webakruti.nirmalrail.ui.MyRequestsActivity;
-import com.webakruti.nirmalrail.ui.RailwayCategoryFormActivity;
 
 import java.util.List;
 
-/**
- * Created by DELL on 9/22/2018.
- */
-
-public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatusAdapter.ViewHolder> {
+public class AdminStationStatusAdapter extends RecyclerView.Adapter<AdminStationStatusAdapter.ViewHolder> {
 
     Activity context;
     List<MyRequestStatusResponse.Station> list;
 
 
-    public MyRequestStatusAdapter(Activity context, List<MyRequestStatusResponse.Station> list) {
+    public AdminStationStatusAdapter(Activity context, List<MyRequestStatusResponse.Station> list) {
         this.context = context;
         this.list = list;
 
@@ -41,15 +34,15 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public AdminStationStatusAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_my_request_status, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(v);
+        AdminStationStatusAdapter.ViewHolder viewHolder = new AdminStationStatusAdapter.ViewHolder(v);
         return viewHolder;
     }
 
     @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final AdminStationStatusAdapter.ViewHolder viewHolder, final int position) {
 
         final MyRequestStatusResponse.Station myRequestStatus = list.get(position);
 
@@ -137,5 +130,5 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
             textViewRequestService = (TextView) itemView.findViewById(R.id.textViewRequestService);
         }
     }
-
 }
+

@@ -95,7 +95,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     Uri outPutfileUri;
     private ProgressDialog progressDialogForAPI;
     private RailwayCategoryResponse.Category serviceCategory;
-    private ArrayList<List<SendRequestFormResponse.PlatformList>> listOfPlatFormsFinal;
+    // private ArrayList<List<SendRequestFormResponse.PlatformList>> listOfPlatFormsFinal;
     private RadioGroup radioGroup;
     private RadioButton radioFootOverBridge;
     private RadioButton radioDustbin;
@@ -107,6 +107,8 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     SendRequestFormResponse.Place selectedPlace;
     SendRequestFormResponse.Station selectedStation;
     SendRequestFormResponse.PlatformList selectedPlatformSpinner;
+    private Map<String, List<SendRequestFormResponse.PlatformList>> mapListForPlatforms;
+    private TextView textViewService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +132,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
             Toast.makeText(RailwayCategoryFormActivity.this, R.string.no_internet_message, Toast.LENGTH_SHORT).show();
         }
 
+        textViewService.setText(serviceCategory.getName());
         handleUIVisibileNotVisible();
 
     }
@@ -219,7 +222,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
         spinnerStations = (Spinner) findViewById(R.id.spinnerStations);
         spinnerPlatform = (Spinner) findViewById(R.id.spinnerPlatform);
-
+        textViewService = (TextView) findViewById(R.id.textViewService);
         linearLayoutPlaces = (LinearLayout) findViewById(R.id.linearLayoutPlaces);
         linearLayoutPlatform = (LinearLayout) findViewById(R.id.linearLayoutPlatform);
         spinnerPlaces = (Spinner) findViewById(R.id.spinnerPlaces);
@@ -327,21 +330,24 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
 
         //
-        listOfPlatFormsFinal = new ArrayList<>();
+        // listOfPlatFormsFinal = new ArrayList<>();
+
+        mapListForPlatforms = new HashMap<String, List<SendRequestFormResponse.PlatformList>>();
 
         if (mapList != null && mapList.size() > 0) {
             for (Map.Entry<String, List<SendRequestFormResponse.PlatformList>> entry : mapList.entrySet()) {
                 List<SendRequestFormResponse.PlatformList> lisOfPlatForms = entry.getValue();
-                listOfPlatFormsFinal.add(lisOfPlatForms);
+                mapListForPlatforms.put(entry.getKey(), lisOfPlatForms);
+                //listOfPlatFormsFinal.add(lisOfPlatForms);
             }
 
         }
 
 
         // set Station Spinner Value
-        if (stationList != null && stationList.size() > 0 && listOfPlatFormsFinal != null && listOfPlatFormsFinal.size() > 0) {
+        if (stationList != null && stationList.size() > 0 && mapListForPlatforms != null && mapListForPlatforms.size() > 0) {
             setStationSpinner(stationList);
-            setPlatFormSpinnerData(0);
+            setPlatFormSpinnerData(0, -1); // should be 0
         }
     }
 
@@ -372,15 +378,15 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                     if (selectedPlace.getAtPlateform().equalsIgnoreCase("0")) {
                         linearLayoutPlatform.setVisibility(View.GONE);
                         setStationSpinner(stationList);
-                        setPlatFormSpinnerData(0);
+                        setPlatFormSpinnerData(0, -1);
                     } else {
                         linearLayoutPlatform.setVisibility(View.VISIBLE);
                         setStationSpinner(stationList);
-                        setPlatFormSpinnerData(0);
+                        setPlatFormSpinnerData(0, -1);
                     }
                 } else if (selectedPlace.getId() == -1) {
                     setStationSpinner(stationList);
-                    setPlatFormSpinnerData(0);
+                    setPlatFormSpinnerData(0, -1);
                 }
             }
 
@@ -414,7 +420,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 selectedStation = (SendRequestFormResponse.Station) adapterView.getItemAtPosition(position);
-                setPlatFormSpinnerData(position);
+                setPlatFormSpinnerData(position, selectedStation.getId());
             }
 
             @Override
@@ -424,7 +430,7 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         });
     }
 
-    private void setPlatFormSpinnerData(int position) {
+    private void setPlatFormSpinnerData(int position, int stationId) {
         List<SendRequestFormResponse.PlatformList> finalList = new ArrayList<>();
 
         SendRequestFormResponse.PlatformList platform = new SendRequestFormResponse.PlatformList();
@@ -435,9 +441,11 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
             finalList.add(platform);
         } else {
             finalList.add(platform);
-            List<SendRequestFormResponse.PlatformList> list = listOfPlatFormsFinal.get(pos);
-            if (list != null && list.size() > 0) {
-                finalList.addAll(list);
+            if (stationId > 0) {
+                List<SendRequestFormResponse.PlatformList> list = mapListForPlatforms.get(stationId + "");
+                if (list != null && list.size() > 0) {
+                    finalList.addAll(list);
+                }
             }
         }
 
@@ -557,22 +565,21 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
     public void showDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(RailwayCategoryFormActivity.this, R.style.alertDialog);
         alertDialog.setTitle("Thank You !!!");
-        alertDialog.setMessage("Thank You !!!");
+        //alertDialog.setMessage("Thank You !!!");
         alertDialog.setPositiveButton("Check Status", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //SharedPreferenceManager.clearPreferences();
                 Intent intent = new Intent(RailwayCategoryFormActivity.this, MyRequestsActivity.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("TYPE_COMPLAINTS", 0); // 0- Railway
                 startActivity(intent);
-                finish();
             }
         });
         // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        /*alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
-        });
+        });*/
         // Showing Alert Message
         alertDialog.show();
     }
@@ -772,8 +779,6 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
 
     private void callUploadForStationAndPlaces() {
         // Station and Places
-
-
 
 
         File baseImage = null;

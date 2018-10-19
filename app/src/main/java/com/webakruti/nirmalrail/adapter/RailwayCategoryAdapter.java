@@ -33,15 +33,15 @@ public class RailwayCategoryAdapter extends RecyclerView.Adapter<RailwayCategory
     }
 
     @Override
-    public RailwayCategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_railway_category, viewGroup, false);
-        RailwayCategoryAdapter.ViewHolder viewHolder = new RailwayCategoryAdapter.ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final RailwayCategoryAdapter.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
 
         final RailwayCategoryResponse.Category category = list.get(position);
         //viewHolder.textViewCategory.setText("Category " + position);

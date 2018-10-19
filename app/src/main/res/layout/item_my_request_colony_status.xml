@@ -52,20 +52,20 @@
                         <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-
                             android:layout_marginRight="2dp"
+                            android:layout_marginTop="2dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:text="Station:"
+                                android:text="Colony:"
                                 android:textColor="@color/blue"
                                 android:textSize="14sp" />
 
                             <TextView
-                                android:id="@+id/textViewRequestStations"
+                                android:id="@+id/textViewRequestColonyName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
@@ -74,55 +74,61 @@
                                 android:textSize="13sp" />
                         </LinearLayout>
 
+
                         <LinearLayout
                             android:layout_width="fill_parent"
-
                             android:layout_height="wrap_content"
                             android:layout_marginRight="2dp"
+
+                            android:layout_marginTop="2dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:text="Platform:"
+                                android:text="Description:"
                                 android:textColor="@color/blue"
                                 android:textSize="14sp" />
 
                             <TextView
-                                android:id="@+id/textViewRequestPlatform"
+                                android:id="@+id/textViewRequestDesc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:text="123"
+                                android:text="abcd did jijjd jojiojf ijojoijf jofjojofj"
                                 android:textColor="@color/black"
                                 android:textSize="13sp" />
                         </LinearLayout>
+
 
                         <LinearLayout
                             android:layout_width="fill_parent"
 
                             android:layout_height="wrap_content"
                             android:layout_marginRight="2dp"
+                            android:layout_marginTop="2dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:text="Service:"
+                                android:text="Adsress:"
                                 android:textColor="@color/blue"
                                 android:textSize="14sp" />
 
                             <TextView
-                                android:id="@+id/textViewRequestService"
+                                android:id="@+id/textViewRequestAddress"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:text="123"
+                                android:text="abcd"
                                 android:textColor="@color/black"
                                 android:textSize="13sp" />
                         </LinearLayout>
+
+
                     </LinearLayout>
                 </LinearLayout>
 

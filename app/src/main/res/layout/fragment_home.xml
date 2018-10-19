@@ -53,8 +53,9 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="100dp"
                     android:layout_marginTop="10dp"
-                    android:text="Nirmal Rail App"
+                    android:text="NIRMAL RAIL APP"
                     android:gravity="center"
+                    android:textAllCaps="true"
                     android:textColor="@color/blue"
                     android:textSize="22sp" />
 
@@ -63,7 +64,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical|right"
+                android:gravity="center_vertical|left"
                 android:text="The objective of this APP is to provide an IT enabled platform for cleanliness related issues of stations and colonies of Nagpur Division SECR. This will enhance Public and Staff participation by giving dynamic feedback to fulfill our endeavour to provide Swachh and Nirmal Railway in Nagpur Division SECR."
                 android:textColor="@color/black"
                 android:textSize="17sp" />
@@ -71,7 +73,7 @@
             <ImageView
                 android:id="@+id/imageViewRequestImage"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="125dp"
                 android:layout_gravity="center"
                 android:background="@drawable/home3" />
 

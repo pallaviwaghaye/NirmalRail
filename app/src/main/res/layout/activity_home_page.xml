@@ -18,49 +18,53 @@
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/toolbarUserDetailsHomeTitle"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Home"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_gravity="center">
 
-                <LinearLayout
-                    android:id="@+id/linearLayoutSwachataKendra"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/toolbarUserDetailsHomeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Home"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/imageViewSwachhataKendra"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="140dp"
-                    android:src="@drawable/swachata_kendra" />
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/linearLayoutRequest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/imageViewSwachhataKendra"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_marginLeft="140dp"
+                            android:src="@drawable/swachata_kendra" />
 
-                    <ImageView
-                        android:id="@+id/imageViewRequestImage"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/request2" />
 
-                </LinearLayout>
+                        <ImageView
+                            android:id="@+id/imageViewRequestImage"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="15dp"
+                            android:src="@drawable/request2" />
+                    </LinearLayout>
 
+                </RelativeLayout>
             </LinearLayout>
 
 
@@ -81,8 +85,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:color="@color/white"
         android:background="@drawable/nav_background1"
+        android:color="@color/white"
         app:headerLayout="@layout/drawer_header"
         app:itemIconTint="@color/nav_drawer_item_select"
         app:itemTextColor="@color/nav_drawer_item_select"

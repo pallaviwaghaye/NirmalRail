@@ -1,7 +1,9 @@
 package com.webakruti.nirmalrail.ui;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.os.Handler;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,41 +12,31 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.adapter.MyRequestStatusAdapter;
-import com.webakruti.nirmalrail.adapter.RailwayCategoryAdapter;
-import com.webakruti.nirmalrail.fragments.ColonyFragment;
 import com.webakruti.nirmalrail.fragments.MyRequestColonyFragment;
 import com.webakruti.nirmalrail.fragments.MyStationsRequestFragment;
-import com.webakruti.nirmalrail.fragments.RailwayFragment;
-import com.webakruti.nirmalrail.model.MyRequestStatusResponse;
-import com.webakruti.nirmalrail.model.RailwayCategoryResponse;
-import com.webakruti.nirmalrail.retrofit.ApiConstants;
-import com.webakruti.nirmalrail.retrofit.service.RestClient;
-import com.webakruti.nirmalrail.utils.NetworkUtil;
 import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.internal.Util;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+public class AdminHomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
-public class MyRequestsActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+    private ImageView imageViewAdminLogout;
+    private Button buttonNewStatus;
+    private Button buttonInprogressStatus;
+    private Button buttonCompletedStatus;
+    private Button buttonInvalidStatus;
 
     private RecyclerView recyclerView;
-    //private LinearLayoutManager mLayoutManger;
-    private ImageView imageViewBack;
     private SwipeRefreshLayout swipeContainer;
     private ProgressDialog progressDialogForAPI;
     private MyRequestStatusAdapter myRequestStatusAdapter;
@@ -55,18 +47,40 @@ public class MyRequestsActivity extends AppCompatActivity implements ViewPager.O
     private TabLayout tabLayout;
     private ViewPagerAdapter adapter;
     private int typeOfComplaint;
-//    List<MyRequestStatusResponse> list = new ArrayList<MyRequestStatusResponse>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_requests);
+        setContentView(R.layout.activity_admin_home);
 
-        imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
-        imageViewBack.setOnClickListener(new View.OnClickListener() {
+        imageViewAdminLogout = (ImageView) findViewById(R.id.imageViewAdminLogout);
+        imageViewAdminLogout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onClick(View view) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminHomeActivity.this);
+                // Setting Dialog Title
+                alertDialog.setTitle("Logout");
+                // Setting Dialog Message
+                alertDialog.setMessage("Are you sure you want to logout?");
+                // Setting Icon to Dialog
+                // Setting Positive "Yes" Button
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferenceManager.clearPreferences();
+                        Intent intent = new Intent(AdminHomeActivity.this, AdminLoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                // Setting Negative "NO" Button
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                // Showing Alert Message
+                alertDialog.show();
             }
         });
 
@@ -78,7 +92,6 @@ public class MyRequestsActivity extends AppCompatActivity implements ViewPager.O
         initViews();
         viewPager.setOnPageChangeListener(this);
 
-
         // code to show respective tabs
         typeOfComplaint = getIntent().getIntExtra("TYPE_COMPLAINTS", -1);
         if (typeOfComplaint == 0) {
@@ -88,12 +101,11 @@ public class MyRequestsActivity extends AppCompatActivity implements ViewPager.O
         }
     }
 
-
     private void initViews() {
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.adminViewpager);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.adminTabs);
         tabLayout.setupWithViewPager(viewPager);
 
     }
@@ -110,8 +122,7 @@ public class MyRequestsActivity extends AppCompatActivity implements ViewPager.O
         viewPager.setAdapter(adapter);
     }
 
-
-    static class ViewPagerAdapter extends FragmentPagerAdapter {
+    class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -157,6 +168,4 @@ public class MyRequestsActivity extends AppCompatActivity implements ViewPager.O
 
     }
 
-
 }
-

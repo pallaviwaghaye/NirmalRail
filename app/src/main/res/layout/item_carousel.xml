@@ -3,11 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ViewFlipper
+        android:id="@+id/viewflipper"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:autoStart="true"
+        android:flipInterval="2000" >
 
     <ImageView
         android:id="@+id/frame_img"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:src="@drawable/book_image_new" />
+    </ViewFlipper>
 
 </LinearLayout>

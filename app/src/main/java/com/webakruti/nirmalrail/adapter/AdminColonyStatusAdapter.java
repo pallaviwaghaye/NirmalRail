@@ -1,8 +1,7 @@
 package com.webakruti.nirmalrail.adapter;
 
-import android.annotation.SuppressLint;
+
 import android.app.Activity;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,29 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.model.MyRequestStatusResponse;
-import com.webakruti.nirmalrail.ui.MyRequestsActivity;
-import com.webakruti.nirmalrail.ui.RailwayCategoryFormActivity;
 
 import java.util.List;
 
-/**
- * Created by DELL on 9/22/2018.
- */
-
-public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatusAdapter.ViewHolder> {
+public class AdminColonyStatusAdapter extends RecyclerView.Adapter<AdminColonyStatusAdapter.ViewHolder> {
 
     Activity context;
-    List<MyRequestStatusResponse.Station> list;
+    List<MyRequestStatusResponse.Colony> list;
 
 
-    public MyRequestStatusAdapter(Activity context, List<MyRequestStatusResponse.Station> list) {
+    public AdminColonyStatusAdapter(Activity context, List<MyRequestStatusResponse.Colony> list) {
         this.context = context;
         this.list = list;
 
@@ -41,28 +33,23 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_my_request_status, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(v);
+    public AdminColonyStatusAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_my_request_colony_status, viewGroup, false);
+        AdminColonyStatusAdapter.ViewHolder viewHolder = new AdminColonyStatusAdapter.ViewHolder(v);
         return viewHolder;
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final AdminColonyStatusAdapter.ViewHolder viewHolder, final int position) {
 
-        final MyRequestStatusResponse.Station myRequestStatus = list.get(position);
+        final MyRequestStatusResponse.Colony myRequestStatus = list.get(position);
 
 
-        viewHolder.textViewRequestStations.setText(myRequestStatus.getStationname());
-        if (myRequestStatus.getAtPlatform() != null) {
-            viewHolder.textViewRequestPlatform.setText(myRequestStatus.getAtPlatform());
-        } else {
-            viewHolder.textViewRequestPlatform.setText("N/A");
-        }
+        viewHolder.textViewRequestColonyName.setText(myRequestStatus.getColonyname());
+        viewHolder.textViewRequestAddress.setText(myRequestStatus.getAddress());
         viewHolder.textViewRequestDate.setText(myRequestStatus.getComplaintDate());
+        viewHolder.textViewRequestDesc.setText(myRequestStatus.getDescription());
 
-        viewHolder.textViewRequestService.setText(myRequestStatus.getServicename().toLowerCase());
 
         if (myRequestStatus.getStatus().equalsIgnoreCase("invalid")) {
             viewHolder.textViewRequestStatus.setBackgroundColor(context.getResources().getColor(R.color.red));
@@ -77,6 +64,8 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
             viewHolder.textViewRequestStatus.setBackgroundColor(context.getResources().getColor(R.color.sky_blue));
             viewHolder.textViewRequestStatus.setText(myRequestStatus.getStatus());
         }
+
+
 
         // viewHolder.imageViewRequestImage.setImageDrawable(R.drawable.request_image);
 
@@ -117,11 +106,11 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
         CardView cardView;
 
         private ImageView imageViewRequestImage;
-        private TextView textViewRequestStations;
-        private TextView textViewRequestPlatform;
+        private TextView textViewRequestColonyName;
+        private TextView textViewRequestDesc;
         private TextView textViewRequestDate;
         private TextView textViewRequestStatus;
-        private TextView textViewRequestService;
+        private TextView textViewRequestAddress;
 
 
         public ViewHolder(View itemView) {
@@ -130,11 +119,14 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
 
             //textViewCategory = (TextView) itemView.findViewById(R.id.textViewCategory);
             imageViewRequestImage = (ImageView) itemView.findViewById(R.id.imageViewRequestImage);
-            textViewRequestStations = (TextView) itemView.findViewById(R.id.textViewRequestStations);
-            textViewRequestPlatform = (TextView) itemView.findViewById(R.id.textViewRequestPlatform);
+            textViewRequestColonyName = (TextView) itemView.findViewById(R.id.textViewRequestColonyName);
+            textViewRequestDesc = (TextView) itemView.findViewById(R.id.textViewRequestDesc);
+
+            textViewRequestAddress = (TextView) itemView.findViewById(R.id.textViewRequestAddress);
+
             textViewRequestDate = (TextView) itemView.findViewById(R.id.textViewRequestDate);
             textViewRequestStatus = (TextView) itemView.findViewById(R.id.textViewRequestStatus);
-            textViewRequestService = (TextView) itemView.findViewById(R.id.textViewRequestService);
+
         }
     }
 
