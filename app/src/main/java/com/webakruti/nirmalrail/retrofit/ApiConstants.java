@@ -18,9 +18,18 @@ public class ApiConstants {
     public static final String GET_STATION_PLATFORM = "getplatformnstation";
 
     public static final String GET_MY_REQUEST_STATUS = "getcomplaint";
+
+
     public static final String GET_COLONIES = "getcolonylist";
     public static final String GET_TECHNOLOGIES = "gettechnologylist";
     public static final String GET_EVENTS = "geteventslist";
+
+
+    // Admin
+    public static final String ADMIN_LOGIN_API = "adminlogin";
+    public static final String GET_ADMIN_REQUEST_STATUS = "admingetcomplaint";
+    public static final String ADMIN_GET_COMPLAINT_BY_ID = "admingetcomplaintbyid";
+    public static final String ADMIN_UPDATE_COMPLAINT_UPLOAD_IMAGE= "adminupdatecomplaint";
 
 
 }

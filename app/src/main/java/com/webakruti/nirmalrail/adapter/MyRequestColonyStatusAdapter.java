@@ -71,7 +71,7 @@ public class MyRequestColonyStatusAdapter extends RecyclerView.Adapter<MyRequest
 /*
         Picasso.with(context).load(myRequestStatus.getAfterImgUrl()).placeholder(R.drawable.request_image)
 */
-        Picasso.with(context).load(myRequestStatus.getBeforeImgUrl().toString()).placeholder(R.drawable.image_back)
+        Picasso.with(context).load(myRequestStatus.getBeforeImgUrl()).resize(300,300).placeholder(R.drawable.image_back)
                 .into(viewHolder.imageViewRequestImage, new Callback.EmptyCallback() {
                     @Override
                     public void onSuccess() {

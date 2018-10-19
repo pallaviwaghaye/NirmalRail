@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.webakruti.nirmalrail.model.AdminLoginSuccess;
 import com.webakruti.nirmalrail.model.UserResponse;
 
 
@@ -49,5 +50,22 @@ public class SharedPreferenceManager {
         return obj;
     }
 
+
+    public static void storeAdminResponseObjectInSharedPreference(AdminLoginSuccess adminLoginSuccess) {
+        SharedPreferences.Editor prefsEditor = tuitionPlusPreferences.edit();
+        //  prefsEditor.clear();
+        Gson gson = new Gson();
+        String json = gson.toJson(adminLoginSuccess);
+        prefsEditor.putString("AdminResponseObject", json);
+        prefsEditor.commit();
+    }
+
+    public static AdminLoginSuccess getAdminObjectFromSharedPreference() {
+        Gson gson1 = new Gson();
+        String json1 = tuitionPlusPreferences.getString("AdminResponseObject", "");
+        AdminLoginSuccess obj = gson1.fromJson(json1, AdminLoginSuccess.class);
+//		Log.e("RetrivedName:", obj.getFirstName());
+        return obj;
+    }
 
 }

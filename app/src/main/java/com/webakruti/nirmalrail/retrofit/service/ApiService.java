@@ -1,5 +1,7 @@
 package com.webakruti.nirmalrail.retrofit.service;
 
+import com.webakruti.nirmalrail.model.AdminLoginSuccess;
+import com.webakruti.nirmalrail.model.AdmintGetComplaintResponse;
 import com.webakruti.nirmalrail.model.ColonyResponse;
 import com.webakruti.nirmalrail.model.EventImageResponse;
 import com.webakruti.nirmalrail.model.MyRequestStatusResponse;
@@ -80,6 +82,7 @@ public interface ApiService {
     Call<MyRequestStatusResponse> getMyRequestStatus(@Header("Authorization") String header);
 
 
+
     // Station, Places, PF
     @Multipart
     @POST(ApiConstants.SAVE_COMPLAINT)
@@ -136,6 +139,32 @@ public interface ApiService {
             @Part("description") RequestBody description,
             @Part("address") RequestBody address
     );
+
+
+    // --------------------ADMIN APIS-------------------------
+
+    @POST(ApiConstants.ADMIN_LOGIN_API)
+    Call<AdminLoginSuccess> adminLogin(@Query("email") String emailId,
+                                       @Query("password") String password);
+
+
+    @POST(ApiConstants.GET_ADMIN_REQUEST_STATUS)
+    Call<MyRequestStatusResponse> getAdminRequestStatus(@Header("Authorization") String header,
+                                                        @Query("status") String status);
+
+    @POST(ApiConstants.ADMIN_GET_COMPLAINT_BY_ID)
+    Call<AdmintGetComplaintResponse> getAdminComplaintById(@Header("Authorization") String header,
+                                                        @Query("id") String id);
+
+
+    @Multipart
+    @POST(ApiConstants.ADMIN_UPDATE_COMPLAINT_UPLOAD_IMAGE)
+    Call<SaveComplaintResponse> uploadAdminComplaintUpdaate(
+            @Header("Authorization") String header,
+            @Part("id") RequestBody id,
+            @Part("status") RequestBody status,
+            @Part("comment") RequestBody comment,
+            @Part MultipartBody.Part baseImage);
 
 
 }

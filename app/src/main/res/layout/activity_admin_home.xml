@@ -48,65 +48,104 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayoutStatusButtons"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/appBarLayout"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+
             <LinearLayout
-                android:id="@+id/linearLayoutStatusButtons"
-                android:layout_below="@+id/appBarLayout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:id="@+id/linearLayoutNewStatus"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="25"
+                android:background="@color/blue"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewNew"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NEW"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
 
-                    <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <Button
-                            android:id="@+id/buttonNewStatus"
-                            android:layout_width="90dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:background="@color/blue"
-                            android:foreground="?selectableItemBackground"
-                            android:text="NEW"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="15sp" />
-                        <Button
-                            android:id="@+id/buttonInprogressStatus"
-                            android:layout_width="90dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:background="@color/yellow"
-                            android:foreground="?selectableItemBackground"
-                            android:text="INPROGRESS"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="14sp" />
-                        <Button
-                            android:id="@+id/buttonCompletedStatus"
-                            android:layout_width="90dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:background="@color/green"
-                            android:foreground="?selectableItemBackground"
-                            android:text="COMPLETED"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="15sp" />
-                        <Button
-                            android:id="@+id/buttonInvalidStatus"
-                            android:layout_width="90dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:background="@color/red"
-                            android:foreground="?selectableItemBackground"
-                            android:text="INVALID"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="15sp" />
-                    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayoutInprogressStatus"
 
-                </LinearLayout>
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="25"
+                android:background="@color/yellow"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewInProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IN PROGRESS"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayoutCompletedStatus"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="25"
+                android:background="@color/green"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewCompleted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="COMPLETED"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutInvalidStatus"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="25"
+                android:background="@color/red"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewInvalid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="INVALID"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/adminTabs"
@@ -126,7 +165,7 @@
         android:id="@+id/adminViewpager"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tabs"
+        android:layout_below="@+id/adminTabs"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 

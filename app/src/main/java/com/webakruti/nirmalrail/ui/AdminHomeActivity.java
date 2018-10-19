@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,26 +17,30 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.adapter.MyRequestStatusAdapter;
-import com.webakruti.nirmalrail.fragments.MyRequestColonyFragment;
-import com.webakruti.nirmalrail.fragments.MyStationsRequestFragment;
+import com.webakruti.nirmalrail.fragments.AdminColonyStatusFragment;
+import com.webakruti.nirmalrail.fragments.AdminStationStatusFragment;
 import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
+import com.webakruti.nirmalrail.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminHomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
+public class AdminHomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+
+    public static final String NEW = "new";
+    public static final String IN_PROGRESS = "inprocess";
+    public static final String COMPLETED = "complete";
+    public static final String INVALID = "invalid";
+
 
     private ImageView imageViewAdminLogout;
-    private Button buttonNewStatus;
-    private Button buttonInprogressStatus;
-    private Button buttonCompletedStatus;
-    private Button buttonInvalidStatus;
+
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeContainer;
@@ -47,6 +53,16 @@ public class AdminHomeActivity extends AppCompatActivity implements ViewPager.On
     private TabLayout tabLayout;
     private ViewPagerAdapter adapter;
     private int typeOfComplaint;
+    private LinearLayout linearLayoutNewStatus;
+    private LinearLayout linearLayoutInprogressStatus;
+    private LinearLayout linearLayoutCompletedStatus;
+    private LinearLayout linearLayoutInvalidStatus;
+    private TextView textViewInvalid;
+    private TextView textViewCompleted;
+    private TextView textViewInProgress;
+    private TextView textViewNew;
+
+    String selectedStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +70,27 @@ public class AdminHomeActivity extends AppCompatActivity implements ViewPager.On
         setContentView(R.layout.activity_admin_home);
 
         imageViewAdminLogout = (ImageView) findViewById(R.id.imageViewAdminLogout);
+
+
+        linearLayoutNewStatus = (LinearLayout) findViewById(R.id.linearLayoutNewStatus);
+        linearLayoutNewStatus.setOnClickListener(this);
+
+        linearLayoutInprogressStatus = (LinearLayout) findViewById(R.id.linearLayoutInprogressStatus);
+        linearLayoutInprogressStatus.setOnClickListener(this);
+
+        linearLayoutCompletedStatus = (LinearLayout) findViewById(R.id.linearLayoutCompletedStatus);
+        linearLayoutCompletedStatus.setOnClickListener(this);
+
+        linearLayoutInvalidStatus = (LinearLayout) findViewById(R.id.linearLayoutInvalidStatus);
+        linearLayoutInvalidStatus.setOnClickListener(this);
+
+
+        textViewInvalid = (TextView) findViewById(R.id.textViewInvalid);
+        textViewCompleted = (TextView) findViewById(R.id.textViewCompleted);
+        textViewInProgress = (TextView) findViewById(R.id.textViewInProgress);
+        textViewNew = (TextView) findViewById(R.id.textViewNew);
+
+
         imageViewAdminLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,35 +129,151 @@ public class AdminHomeActivity extends AppCompatActivity implements ViewPager.On
         initViews();
         viewPager.setOnPageChangeListener(this);
 
-        // code to show respective tabs
-        typeOfComplaint = getIntent().getIntExtra("TYPE_COMPLAINTS", -1);
-        if (typeOfComplaint == 0) {
-            viewPager.setCurrentItem(0);
-        } else if (typeOfComplaint == 1) {
-            viewPager.setCurrentItem(1);
+
+        // call by default New
+        // no need to pass new first time, its assignning in fragments
+        this.selectedStatus = NEW;
+        textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 42));
+        textViewNew.setTypeface(null, Typeface.BOLD);
+
+        textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+        textViewInProgress.setTypeface(null, Typeface.NORMAL);
+
+        textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+        textViewCompleted.setTypeface(null, Typeface.NORMAL);
+
+        textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+        textViewInvalid.setTypeface(null, Typeface.NORMAL);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.linearLayoutNewStatus:
+                callGetDataAPI(NEW);
+                break;
+            case R.id.linearLayoutInprogressStatus:
+                callGetDataAPI(IN_PROGRESS);
+
+                break;
+            case R.id.linearLayoutCompletedStatus:
+                callGetDataAPI(COMPLETED);
+
+                break;
+            case R.id.linearLayoutInvalidStatus:
+                callGetDataAPI(INVALID);
+
+                break;
+        }
+
+    }
+
+    private void callGetDataAPI(String statusType) {
+        this.selectedStatus = statusType;
+
+        switch (statusType) {
+
+            case NEW:
+                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 42));
+                textViewNew.setTypeface(null, Typeface.BOLD);
+
+                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInProgress.setTypeface(null, Typeface.NORMAL);
+
+                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewCompleted.setTypeface(null, Typeface.NORMAL);
+
+                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInvalid.setTypeface(null, Typeface.NORMAL);
+
+                viewPager.setCurrentItem(0);
+                onPageSelected(0);
+                break;
+
+            case IN_PROGRESS:
+
+                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewNew.setTypeface(null, Typeface.NORMAL);
+
+                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 42));
+                textViewInProgress.setTypeface(null, Typeface.BOLD);
+
+                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewCompleted.setTypeface(null, Typeface.NORMAL);
+
+                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInvalid.setTypeface(null, Typeface.NORMAL);
+
+                viewPager.setCurrentItem(0);
+                onPageSelected(0);
+                break;
+
+            case COMPLETED:
+
+                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewNew.setTypeface(null, Typeface.NORMAL);
+
+                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInProgress.setTypeface(null, Typeface.NORMAL);
+
+                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 42));
+                textViewCompleted.setTypeface(null, Typeface.BOLD);
+
+                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInvalid.setTypeface(null, Typeface.NORMAL);
+
+                viewPager.setCurrentItem(0);
+                onPageSelected(0);
+                break;
+
+            case INVALID:
+
+                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewNew.setTypeface(null, Typeface.NORMAL);
+
+                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInProgress.setTypeface(null, Typeface.NORMAL);
+
+                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewCompleted.setTypeface(null, Typeface.NORMAL);
+
+                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 42));
+                textViewInvalid.setTypeface(null, Typeface.BOLD);
+
+                viewPager.setCurrentItem(0);
+                onPageSelected(0);
+
+                break;
+
         }
     }
 
+
     private void initViews() {
         viewPager = (ViewPager) findViewById(R.id.adminViewpager);
-        setupViewPager(viewPager);
+        setupViewPager(viewPager, NEW);
+
+
+    }
+
+    private void setupViewPager(ViewPager viewPager, String typeStatus) {
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        AdminStationStatusFragment adminStationFragment = new AdminStationStatusFragment();
+
+        AdminColonyStatusFragment adminColonyFragment = new AdminColonyStatusFragment();
+
+        adapter.addFragment(adminStationFragment, "STATION");
+        adapter.addFragment(adminColonyFragment, "COLONY");
+
+        viewPager.setAdapter(adapter);
+
 
         tabLayout = (TabLayout) findViewById(R.id.adminTabs);
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        MyStationsRequestFragment allFragment = new MyStationsRequestFragment();
-        MyRequestColonyFragment liveFragment = new MyRequestColonyFragment();
-
-        adapter.addFragment(allFragment, "STATION");
-        adapter.addFragment(liveFragment, "COLONY");
-
-        viewPager.setAdapter(adapter);
-    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -159,6 +312,16 @@ public class AdminHomeActivity extends AppCompatActivity implements ViewPager.On
 
     @Override
     public void onPageSelected(int position) {
+
+        if (position == 0) {
+            // Station
+            ((AdminStationStatusFragment) adapter.getItem(position)).onRefresh(selectedStatus);
+
+        } else if (position == 1) {
+            // colony
+            ((AdminColonyStatusFragment) adapter.getItem(position)).onRefresh(selectedStatus);
+
+        }
 
 
     }

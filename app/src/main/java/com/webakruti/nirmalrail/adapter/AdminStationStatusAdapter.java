@@ -3,6 +3,7 @@ package com.webakruti.nirmalrail.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.model.MyRequestStatusResponse;
+import com.webakruti.nirmalrail.ui.AdminStatusFormActivity;
 
 import java.util.List;
 
@@ -76,7 +78,7 @@ public class AdminStationStatusAdapter extends RecyclerView.Adapter<AdminStation
 /*
         Picasso.with(context).load(myRequestStatus.getAfterImgUrl()).placeholder(R.drawable.request_image)
 */
-        Picasso.with(context).load(myRequestStatus.getBeforeImgUrl().toString()).placeholder(R.drawable.image_back)
+        /*Picasso.with(context).load(myRequestStatus.getBeforeImgUrl()).placeholder(R.drawable.image_back)
                 .into(viewHolder.imageViewRequestImage, new Callback.EmptyCallback() {
                     @Override
                     public void onSuccess() {
@@ -88,15 +90,19 @@ public class AdminStationStatusAdapter extends RecyclerView.Adapter<AdminStation
                         viewHolder.imageViewRequestImage.setImageResource(R.drawable.image_back);
                     }
                 });
+*/
 
-        /*viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+        Picasso.with(context).load(myRequestStatus.getBeforeImgUrl()).placeholder(R.drawable.image_back).resize(300,300).into(viewHolder.imageViewRequestImage);
+
+        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, RailwayCategoryFormActivity.class);
+                Intent intent = new Intent(context, AdminStatusFormActivity.class);
+                intent.putExtra("id",myRequestStatus.getId());
+                intent.putExtra("STATUS_INFO", myRequestStatus.getStatus());
                 context.startActivity(intent);
             }
         });
-*/
 
     }
 

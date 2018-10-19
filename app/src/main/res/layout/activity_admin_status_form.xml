@@ -39,8 +39,7 @@
                         android:layout_height="32dp"
                         android:layout_gravity="center_vertical"
                         android:padding="5dp"
-                        android:src="@drawable/action_back"
-                        />
+                        android:src="@drawable/action_back" />
 
 
                     <TextView
@@ -53,89 +52,91 @@
                         android:text="Admin status update form"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
 
 
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
+
     <ScrollView
-        android:layout_below="@+id/appBarLayout"
-        android:scrollbars="none"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/appBarLayout"
+        android:scrollbars="none">
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/linearLayoutUserDetails"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="User Details"
-                android:textColor="@color/blue"
-                android:textSize="14sp" />
-
             <LinearLayout
+                android:id="@+id/linearLayoutUserDetails"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-
-                android:layout_marginRight="2dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:text="Name :"
+                    android:layout_marginTop="10dp"
+                    android:text="User Details"
                     android:textColor="@color/blue"
                     android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/textViewRequestStations"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="abcdef"
-                    android:textColor="@color/black"
-                    android:textSize="13sp" />
+
+                    android:layout_marginRight="2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Name :"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textViewName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="abcdef"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Mobile No. :"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textViewMobileNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="9876543210"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
+                </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-
-                android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="Mobile No. :"
-                    android:textColor="@color/blue"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/textViewRequestPlatform"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="9876543210"
-                    android:textColor="@color/black"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayoutComplaintDetails"
@@ -146,9 +147,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     android:text="Complaint Details"
                     android:textColor="@color/blue"
                     android:textSize="14sp" />
@@ -204,7 +205,194 @@
                 </LinearLayout>
             </LinearLayout>
 
-            
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Status :"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textViewComplaintStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="ghjklm"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Change Status :"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerChangeStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="20dp"
+                        android:popupBackground="@color/white"></Spinner>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayoutCompleteInfo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Before" />
+
+                    <ImageView
+                        android:id="@+id/imageViewBefore"
+                        android:layout_width="150dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:adjustViewBounds="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="After" />
+
+                    <ImageView
+                        android:id="@+id/imageViewAfter"
+                        android:layout_width="150dp"
+                        android:layout_height="120dp"
+                        android:layout_marginTop="10dp"
+                        android:adjustViewBounds="true" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/editTextComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/dark_blue"
+                android:gravity="top|left"
+                android:hint="Comment"
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:scrollHorizontally="false"
+                android:textColor="@color/black"
+                android:textColorHint="@color/divider_color"
+                android:textSize="15sp" />
+
+
+            <LinearLayout
+                android:id="@+id/linearLayoutPhotos"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageViewCamera"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/camera" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15sp"
+                    android:layout_marginRight="15sp"
+                    android:text="or"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/imageViewGallery"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/camera1" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageViewPhoto"
+                android:layout_width="270dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:visibility="gone" />
+
+
+            <Button
+                android:id="@+id/buttonSubmit"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="40dp"
+                android:background="@color/dark_blue"
+                android:foreground="?selectableItemBackground"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
 
         </LinearLayout>
 

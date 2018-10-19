@@ -45,9 +45,17 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(i);
                         finish();
                     } else {
-                        Intent i = new Intent(SplashActivity.this, LoginActivity.class);
-                        startActivity(i);
-                        finish();
+
+                        if (SharedPreferenceManager.getAdminObjectFromSharedPreference() != null) {
+                            Intent i = new Intent(SplashActivity.this, AdminHomeActivity.class);
+                            startActivity(i);
+                            finish();
+                        } else {
+                            Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+                            startActivity(i);
+                            finish();
+
+                        }
                     }
                 } catch (Exception e) {
                     // TODO Auto-generated catch block

@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.linearLayoutAdminLogin:
                 Intent intent3 = new Intent(LoginActivity.this, AdminLoginActivity.class);
                 startActivity(intent3);
-                finish();
+                //finish();
 
                 break;
 

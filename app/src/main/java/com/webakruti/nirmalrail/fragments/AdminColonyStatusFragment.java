@@ -18,8 +18,10 @@ import android.widget.Toast;
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.adapter.AdminColonyStatusAdapter;
 import com.webakruti.nirmalrail.adapter.MyRequestColonyStatusAdapter;
+import com.webakruti.nirmalrail.callbacks.ICallForStatusAPIs;
 import com.webakruti.nirmalrail.model.MyRequestStatusResponse;
 import com.webakruti.nirmalrail.retrofit.service.RestClient;
+import com.webakruti.nirmalrail.ui.AdminHomeActivity;
 import com.webakruti.nirmalrail.utils.NetworkUtil;
 import com.webakruti.nirmalrail.utils.SharedPreferenceManager;
 
@@ -29,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdminColonyStatusFragment extends Fragment {
+public class AdminColonyStatusFragment extends Fragment implements ICallForStatusAPIs {
 
     private View rootView;
     private com.webakruti.nirmalrail.utils.CustomSwipeToRefresh swipeContainer;
@@ -38,6 +40,7 @@ public class AdminColonyStatusFragment extends Fragment {
     private ProgressDialog progressDialogForAPI;
     private AdminColonyStatusAdapter adminColonyStatusAdapter;
     boolean isCallFromPullDown = false;
+    private String status;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,14 +58,13 @@ public class AdminColonyStatusFragment extends Fragment {
 
         initSwipeLayout();
 
-        progressDialogForAPI = new ProgressDialog(getActivity());
-        progressDialogForAPI.setCancelable(false);
-        progressDialogForAPI.setIndeterminate(true);
-        progressDialogForAPI.setMessage("Please wait...");
-        progressDialogForAPI.show();
+
+        status = AdminHomeActivity.NEW;
+
+
 
         if (NetworkUtil.hasConnectivity(getActivity())) {
-            callGetRequestAPI();
+            callAdminStationsAPI();
         } else {
             Toast.makeText(getActivity(), R.string.no_internet_message, Toast.LENGTH_SHORT).show();
         }
@@ -81,7 +83,7 @@ public class AdminColonyStatusFragment extends Fragment {
                 if (NetworkUtil.hasConnectivity(getActivity())) {
                     // call API
                     isCallFromPullDown = true;
-                    callGetRequestAPI();
+                    callAdminStationsAPI();
 
                 } else {
                     swipeContainer.setRefreshing(false);
@@ -96,15 +98,56 @@ public class AdminColonyStatusFragment extends Fragment {
 
     }
 
+    @Override
+    public void onRefresh(String statusType) {
+        switch (statusType) {
 
-    private void callGetRequestAPI() {
+            case AdminHomeActivity.NEW:
+                status = AdminHomeActivity.NEW;
+                callAdminStationsAPI();
+                break;
+
+
+            case AdminHomeActivity.IN_PROGRESS:
+                status = AdminHomeActivity.IN_PROGRESS;
+                callAdminStationsAPI();
+
+                break;
+
+
+            case AdminHomeActivity.COMPLETED:
+                status = AdminHomeActivity.COMPLETED;
+                callAdminStationsAPI();
+
+                break;
+
+            case AdminHomeActivity.INVALID:
+                status = AdminHomeActivity.INVALID;
+                callAdminStationsAPI();
+
+                break;
+
+
+        }
+    }
+
+
+    private void callAdminStationsAPI() {
+
+        if(!isCallFromPullDown) {
+            progressDialogForAPI = new ProgressDialog(getActivity());
+            progressDialogForAPI.setCancelable(true);
+            progressDialogForAPI.setIndeterminate(true);
+            progressDialogForAPI.setMessage("Please wait...");
+            progressDialogForAPI.show();
+        }
 
         SharedPreferenceManager.setApplicationContext(getActivity());
-        String token = SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
+        String token = SharedPreferenceManager.getAdminObjectFromSharedPreference().getSuccess().getToken();
 
         String API = "http://nirmalrail.webakruti.in/api/";
         String headers = "Bearer " + token;
-        Call<MyRequestStatusResponse> requestCallback = RestClient.getApiService(API).getMyRequestStatus(headers);
+        Call<MyRequestStatusResponse> requestCallback = RestClient.getApiService(API).getAdminRequestStatus(headers, status);
         requestCallback.enqueue(new Callback<MyRequestStatusResponse>() {
             @Override
             public void onResponse(Call<MyRequestStatusResponse> call, Response<MyRequestStatusResponse> response) {
