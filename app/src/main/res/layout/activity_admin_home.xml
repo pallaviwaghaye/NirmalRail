@@ -39,7 +39,7 @@
                         android:layout_marginLeft="140dp"
                         android:layout_marginRight="25dp"
 
-                        android:src="@drawable/logout1" />
+                        android:src="@drawable/logout" />
 
                 </LinearLayout>
 

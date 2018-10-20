@@ -39,6 +39,7 @@
                         android:layout_gravity="center_vertical"
                         android:padding="5dp"
                         android:src="@drawable/action_back"
+                        android:visibility="gone"
                         />
 
                     <TextView
