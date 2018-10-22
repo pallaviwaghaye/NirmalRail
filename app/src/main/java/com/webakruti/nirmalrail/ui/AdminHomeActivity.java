@@ -133,16 +133,16 @@ public class AdminHomeActivity extends AppCompatActivity implements ViewPager.On
         // call by default New
         // no need to pass new first time, its assignning in fragments
         this.selectedStatus = NEW;
-        textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 42));
+        textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
         textViewNew.setTypeface(null, Typeface.BOLD);
 
-        textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+        textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
         textViewInProgress.setTypeface(null, Typeface.NORMAL);
 
-        textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+        textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
         textViewCompleted.setTypeface(null, Typeface.NORMAL);
 
-        textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+        textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
         textViewInvalid.setTypeface(null, Typeface.NORMAL);
 
     }
@@ -175,16 +175,16 @@ public class AdminHomeActivity extends AppCompatActivity implements ViewPager.On
         switch (statusType) {
 
             case NEW:
-                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 42));
+                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
                 textViewNew.setTypeface(null, Typeface.BOLD);
 
-                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewInProgress.setTypeface(null, Typeface.NORMAL);
 
-                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewCompleted.setTypeface(null, Typeface.NORMAL);
 
-                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewInvalid.setTypeface(null, Typeface.NORMAL);
 
                 viewPager.setCurrentItem(0);
@@ -193,16 +193,16 @@ public class AdminHomeActivity extends AppCompatActivity implements ViewPager.On
 
             case IN_PROGRESS:
 
-                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewNew.setTypeface(null, Typeface.NORMAL);
 
-                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 42));
+                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
                 textViewInProgress.setTypeface(null, Typeface.BOLD);
 
-                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewCompleted.setTypeface(null, Typeface.NORMAL);
 
-                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewInvalid.setTypeface(null, Typeface.NORMAL);
 
                 viewPager.setCurrentItem(0);
@@ -211,16 +211,16 @@ public class AdminHomeActivity extends AppCompatActivity implements ViewPager.On
 
             case COMPLETED:
 
-                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewNew.setTypeface(null, Typeface.NORMAL);
 
-                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewInProgress.setTypeface(null, Typeface.NORMAL);
 
-                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 42));
+                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
                 textViewCompleted.setTypeface(null, Typeface.BOLD);
 
-                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewInvalid.setTypeface(null, Typeface.NORMAL);
 
                 viewPager.setCurrentItem(0);
@@ -229,16 +229,16 @@ public class AdminHomeActivity extends AppCompatActivity implements ViewPager.On
 
             case INVALID:
 
-                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewNew.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewNew.setTypeface(null, Typeface.NORMAL);
 
-                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewInProgress.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewInProgress.setTypeface(null, Typeface.NORMAL);
 
-                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
+                textViewCompleted.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 32));
                 textViewCompleted.setTypeface(null, Typeface.NORMAL);
 
-                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 42));
+                textViewInvalid.setTextSize(Utils.pixelToDp(AdminHomeActivity.this, 36));
                 textViewInvalid.setTypeface(null, Typeface.BOLD);
 
                 viewPager.setCurrentItem(0);
