@@ -96,6 +96,8 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
     private AdmintGetComplaintResponse.Complaint complaint;
     private String selectedChangedStatus = "Select";
     private ImageView imageViewBack;
+    private TextView textViewBefore;
+    private TextView textViewAfter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,13 +109,19 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
 
         if (statusInfo.equalsIgnoreCase(AdminHomeActivity.COMPLETED)) {
             linearLayoutSpinner.setVisibility(View.GONE);
-            linearLayoutCompleteInfo.setVisibility(View.VISIBLE);
+            textViewAfter.setVisibility(View.VISIBLE);
+            imageViewAfter.setVisibility(View.VISIBLE);
+            textViewBefore.setVisibility(View.VISIBLE);
+            imageViewBefore.setVisibility(View.VISIBLE);
             linearLayoutPhotos.setVisibility(View.GONE);
             editTextComment.setEnabled(false);
             buttonSubmit.setVisibility(View.GONE);
         } else {
             linearLayoutSpinner.setVisibility(View.VISIBLE);
-            linearLayoutCompleteInfo.setVisibility(View.GONE);
+            textViewAfter.setVisibility(View.GONE);
+            imageViewAfter.setVisibility(View.GONE);
+            textViewBefore.setVisibility(View.VISIBLE);
+            imageViewBefore.setVisibility(View.VISIBLE);
             linearLayoutPhotos.setVisibility(View.VISIBLE);
             editTextComment.setEnabled(true);
             buttonSubmit.setVisibility(View.VISIBLE);
@@ -201,6 +209,8 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
         textViewMobileNo = (TextView) findViewById(R.id.textViewMobileNo);
         textViewComplaintStations = (TextView) findViewById(R.id.textViewComplaintStations);
         textViewComplaintPlatform = (TextView) findViewById(R.id.textViewComplaintPlatform);
+        textViewBefore = (TextView) findViewById(R.id.textViewBefore);
+        textViewAfter = (TextView) findViewById(R.id.textViewAfter);
         textViewComplaintStatus = (TextView) findViewById(R.id.textViewComplaintStatus);
         spinnerChangeStatus = (Spinner) findViewById(R.id.spinnerChangeStatus);
         editTextComment = (EditText) findViewById(R.id.editTextComment);
@@ -564,6 +574,9 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                             textViewComplaintStations.setText(complaint.getStationname());
                             textViewComplaintPlatform.setText(complaint.getAtPlatform());
                             textViewComplaintStatus.setText(complaint.getStatus());
+                            Picasso.with(AdminStatusFormActivity.this).load(complaint.getBeforeImgUrl()).placeholder(R.drawable.image_back).resize(300, 300).into(imageViewBefore);
+
+
                             if (statusInfo.equalsIgnoreCase(AdminHomeActivity.COMPLETED)) {
 
                                 Picasso.with(AdminStatusFormActivity.this).load(complaint.getBeforeImgUrl()).placeholder(R.drawable.image_back).resize(300, 300).into(imageViewBefore);
