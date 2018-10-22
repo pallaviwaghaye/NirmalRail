@@ -5,9 +5,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="yellow">#ecbd1e</color>
+    <color name="yellow">#ffc107</color>
     <color name="orange">#ec8c1e</color>
-    <color name="blue">#0080ff</color>
+    <color name="blue">#007bff</color>
     <color name="dashboard_count_color">#e61a1a</color>
     <color name="grey">#6d8383</color>
     <color name="pink">#FF69B4</color>
@@ -19,8 +19,8 @@
     <color name="divider_color">#dadada</color>
     <color name="blue_for_link">#2B7CA0</color>
     <color name="dark_blue">#134677</color>
-    <color name="red">#ec2327</color>
+    <color name="red">#dc3545</color>
     <color name="gray">#dedddd</color>
-    <color name="green">#0ddf1e</color>
+    <color name="green">#28a745</color>
 
 </resources>
