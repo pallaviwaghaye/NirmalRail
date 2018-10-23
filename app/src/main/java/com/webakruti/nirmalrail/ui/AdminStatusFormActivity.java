@@ -573,7 +573,22 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                             textViewMobileNo.setText(complaint.getMobile());
                             textViewComplaintStations.setText(complaint.getStationname());
                             textViewComplaintPlatform.setText(complaint.getAtPlatform());
-                            textViewComplaintStatus.setText(complaint.getStatus());
+                            //textViewComplaintStatus.setText(complaint.getStatus());
+
+                            if (complaint.getStatus().equalsIgnoreCase("invalid")) {
+                                textViewComplaintStatus.setBackgroundColor(getResources().getColor(R.color.red));
+                                textViewComplaintStatus.setText(complaint.getStatus());
+                            } else if (complaint.getStatus().equalsIgnoreCase("inprocess")) {
+                                textViewComplaintStatus.setBackgroundColor(getResources().getColor(R.color.yellow));
+                                textViewComplaintStatus.setText(complaint.getStatus());
+                            } else if (complaint.getStatus().equalsIgnoreCase("complete")) {
+                                textViewComplaintStatus.setBackgroundColor(getResources().getColor(R.color.green));
+                                textViewComplaintStatus.setText(complaint.getStatus());
+                            } else {
+                                textViewComplaintStatus.setBackgroundColor(getResources().getColor(R.color.sky_blue));
+                                textViewComplaintStatus.setText(complaint.getStatus());
+                            }
+
                             Picasso.with(AdminStatusFormActivity.this).load(complaint.getBeforeImgUrl()).placeholder(R.drawable.image_back).resize(300, 300).into(imageViewBefore);
 
 
