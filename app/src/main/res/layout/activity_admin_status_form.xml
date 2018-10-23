@@ -165,12 +165,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Complaint Details :-"
-                    android:textColor="@color/blue"
-                    android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Complaint Details :-"
+                        android:textColor="@color/blue"
+                        android:textSize="18sp" />
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="0.45dp"
@@ -191,46 +191,46 @@
                         android:layout_weight="50"
                         android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="Station :"
-                        android:textColor="@color/mid_blue"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/textViewComplaintStations"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="abcdef"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-                    </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="50"
-                            android:orientation="horizontal">
+                            android:layout_marginLeft="10dp"
+                            android:text="Station :"
+                            android:textColor="@color/mid_blue"
+                            android:textSize="16sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:text="Platform :"
-                                android:textColor="@color/mid_blue"
-                                android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/textViewComplaintStations"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="abcdef"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/textViewComplaintPlatform"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:text="ghjklm"
-                                android:textColor="@color/black"
-                                android:textSize="15sp" />
-                        </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="Platform :"
+                            android:textColor="@color/mid_blue"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/textViewComplaintPlatform"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="ghjklm"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -370,7 +370,6 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/divider_color"
                 android:textSize="15sp" />
-
 
             <LinearLayout
                 android:id="@+id/linearLayoutPhotos"

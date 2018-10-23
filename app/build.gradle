@@ -6,8 +6,8 @@ android {
         applicationId "com.webakruti.nirmalrail"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 8
-        versionName "4.0.0"
+        versionCode 9
+        versionName "4.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 

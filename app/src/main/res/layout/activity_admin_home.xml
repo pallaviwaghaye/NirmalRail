@@ -117,7 +117,7 @@
                     android:id="@+id/textViewCompleted"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="COMPLETED"
+                    android:text="COMPLETE"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
