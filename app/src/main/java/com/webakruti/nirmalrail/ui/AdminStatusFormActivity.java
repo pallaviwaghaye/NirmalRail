@@ -99,6 +99,8 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
     private TextView textViewBefore;
     private TextView textViewAfter;
 
+    private LinearLayout linearLayoutStationPlatform;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,6 +226,8 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
         imageViewAfter = (ImageView) findViewById(R.id.imageViewAfter);
         linearLayoutPhotos = (LinearLayout) findViewById(R.id.linearLayoutPhotos);
         imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
+        linearLayoutStationPlatform = (LinearLayout)findViewById(R.id.linearLayoutStationPlatform);
+
         imageViewCamera.setOnClickListener(this);
         imageViewGallery.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
@@ -571,9 +575,22 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                             complaint = result.getSuccess().getComplaint();
                             textViewName.setText(complaint.getName());
                             textViewMobileNo.setText(complaint.getMobile());
-                            textViewComplaintStations.setText(complaint.getStationname());
-                            textViewComplaintPlatform.setText(complaint.getAtPlatform());
-                            //textViewComplaintStatus.setText(complaint.getStatus());
+
+                           if(result.getSuccess().getComplaint().getColonyname() == null) {
+
+                               linearLayoutStationPlatform.setVisibility(View.VISIBLE);
+                                /*textViewComplaintStations.setVisibility(View.VISIBLE);
+                                textViewComplaintPlatform.setVisibility(View.VISIBLE);*/
+                               textViewComplaintStations.setText(complaint.getStationname());
+                               textViewComplaintPlatform.setText(complaint.getAtPlatform());
+                               textViewComplaintStatus.setText(complaint.getStatus());
+
+                            }
+                            else {
+                               linearLayoutStationPlatform.setVisibility(View.GONE);
+                                /*textViewComplaintStations.setVisibility(View.GONE);
+                                textViewComplaintPlatform.setVisibility(View.GONE);*/
+                            }
 
                             if (complaint.getStatus().equalsIgnoreCase("invalid")) {
                                 textViewComplaintStatus.setBackgroundColor(getResources().getColor(R.color.red));
