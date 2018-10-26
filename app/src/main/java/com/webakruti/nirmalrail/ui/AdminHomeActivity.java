@@ -1,5 +1,6 @@
 package com.webakruti.nirmalrail.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -38,7 +39,9 @@ public class AdminHomeActivity extends AppCompatActivity implements ViewPager.On
     public static final String COMPLETED = "complete";
     public static final String INVALID = "invalid";
 
-
+    public static final int REQUEST_CODE_HOME_FORM = 1; // always integer value for startactivityfor result
+    public static final int TAB_STATION = 0;
+    public static final int TAB_COLONY = 1;
     private ImageView imageViewAdminLogout;
 
 
@@ -330,5 +333,50 @@ public class AdminHomeActivity extends AppCompatActivity implements ViewPager.On
     public void onPageScrollStateChanged(int state) {
 
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == REQUEST_CODE_HOME_FORM) {
+            if (resultCode == Activity.RESULT_OK) {
+                String selectedStatus = intent.getStringExtra("SELECTED_STATUS");
+                int selectedTab = intent.getIntExtra("TAB_TYPE", -1);
+                callRefreshGetDataAPI(selectedStatus, selectedTab);
+            }
+
+        }
+    }
+
+
+    private void callRefreshGetDataAPI(String statusType, int selectedTab) {
+        this.selectedStatus = statusType;
+
+        switch (statusType) {
+
+            case NEW:
+
+                onPageSelected(selectedTab);
+                break;
+
+            case IN_PROGRESS:
+
+                onPageSelected(selectedTab);
+                break;
+
+            case COMPLETED:
+
+
+                onPageSelected(selectedTab);
+                break;
+
+            case INVALID:
+
+                onPageSelected(selectedTab);
+
+                break;
+
+        }
+    }
+
 
 }

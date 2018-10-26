@@ -18,6 +18,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.model.MyRequestStatusResponse;
+import com.webakruti.nirmalrail.ui.AdminHomeActivity;
 import com.webakruti.nirmalrail.ui.AdminStatusFormActivity;
 
 import java.util.List;
@@ -92,15 +93,18 @@ public class AdminStationStatusAdapter extends RecyclerView.Adapter<AdminStation
                 });
 */
 
-        Picasso.with(context).load(myRequestStatus.getBeforeImgUrl()).placeholder(R.drawable.image_not_found).resize(300,300).into(viewHolder.imageViewRequestImage);
+        Picasso.with(context).load(myRequestStatus.getBeforeImgUrl()).placeholder(R.drawable.image_not_found).resize(300, 300).into(viewHolder.imageViewRequestImage);
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AdminStatusFormActivity.class);
-                intent.putExtra("id",myRequestStatus.getId());
+                intent.putExtra("id", myRequestStatus.getId());
                 intent.putExtra("STATUS_INFO", myRequestStatus.getStatus());
-                context.startActivity(intent);
+                intent.putExtra("TAB_TYPE", AdminHomeActivity.TAB_STATION); // Need to pass to check which tab is selected while refreshing (As it is Station related adapter, we are sending 0
+                // context.startActivity(intent);
+                context.startActivityForResult(intent, AdminHomeActivity.REQUEST_CODE_HOME_FORM);
+
             }
         });
 

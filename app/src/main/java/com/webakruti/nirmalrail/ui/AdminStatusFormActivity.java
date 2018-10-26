@@ -100,6 +100,7 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
     private TextView textViewAfter;
 
     private LinearLayout linearLayoutStationPlatform;
+    private int tabTypeInHomePage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,8 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
         initViews();
         int id = getIntent().getIntExtra("id", -1);
         statusInfo = getIntent().getStringExtra("STATUS_INFO");
+
+        tabTypeInHomePage = getIntent().getIntExtra("TAB_TYPE",-1);
 
         if (statusInfo.equalsIgnoreCase(AdminHomeActivity.COMPLETED)) {
             linearLayoutSpinner.setVisibility(View.GONE);
@@ -226,7 +229,7 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
         imageViewAfter = (ImageView) findViewById(R.id.imageViewAfter);
         linearLayoutPhotos = (LinearLayout) findViewById(R.id.linearLayoutPhotos);
         imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
-        linearLayoutStationPlatform = (LinearLayout)findViewById(R.id.linearLayoutStationPlatform);
+        linearLayoutStationPlatform = (LinearLayout) findViewById(R.id.linearLayoutStationPlatform);
 
         imageViewCamera.setOnClickListener(this);
         imageViewGallery.setOnClickListener(this);
@@ -576,18 +579,17 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                             textViewName.setText(complaint.getName());
                             textViewMobileNo.setText(complaint.getMobile());
 
-                           if(result.getSuccess().getComplaint().getColonyname() == null) {
+                            if (result.getSuccess().getComplaint().getColonyname() == null) {
 
-                               linearLayoutStationPlatform.setVisibility(View.VISIBLE);
+                                linearLayoutStationPlatform.setVisibility(View.VISIBLE);
                                 /*textViewComplaintStations.setVisibility(View.VISIBLE);
                                 textViewComplaintPlatform.setVisibility(View.VISIBLE);*/
-                               textViewComplaintStations.setText(complaint.getStationname());
-                               textViewComplaintPlatform.setText(complaint.getAtPlatform());
-                               textViewComplaintStatus.setText(complaint.getStatus());
+                                textViewComplaintStations.setText(complaint.getStationname());
+                                textViewComplaintPlatform.setText(complaint.getAtPlatform());
+                                textViewComplaintStatus.setText(complaint.getStatus());
 
-                            }
-                            else {
-                               linearLayoutStationPlatform.setVisibility(View.GONE);
+                            } else {
+                                linearLayoutStationPlatform.setVisibility(View.GONE);
                                 /*textViewComplaintStations.setVisibility(View.GONE);
                                 textViewComplaintPlatform.setVisibility(View.GONE);*/
                             }
@@ -676,7 +678,7 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
         } else {
           /*  Toast.makeText(AdminStatusFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
             return;*/
-           path = null;
+            path = null;
         }
 
 
@@ -719,6 +721,12 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                             if (saveComplaintResponse.getSuccess().getStatus()) {
                                 Toast.makeText(getApplicationContext(), saveComplaintResponse.getSuccess().getMsg(), Toast.LENGTH_SHORT).show();
                                 Log.e("Upload", "Upload Successful");
+
+                                // Code to call onActivityResult method in AdminHome Activity
+                                Intent returnIntent = new Intent();
+                                returnIntent.putExtra("SELECTED_STATUS", statusInfo);
+                                returnIntent.putExtra("TAB_TYPE", tabTypeInHomePage);
+                                setResult(Activity.RESULT_OK, returnIntent);
                                 finish();
                             }
                         } else {
