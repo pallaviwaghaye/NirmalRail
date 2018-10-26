@@ -602,8 +602,10 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                 t.printStackTrace();
             }
         } else {
-            Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
-            return;
+           /* Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+            return;*/
+
+            path = null;
         }
 
 
@@ -619,8 +621,19 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         RequestBody stationId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedStation.getId() + "");
 
 
-        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
-        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+        RequestBody requestBaseFile;
+        MultipartBody.Part bodyImage = null;
+        if (path != null) {
+            // with image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+            bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+
+        } else {
+            // without image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+            bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+
+        }
 
 
         String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
@@ -694,8 +707,9 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                 t.printStackTrace();
             }
         } else {
-            Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
-            return;
+           /* Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+            return;*/
+            path = null;
         }
         /*
          @Header("Authorization") String header,
@@ -716,10 +730,19 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         RequestBody atPlatform = RequestBody.create(MediaType.parse("multipart/form-data"), selectedPlatformSpinner.getPlatform() + "");
 
 
-        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
-        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+        RequestBody requestBaseFile;
+        MultipartBody.Part bodyImage = null;
+        if (path != null) {
+            // with image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+            bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
 
+        } else {
+            // without image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+            bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
 
+        }
         String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
 
         Call<SaveComplaintResponse> colorsCall = RestClient.getApiService(ApiConstants.BASE_URL).uploadImage_Station_PF(header, bodyImage, description, serviceId, stationId, atPlatform);
@@ -794,8 +817,9 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                 t.printStackTrace();
             }
         } else {
-            Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
-            return;
+           /* Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+            return;*/
+            path = null;
         }
 
         progressDialogForAPI = new ProgressDialog(RailwayCategoryFormActivity.this);
@@ -809,9 +833,19 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         RequestBody stationId = RequestBody.create(MediaType.parse("multipart/form-data"), selectedStation.getId() + "");
 
 
-        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
-        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+        RequestBody requestBaseFile;
+        MultipartBody.Part bodyImage = null;
+        if (path != null) {
+            // with image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+            bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
 
+        } else {
+            // without image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+            bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+
+        }
 
         String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
 
@@ -887,8 +921,9 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
                 t.printStackTrace();
             }
         } else {
-            Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
-            return;
+          /*  Toast.makeText(RailwayCategoryFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+            return;*/
+            path = null;
         }
 
 
@@ -903,9 +938,19 @@ public class RailwayCategoryFormActivity extends AppCompatActivity implements Vi
         RequestBody atPlatform = RequestBody.create(MediaType.parse("multipart/form-data"), selectedPlatformSpinner.getPlatform() + "");
 
 
-        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
-        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+        RequestBody requestBaseFile;
+        MultipartBody.Part bodyImage = null;
+        if (path != null) {
+            // with image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+            bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
 
+        } else {
+            // without image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+            bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+
+        }
 
         String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
 

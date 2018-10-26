@@ -284,8 +284,9 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
                 t.printStackTrace();
             }
         } else {
-            Toast.makeText(getActivity(), "Please select image", Toast.LENGTH_SHORT).show();
-            return;
+          /*  Toast.makeText(getActivity(), "Please select image", Toast.LENGTH_SHORT).show();
+            return;*/
+            path = null;
         }
 
 
@@ -305,8 +306,19 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
         RequestBody address = RequestBody.create(MediaType.parse("multipart/form-data"), editTextColonyAddress.getText().toString());
 
 
-        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
-        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+        RequestBody requestBaseFile;
+        MultipartBody.Part bodyImage = null;
+        if (path != null) {
+            // with image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+            bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+
+
+        } else {
+            // without image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+            bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
+        }
 
 
         String header = "Bearer " + SharedPreferenceManager.getUserObjectFromSharedPreference().getSuccess().getToken();
