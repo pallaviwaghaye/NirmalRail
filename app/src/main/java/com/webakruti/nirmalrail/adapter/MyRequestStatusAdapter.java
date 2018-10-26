@@ -20,6 +20,7 @@ import com.webakruti.nirmalrail.R;
 import com.webakruti.nirmalrail.model.MyRequestStatusResponse;
 import com.webakruti.nirmalrail.ui.MyRequestsActivity;
 import com.webakruti.nirmalrail.ui.RailwayCategoryFormActivity;
+import com.webakruti.nirmalrail.ui.UserStatusDetailsActivity;
 
 import java.util.List;
 
@@ -96,14 +97,15 @@ public class MyRequestStatusAdapter extends RecyclerView.Adapter<MyRequestStatus
                     }
                 });
 
-        /*viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, RailwayCategoryFormActivity.class);
+                Intent intent = new Intent(context, UserStatusDetailsActivity.class);
+                intent.putExtra("id",myRequestStatus.getId());
+                intent.putExtra("STATUS_INFO", myRequestStatus.getStatus());
                 context.startActivity(intent);
             }
         });
-*/
 
     }
 

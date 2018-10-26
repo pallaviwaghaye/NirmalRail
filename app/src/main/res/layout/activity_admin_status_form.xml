@@ -49,7 +49,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:gravity="left"
-                        android:text="Admin status update form"
+                        android:text="Admin form"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -75,17 +75,43 @@
                 android:id="@+id/linearLayoutUserDetails"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/gray">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="User Details"
-                    android:textColor="@color/blue"
-                    android:textSize="14sp" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/user" />
+
+                        <LinearLayout
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                        <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User Details :-"
+                        android:textColor="@color/blue"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.45dp"
+                        android:background="@color/blue"
+                        android:gravity="center" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -99,8 +125,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="Name :"
-                        android:textColor="@color/blue"
-                        android:textSize="14sp" />
+                        android:textColor="@color/mid_blue"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/textViewName"
@@ -109,7 +135,7 @@
                         android:layout_marginLeft="10dp"
                         android:text="abcdef"
                         android:textColor="@color/black"
-                        android:textSize="13sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -123,118 +149,195 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
                         android:text="Mobile No. :"
-                        android:textColor="@color/blue"
-                        android:textSize="14sp" />
+                        android:textColor="@color/mid_blue"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/textViewMobileNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
                         android:text="9876543210"
                         android:textColor="@color/black"
-                        android:textSize="13sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
+
+                <View
+
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/faint_blue"/>
+
             </LinearLayout>
 
+        <LinearLayout
+
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/linearLayoutComplaintDetails"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Complaint Details"
-                    android:textColor="@color/blue"
-                    android:textSize="14sp" />
+                    android:layout_alignParentLeft="true"
+                    android:orientation="horizontal"
+                    android:layout_weight="50">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/complaint_details" />
+                    <LinearLayout
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Complaint Details :-"
+                            android:textColor="@color/blue"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0.45dp"
+                            android:background="@color/blue"
+                            android:gravity="center" />
 
-                    android:layout_marginRight="2dp"
-                    android:orientation="horizontal">
-
+                    </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical"
+                        android:layout_weight="50">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="Station :"
-                        android:textColor="@color/blue"
-                        android:textSize="14sp" />
+                        android:text="Status"
+                        android:layout_marginTop="12dp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/mid_blue"
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/textViewComplaintStations"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="abcdef"
-                        android:textColor="@color/black"
-                        android:textSize="13sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="Platform :"
-                        android:textColor="@color/blue"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/textViewComplaintPlatform"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:id="@+id/textViewComplaintStatus"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:text="ghjklm"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:textColor="@color/black"
-                        android:textSize="13sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutStationPlatform"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="Station :"
+                            android:textColor="@color/mid_blue"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/textViewComplaintStations"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="abcdef"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="Platform :"
+                            android:textColor="@color/mid_blue"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/textViewComplaintPlatform"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="ghjklm"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:weightSum="100">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="37"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="Status :"
-                        android:textColor="@color/blue"
-                        android:textSize="14sp" />
+                        android:layout_marginTop="12dp"
+                        android:text="Change Status :"
+                        android:textColor="@color/mid_blue"
+                        android:textSize="16sp" />
 
-                    <TextView
-                        android:id="@+id/textViewComplaintStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="ghjklm"
-                        android:textColor="@color/black"
-                        android:textSize="13sp" />
                 </LinearLayout>
 
 
@@ -242,24 +345,14 @@
                     android:id="@+id/linearLayoutSpinner"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="50"
+                    android:layout_weight="63"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="Change Status :"
-                        android:textColor="@color/blue"
-                        android:textSize="14sp" />
 
                     <Spinner
                         android:id="@+id/spinnerChangeStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="20dp"
                         android:popupBackground="@color/white"></Spinner>
                 </LinearLayout>
             </LinearLayout>
@@ -270,6 +363,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -285,6 +379,7 @@
                         android:id="@+id/textViewBefore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/mid_blue"
                         android:text="Before" />
 
                     <ImageView
@@ -307,6 +402,7 @@
                         android:id="@+id/textViewAfter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/mid_blue"
                         android:text="After" />
 
                     <ImageView
@@ -321,14 +417,13 @@
 
             </LinearLayout>
 
-
             <EditText
                 android:id="@+id/editTextComment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/dark_blue"
                 android:gravity="top|left"
                 android:hint="Comment"
@@ -337,7 +432,7 @@
                 android:lines="5"
                 android:scrollHorizontally="false"
                 android:textColor="@color/black"
-                android:textColorHint="@color/divider_color"
+                android:textColorHint="@color/mid_blue"
                 android:textSize="15sp" />
 
 
@@ -353,7 +448,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/camera" />
+                    android:src="@drawable/camera1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -361,6 +456,7 @@
                     android:layout_marginLeft="15sp"
                     android:layout_marginRight="15sp"
                     android:text="or"
+                    android:textColor="@color/mid_blue"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -368,8 +464,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/camera1" />
+                    android:src="@drawable/gallery" />
             </LinearLayout>
+        </LinearLayout>
 
             <ImageView
                 android:id="@+id/imageViewPhoto"

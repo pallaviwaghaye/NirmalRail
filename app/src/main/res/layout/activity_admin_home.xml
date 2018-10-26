@@ -39,7 +39,7 @@
                         android:layout_marginLeft="140dp"
                         android:layout_marginRight="25dp"
 
-                        android:src="@drawable/logout1" />
+                        android:src="@drawable/logout" />
 
                 </LinearLayout>
 
@@ -97,7 +97,7 @@
                     android:id="@+id/textViewInProgress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="IN PROGRESS"
+                    android:text="INPROCESS"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -117,7 +117,7 @@
                     android:id="@+id/textViewCompleted"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="COMPLETED"
+                    android:text="COMPLETE"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 

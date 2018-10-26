@@ -99,6 +99,8 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
     private TextView textViewBefore;
     private TextView textViewAfter;
 
+    private LinearLayout linearLayoutStationPlatform;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,6 +226,8 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
         imageViewAfter = (ImageView) findViewById(R.id.imageViewAfter);
         linearLayoutPhotos = (LinearLayout) findViewById(R.id.linearLayoutPhotos);
         imageViewBack = (ImageView) findViewById(R.id.imageViewBack);
+        linearLayoutStationPlatform = (LinearLayout)findViewById(R.id.linearLayoutStationPlatform);
+
         imageViewCamera.setOnClickListener(this);
         imageViewGallery.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
@@ -571,14 +575,44 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                             complaint = result.getSuccess().getComplaint();
                             textViewName.setText(complaint.getName());
                             textViewMobileNo.setText(complaint.getMobile());
-                            textViewComplaintStations.setText(complaint.getStationname());
-                            textViewComplaintPlatform.setText(complaint.getAtPlatform());
-                            textViewComplaintStatus.setText(complaint.getStatus());
-                            Picasso.with(AdminStatusFormActivity.this).load(complaint.getBeforeImgUrl()).placeholder(R.drawable.image_back).resize(300, 300).into(imageViewBefore);
 
+                           if(result.getSuccess().getComplaint().getColonyname() == null) {
+
+                               linearLayoutStationPlatform.setVisibility(View.VISIBLE);
+                                /*textViewComplaintStations.setVisibility(View.VISIBLE);
+                                textViewComplaintPlatform.setVisibility(View.VISIBLE);*/
+                               textViewComplaintStations.setText(complaint.getStationname());
+                               textViewComplaintPlatform.setText(complaint.getAtPlatform());
+                               textViewComplaintStatus.setText(complaint.getStatus());
+
+                            }
+                            else {
+                               linearLayoutStationPlatform.setVisibility(View.GONE);
+                                /*textViewComplaintStations.setVisibility(View.GONE);
+                                textViewComplaintPlatform.setVisibility(View.GONE);*/
+                            }
+
+                            if (complaint.getStatus().equalsIgnoreCase("invalid")) {
+                                textViewComplaintStatus.setBackgroundColor(getResources().getColor(R.color.red));
+                                textViewComplaintStatus.setText(complaint.getStatus());
+                            } else if (complaint.getStatus().equalsIgnoreCase("inprocess")) {
+                                textViewComplaintStatus.setBackgroundColor(getResources().getColor(R.color.yellow));
+                                textViewComplaintStatus.setText(complaint.getStatus());
+                            } else if (complaint.getStatus().equalsIgnoreCase("complete")) {
+                                textViewComplaintStatus.setBackgroundColor(getResources().getColor(R.color.green));
+                                textViewComplaintStatus.setText(complaint.getStatus());
+                            } else {
+                                textViewComplaintStatus.setBackgroundColor(getResources().getColor(R.color.sky_blue));
+                                textViewComplaintStatus.setText(complaint.getStatus());
+                            }
+
+                            Picasso.with(AdminStatusFormActivity.this).load(complaint.getBeforeImgUrl()).placeholder(R.drawable.image_back).resize(300, 300).into(imageViewBefore);
+                            imageViewBefore.getLayoutParams().height = 600; // OR
+                            imageViewBefore.getLayoutParams().width = 1000;
 
                             if (statusInfo.equalsIgnoreCase(AdminHomeActivity.COMPLETED)) {
-
+                                imageViewBefore.getLayoutParams().height = 350; // OR
+                                imageViewBefore.getLayoutParams().width = 350;
                                 Picasso.with(AdminStatusFormActivity.this).load(complaint.getBeforeImgUrl()).placeholder(R.drawable.image_back).resize(300, 300).into(imageViewBefore);
                                 Picasso.with(AdminStatusFormActivity.this).load(complaint.getAfterImgUrl()).placeholder(R.drawable.image_back).resize(300, 300).into(imageViewAfter);
                                 if (complaint.getComment() != null) {
