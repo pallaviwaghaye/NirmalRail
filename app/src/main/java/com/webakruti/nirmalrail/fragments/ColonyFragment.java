@@ -381,7 +381,7 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
     public void showDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.alertDialog);
         alertDialog.setTitle("Thank You !!!");
-        alertDialog.setMessage("Thank You !!!");
+        //alertDialog.setMessage("Thank You !!!");
         alertDialog.setPositiveButton("Check Status", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //SharedPreferenceManager.clearPreferences();
