@@ -640,8 +640,9 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                 t.printStackTrace();
             }
         } else {
-            Toast.makeText(AdminStatusFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
-            return;
+          /*  Toast.makeText(AdminStatusFormActivity.this, "Please select image", Toast.LENGTH_SHORT).show();
+            return;*/
+           path = null;
         }
 
 
@@ -656,11 +657,18 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
         RequestBody status = RequestBody.create(MediaType.parse("multipart/form-data"), selectedChangedStatus);
         RequestBody id = RequestBody.create(MediaType.parse("multipart/form-data"), complaint.getId() + "");
 
+        RequestBody requestBaseFile;
+        MultipartBody.Part bodyImage = null;
+        if (path != null) {
+            // with image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+            bodyImage = MultipartBody.Part.createFormData("complete_img", "image" + System.currentTimeMillis(), requestBaseFile);
 
-        RequestBody requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
-        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("complete_img", "image" + System.currentTimeMillis(), requestBaseFile);
-
-
+        } else {
+            // without image
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+            bodyImage = MultipartBody.Part.createFormData("complete_img", "image" + System.currentTimeMillis(), requestBaseFile);
+        }
         String header = "Bearer " + SharedPreferenceManager.getAdminObjectFromSharedPreference().getSuccess().getToken();
 
         Call<SaveComplaintResponse> colorsCall = RestClient.getApiService(ApiConstants.BASE_URL).uploadAdminComplaintUpdaate(header, id, status, description, bodyImage);
