@@ -316,7 +316,7 @@ public class ColonyFragment extends Fragment implements View.OnClickListener {
 
         } else {
             // without image
-            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
+            requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), "");
             bodyImage = MultipartBody.Part.createFormData("image_path", "image" + System.currentTimeMillis(), requestBaseFile);
         }
 
