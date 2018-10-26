@@ -39,7 +39,8 @@
         <activity android:name=".ui.SuccessActivity" />
         <activity android:name=".ui.AdminLoginActivity" />
         <activity android:name=".ui.AdminHomeActivity" />
-        <activity android:name=".ui.AdminStatusFormActivity"></activity>
+        <activity android:name=".ui.AdminStatusFormActivity" />
+        <activity android:name=".ui.UserStatusDetailsActivity"></activity>
     </application>
 
 </manifest>
