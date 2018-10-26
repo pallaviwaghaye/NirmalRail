@@ -92,7 +92,7 @@ public class AdminStationStatusAdapter extends RecyclerView.Adapter<AdminStation
                 });
 */
 
-        Picasso.with(context).load(myRequestStatus.getBeforeImgUrl()).placeholder(R.drawable.image_back).resize(300,300).into(viewHolder.imageViewRequestImage);
+        Picasso.with(context).load(myRequestStatus.getBeforeImgUrl()).placeholder(R.drawable.image_not_found).resize(300,300).into(viewHolder.imageViewRequestImage);
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

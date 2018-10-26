@@ -606,15 +606,15 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                                 textViewComplaintStatus.setText(complaint.getStatus());
                             }
 
-                            Picasso.with(AdminStatusFormActivity.this).load(complaint.getBeforeImgUrl()).placeholder(R.drawable.image_back).resize(300, 300).into(imageViewBefore);
+                            Picasso.with(AdminStatusFormActivity.this).load(complaint.getBeforeImgUrl()).placeholder(R.drawable.image_not_found).resize(300, 300).into(imageViewBefore);
                             imageViewBefore.getLayoutParams().height = 600; // OR
                             imageViewBefore.getLayoutParams().width = 1000;
 
                             if (statusInfo.equalsIgnoreCase(AdminHomeActivity.COMPLETED)) {
                                 imageViewBefore.getLayoutParams().height = 350; // OR
                                 imageViewBefore.getLayoutParams().width = 350;
-                                Picasso.with(AdminStatusFormActivity.this).load(complaint.getBeforeImgUrl()).placeholder(R.drawable.image_back).resize(300, 300).into(imageViewBefore);
-                                Picasso.with(AdminStatusFormActivity.this).load(complaint.getAfterImgUrl()).placeholder(R.drawable.image_back).resize(300, 300).into(imageViewAfter);
+                                Picasso.with(AdminStatusFormActivity.this).load(complaint.getBeforeImgUrl()).placeholder(R.drawable.image_not_found).resize(300, 300).into(imageViewBefore);
+                                Picasso.with(AdminStatusFormActivity.this).load(complaint.getAfterImgUrl()).placeholder(R.drawable.image_not_found).resize(300, 300).into(imageViewAfter);
                                 if (complaint.getComment() != null) {
                                     editTextComment.setText(complaint.getComment());
                                 } else {
