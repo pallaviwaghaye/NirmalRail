@@ -164,7 +164,7 @@ public interface ApiService {
             @Part("id") RequestBody id,
             @Part("status") RequestBody status,
             @Part("comment") RequestBody comment,
-            @Part MultipartBody.Part baseImage);
+            @Part MultipartBody.Part baseImage); //key given into code for image
 
 
 }

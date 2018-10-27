@@ -80,8 +80,8 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
     private ImageView imageViewPhoto;
     private Button buttonSubmit;
     private ProgressDialog progressDialogForAPI;
-    public static final int REQ_CODE_PICK_IMAGE = 1;
-    private static final int REQUEST_IMAGE_CAPTURE = 2;
+    public static final int REQ_CODE_PICK_IMAGE = 1; //gallery
+    private static final int REQUEST_IMAGE_CAPTURE = 2; //camera
     private LinearLayout linearLayoutCamera;
     private File baseImage;
     private File photoFile;
@@ -317,18 +317,20 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
     }
 
     public void pickImageCamera() {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()); //new date = current date
 
         String fileName = "image_" + timeStamp;
         //create parameters for Intent with filename
-        ContentValues values = new ContentValues();
+        ContentValues values = new ContentValues();  //to accept
         values.put(MediaStore.Images.Media.TITLE, fileName);
         values.put(MediaStore.Images.Media.DESCRIPTION, "Image capture by camera");
+        //values.put(MediaStore.Images.Media.LONGITUDE, "Image capture by camera");
         //imageUri is the current activity attribute, define and save it for later usage (also in onSaveInstanceState)
         outPutfileUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        //
         //create new Intent
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutfileUri);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); //to send intent for image
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutfileUri);  //to give path image
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
         intent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE); // response will come in onActivityForResult
@@ -336,7 +338,7 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
 
     }
 
-
+//to give path in string format
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(contentUri, proj, // Which columns to return
@@ -500,7 +502,7 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
         @Override
         public void onPermissionGranted() {
             path = null;
-            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI); //to open gallery images
             i.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             startActivityForResult(i, REQ_CODE_PICK_IMAGE);
         }
@@ -516,6 +518,7 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
+            //gallery
             case REQ_CODE_PICK_IMAGE:
                 if (resultCode == Activity.RESULT_OK) {
                     Uri selectedImage = data.getData();
@@ -532,6 +535,7 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                     }
                 }
                 break;
+            //camera
             case REQUEST_IMAGE_CAPTURE:
                 if (resultCode == RESULT_OK) {
                     try {
@@ -547,6 +551,7 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                         e.printStackTrace();
                     }
                 }
+                break;
 
         }
     }
@@ -626,15 +631,15 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                             }
 
                         } else {
-                            Toast.makeText(AdminStatusFormActivity.this, "OTP Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AdminStatusFormActivity.this, "Unable to reach server.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(AdminStatusFormActivity.this, "Mobile number is not registered. Please register first.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminStatusFormActivity.this, "Unable to reach server.", Toast.LENGTH_SHORT).show();
 
                     }
                 } else {
                     // Response code is 401
-                    Toast.makeText(AdminStatusFormActivity.this, "OTP Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminStatusFormActivity.this, "Unable to reach server.", Toast.LENGTH_SHORT).show();
                 }
 
                 if (progressDialogForAPI != null) {
@@ -666,8 +671,8 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
         File baseImage = null;
         if (path != null) {
             baseImage = new File(path);
-
-            int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
+            //to compress image from 100 to 75
+            //int compressionRatio = 2; //1 == originalImage, 2 = 50% compression, 4=25% compress
             try {
                 Bitmap bitmap = BitmapFactory.decodeFile(baseImage.getPath());
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 75, new FileOutputStream(baseImage));
@@ -693,12 +698,14 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
         RequestBody status = RequestBody.create(MediaType.parse("multipart/form-data"), selectedChangedStatus);
         RequestBody id = RequestBody.create(MediaType.parse("multipart/form-data"), complaint.getId() + "");
 
+        //for image
         RequestBody requestBaseFile;
+        //local variable to save path
         MultipartBody.Part bodyImage = null;
         if (path != null) {
             // with image
             requestBaseFile = RequestBody.create(MediaType.parse("multipart/form-data"), baseImage);
-            bodyImage = MultipartBody.Part.createFormData("complete_img", "image" + System.currentTimeMillis(), requestBaseFile);
+            bodyImage = MultipartBody.Part.createFormData("complete_img", "image" + System.currentTimeMillis(), requestBaseFile); //works like primary key name...written system.currenttimestamp= unique timestamp
 
         } else {
             // without image
@@ -726,18 +733,18 @@ public class AdminStatusFormActivity extends AppCompatActivity implements View.O
                                 Intent returnIntent = new Intent();
                                 returnIntent.putExtra("SELECTED_STATUS", statusInfo);
                                 returnIntent.putExtra("TAB_TYPE", tabTypeInHomePage);
-                                setResult(Activity.RESULT_OK, returnIntent);
+                                setResult(Activity.RESULT_OK, returnIntent); //onactivityresult
                                 finish();
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Unable to reach server.", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Unable to reach server.", Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Unable to reach server ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Unable to reach server.", Toast.LENGTH_SHORT).show();
                 }
 
 
